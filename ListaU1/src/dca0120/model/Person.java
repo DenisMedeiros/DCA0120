@@ -1,5 +1,12 @@
 package dca0120.model;
 
+/**
+ * Classe Person.
+ * 
+ * @author denis
+ * @author ney
+ *
+ */
 public class Person {
 	
 	private int id;

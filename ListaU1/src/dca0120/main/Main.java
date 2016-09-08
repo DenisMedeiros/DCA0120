@@ -4,6 +4,14 @@ import java.awt.EventQueue;
 
 import dca0120.view.TelaPrincipal;
 
+/**
+ * 
+ * @author denis 
+ * @author ney
+ * 
+ * Classe Main.
+ *
+ */
 public class Main {
 	
 	

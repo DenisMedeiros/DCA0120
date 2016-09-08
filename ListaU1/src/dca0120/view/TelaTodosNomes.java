@@ -13,6 +13,13 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
+/**
+ * Tela que exibe todos os nomes de todas as pessoas cadastradas no sistema.
+ * 
+ * @author denis
+ * @author ney
+ *
+ */
 public class TelaTodosNomes extends JFrame {
 
 	private static final long serialVersionUID = -5969381227186491278L;

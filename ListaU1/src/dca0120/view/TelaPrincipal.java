@@ -16,6 +16,13 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
+/**
+ * Tela principal do sistema.
+ *
+ * @author denis
+ * @author ney
+ *
+ */
 public class TelaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = -8287323256759666912L;
@@ -53,10 +60,10 @@ public class TelaPrincipal extends JFrame {
 		
 		labelInserindoDados.setVisible(true);
 		Person p1 = new Person(1, "Fernandes", "Carla", "Rua 1", "Natal");
-		Person p2 = new Person(1, "Curvelo", "Danilo", "Rua 2", "MossorÛ");
+		Person p2 = new Person(1, "Curvelo", "Danilo", "Rua 2", "Mossor√≥");
 		Person p3 = new Person(1, "Fernandes", "Flavia", "Rua 3", "Natal");
 		
-		// Insere somente se n„o foram inseridos ainda.
+		// Insere somente se n√£o foram inseridos ainda.
 		if(pd.getTodasPessoas().size() == 0) {
 			pd.inserirPessoa(p1);
 			pd.inserirPessoa(p2);
@@ -68,6 +75,7 @@ public class TelaPrincipal extends JFrame {
 	}
 	
 	private void initialize() {
+		
 		setTitle("Lista Unidade 1");
 		
 		telaTodasPessoas = null;
@@ -94,11 +102,11 @@ public class TelaPrincipal extends JFrame {
 		labelCriandoTabela.setVisible(false);
 		panel1.add(labelCriandoTabela);
 		
-		labelInserindoDados = new JLabel("[3] Inserindo dados padrıes...");
+		labelInserindoDados = new JLabel("[3] Inserindo dados padr√µes...");
 		labelInserindoDados.setVisible(false);
 		panel1.add(labelInserindoDados);
 		
-		labelConcluido = new JLabel("[4] PreparaÁ„o inicial concluÌda!");
+		labelConcluido = new JLabel("[4] Prepara√ß√£o inicial conclu√≠da!");
 		labelConcluido.setVisible(false);
 		panel1.add(labelConcluido);
 		

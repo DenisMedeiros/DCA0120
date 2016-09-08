@@ -1,6 +1,5 @@
 package dca0120.model;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,10 +8,21 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * 
+ * @author denis
+ * @author ney
+ * 
+ * Classe responsável por interconectar a classe Person com a tabela Person.
+ *
+ */
 public class PersonDAO {
 	
-	Connection conexao;
+	private Connection conexao;
 	
+	 /**
+	  * Construtor padrão. Ele abre a conexão com o banco de dados.
+	  */
 	public PersonDAO() {
 		try {
 			conexao = ConnectionFactory.getConexao();
@@ -23,6 +33,9 @@ public class PersonDAO {
 		}
 	}
 	
+	/**
+	 * Cria a tabela Person no banco de dados.
+	 */
 	public void criarTabela() {
 		try {
 			Statement st = conexao.createStatement();
@@ -39,6 +52,12 @@ public class PersonDAO {
 		}
 	}
 	
+	
+	/**
+	 * Insere uma pessoa no banco de dados.
+	 * 
+	 * @param p Objeto do tipo Pessoa a ser inserido no banco de dados.
+	 */
 	public void inserirPessoa(Person p) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Persons(PersonID, LastName, FirstName, "
@@ -55,6 +74,12 @@ public class PersonDAO {
 		}
 	}
 	
+	/**
+	 * 	
+	 * Retorna a lista de todas as pessoas cadastradas
+	 * 
+	 * @return lista Lista de pessoas cadastradas.
+	 */
 	public List<Person> getTodasPessoas() {
 		List<Person> lista = new ArrayList<Person>();
 		try {
@@ -75,14 +100,16 @@ public class PersonDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
-		
 		return lista;
 	}
 	
+	/**
+	 * Returna a lista de todos os sobrenomes das pessoas cadastradas no sistema.
+	 * 
+	 * @return lista Lista de sobrenomes de todas as pessoas cadastradas.
+	 */
 	public List<String> getLastNames() {
 		List<String> lista = new ArrayList<String>();
-		
 		try {
 			Statement st = conexao.createStatement();
 	        String sql = "SELECT LastName FROM Persons";
@@ -96,13 +123,16 @@ public class PersonDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return lista;
 	}
 	
+	/**
+	 * Returna a lista de todos os nomes das pessoas cadastradas no sistema.
+	 * 
+	 * @return lista Lista de nomes de todas as pessoas cadastradas.
+	 */
 	public List<String> getFirstNames() {
 		List<String> lista = new ArrayList<String>();
-		
 		try {
 			Statement st = conexao.createStatement();
 	        String sql = "SELECT FirstName FROM Persons";
@@ -115,8 +145,7 @@ public class PersonDAO {
 	        
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		
+		}	
 		return lista;
 	}
 
