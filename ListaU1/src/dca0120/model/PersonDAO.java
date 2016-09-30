@@ -1,5 +1,7 @@
 package dca0120.model;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
+import java.sql.Date;
 
 /**
  * 
@@ -41,10 +44,14 @@ public class PersonDAO {
 		try {
 			Statement st = conexao.createStatement();
 	        String sql = "CREATE TABLE IF NOT EXISTS Persons (" +
-	                 " PersonID INTEGER auto_increment, " +
-	                 " Name VARCHAR(255), " +
+	                 " PersonID INTEGER AUTO_INCREMENT, " +
+	                 " Name VARCHAR(255) NOT NULL, " +
+	                 " Login VARCHAR(255) NOT NULL, " +
+	                 " Email VARCHAR(255) NOT NULL, " +
+	                 " Birthday DATE" +
 	                 " Address VARCHAR(255), " +
 	                 " City VARCHAR(255), " +
+	                 " Photo BLOB, " +
 	                 " Primary key (PersonID), " +
 	                 ")";
 	        st.executeUpdate(sql);
@@ -60,16 +67,22 @@ public class PersonDAO {
 	 * @param p Objeto do tipo Pessoa a ser inserido no banco de dados.
 	 */
 	public void inserirPessoa(Person p) {
+		FileInputStream imagePath;
 		try {
-			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Persons(PersonID, Name, "
-					+ "Address, City) VALUES (?, ?, ?, ?)");
+			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Persons(PersonID, Name, Login"
+					+ "Email, Birthday, Address, City, Photo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 			
 	        pst.setInt(1, p.getId());
 	        pst.setString(2, p.getName());
-	        pst.setString(3, p.getRua());
-	        pst.setString(4, p.getCity());
+	        pst.setString(3, p.getLogin());
+	        pst.setString(4, p.getEmail());
+	        pst.setDate(5, (Date) p.getBirthday().getTime());
+	        pst.setString(6, p.getRua());
+	        pst.setString(7, p.getCity());
+	        imagePath = new FileInputStream(p.getPhoto());
+	        pst.setBinaryStream(8, imagePath, (int) p.getPhoto().length());
 	        pst.executeUpdate();
-		} catch (SQLException e) {
+		} catch (SQLException | FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}

@@ -1,6 +1,9 @@
 package dca0120.model;
 
+import java.io.*;
 import java.util.Calendar;
+
+
 /**
  * Classe Person.
  * 
@@ -19,14 +22,14 @@ public class Person {
 	private String password;
 	private Address address;
 	private Calendar birthday;
-
+	private File photo;
 	
 	
 	public Person() {
 		
 	}
 	
-	public Person(int id, String Name, int day, int month, int year, String login, Address address, String password, String email, String phoneMobile, String phoneHome) {
+	public Person(int id, String Name,  String email, String login, String password, int day, int month, int year, Address address, String phoneMobile, String phoneHome, String photoPath) {
 		this.id = id;
 		this.name = Name;
 		this.setLogin(login);
@@ -36,8 +39,17 @@ public class Person {
 		this.phoneHome = phoneHome;
 		this.phoneMobile = phoneMobile;
 		this.setBirthday(day, month, year);
+		this.setPhoto(photoPath);
 	}
 	
+	public void setPhoto(String photoPath) {
+		this.photo = new File(photoPath);
+	}
+	
+	public File getPhoto() {
+		return photo;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -115,7 +127,7 @@ public class Person {
 	}
 
 	public void setBirthday(int day, int month, int year) {
-		birthday.set(year, month, day);
+		this.birthday.set(year, month-1, day);
 	}
 	
 
