@@ -57,17 +57,20 @@ public class Person {
 	public String getRua() {
 		return address.getRua();
 	}
+	public void setRua(String rua) {
+		this.address.setRua(rua);
+	}
 	
 	public String getCity() {
 		return address.getCity();
 	}
+	public void setCity(String city) {
+		this.address.setCity(city);
+	}
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-	public void setRua(String rua) {
-		this.address.setRua(rua);
-	}
-		
+				
 	public String getPhoneMobile() {
 		return phoneMobile;
 	}

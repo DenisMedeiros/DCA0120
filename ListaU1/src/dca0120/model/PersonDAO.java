@@ -66,7 +66,6 @@ public class PersonDAO {
 			
 	        pst.setInt(1, p.getId());
 	        pst.setString(2, p.getName());
-	        //pst.setString(2, p.getFirstName());
 	        pst.setString(3, p.getRua());
 	        pst.setString(4, p.getCity());
 	        pst.executeUpdate();
@@ -92,10 +91,10 @@ public class PersonDAO {
 	        	Person p = new Person();
 	        	p.setId(res.getInt("PersonID"));
 	        	p.setName(res.getString("Name"));
-	        	p.setFirstName(res.getString("FirstName"));
 	        	p.setRua(res.getString("Address"));
 	        	p.setCity(res.getString("City"));
 	        	lista.add(p);
+	        	
 	        }
 	        
 		} catch (SQLException e) {
@@ -105,49 +104,27 @@ public class PersonDAO {
 	}
 	
 	/**
-	 * Returna a lista de todos os sobrenomes das pessoas cadastradas no sistema.
-	 * 
-	 * @return lista Lista de sobrenomes de todas as pessoas cadastradas.
-	 */
-	public List<String> getLastNames() {
-		List<String> lista = new ArrayList<String>();
-		try {
-			Statement st = conexao.createStatement();
-	        String sql = "SELECT LastName FROM Persons";
-	        ResultSet res = st.executeQuery(sql);
-	       
-	        while (res.next()) {
-	        	String lastName = res.getString("LastName");
-	        	lista.add(lastName);
-	        }
-	        
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return lista;
-	}
-	
-	/**
-	 * Returna a lista de todos os nomes das pessoas cadastradas no sistema.
+	 * Retorna a lista de todos os nomes das pessoas cadastradas no sistema.
 	 * 
 	 * @return lista Lista de nomes de todas as pessoas cadastradas.
 	 */
-	public List<String> getFirstNames() {
+	public List<String> getNames() {
 		List<String> lista = new ArrayList<String>();
 		try {
 			Statement st = conexao.createStatement();
-	        String sql = "SELECT FirstName FROM Persons";
+	        String sql = "SELECT Name FROM Persons";
 	        ResultSet res = st.executeQuery(sql);
 	       
 	        while (res.next()) {
-	        	String firstName = res.getString("FirstName");
-	        	lista.add(firstName);
+	        	String Name = res.getString("Name");
+	        	lista.add(Name);
 	        }
 	        
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}	
+		}
 		return lista;
 	}
+	
 
 }
