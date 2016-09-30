@@ -35,17 +35,16 @@ public class PersonDAO {
 	
 	/**
 	 * Cria a tabela Person no banco de dados.
-	 * 
 	 */
 	public void criarTabela() {
 		try {
 			Statement st = conexao.createStatement();
 	        String sql = "CREATE TABLE IF NOT EXISTS Persons (" +
-	                 " PersonID INTEGER auto_increment, " +
-	                 " Name VARCHAR(255), " +
+	                 " PersonID INTEGER, " +
+	                 " FirstName VARCHAR(255), " +
+	                 " LastName VARCHAR(255), " +
 	                 " Address VARCHAR(255), " +
 	                 " City VARCHAR(255), " +
-	                 " Primary key (PersonID), " +
 	                 ")";
 	        st.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -61,14 +60,14 @@ public class PersonDAO {
 	 */
 	public void inserirPessoa(Person p) {
 		try {
-			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Persons(PersonID, Name, "
-					+ "Address, City) VALUES (?, ?, ?, ?)");
+			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Persons(PersonID, LastName, FirstName, "
+					+ "Address, City) VALUES (?, ?, ?, ?, ?)");
 			
 	        pst.setInt(1, p.getId());
-	        pst.setString(2, p.getName());
-	        //pst.setString(2, p.getFirstName());
-	        pst.setString(3, p.getRua());
-	        pst.setString(4, p.getCity());
+	        pst.setString(2, p.getLastName());
+	        pst.setString(3, p.getFirstName());
+	        pst.setString(4, p.getAddress());
+	        pst.setString(5, p.getCity());
 	        pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -91,9 +90,9 @@ public class PersonDAO {
 	        while (res.next()) {
 	        	Person p = new Person();
 	        	p.setId(res.getInt("PersonID"));
-	        	p.setName(res.getString("Name"));
+	        	p.setLastName(res.getString("LastName"));
 	        	p.setFirstName(res.getString("FirstName"));
-	        	p.setRua(res.getString("Address"));
+	        	p.setAddress(res.getString("Address"));
 	        	p.setCity(res.getString("City"));
 	        	lista.add(p);
 	        }

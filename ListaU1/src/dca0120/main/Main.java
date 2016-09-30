@@ -2,7 +2,9 @@ package dca0120.main;
 
 import java.awt.EventQueue;
 
-import dca0120.view.TelaPrincipal;
+import javax.swing.UIManager;
+
+import dca0120.view.LoginScreen;
 
 /**
  * 
@@ -16,10 +18,21 @@ public class Main {
 	
 	
 	public static void main(String[] args) {
+		
+		
+		try {			
+			// Altera o Look And Feel para o atual do sistema operacional.
+		    // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch(Exception e){
+
+		}
+		
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaPrincipal frame = new TelaPrincipal();
+					LoginScreen frame = new LoginScreen();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
