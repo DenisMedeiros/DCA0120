@@ -1,6 +1,6 @@
 package dca0120.model;
 
-import java.util.Date;
+import java.util.Calendar;
 /**
  * Classe Person.
  * 
@@ -18,7 +18,7 @@ public class Person {
 	private String login;
 	private String password;
 	private Address address;
-	private Date birthday;
+	private Calendar birthday;
 
 	
 	
@@ -26,7 +26,7 @@ public class Person {
 		
 	}
 	
-	public Person(int id, String Name, String login, Address address, String password, String email, String phoneMobile, String phoneHome) {
+	public Person(int id, String Name, int day, int month, int year, String login, Address address, String password, String email, String phoneMobile, String phoneHome) {
 		this.id = id;
 		this.name = Name;
 		this.setLogin(login);
@@ -35,7 +35,7 @@ public class Person {
 		this.setEmail(email);
 		this.phoneHome = phoneHome;
 		this.phoneMobile = phoneMobile;
-
+		this.setBirthday(day, month, year);
 	}
 	
 	public int getId() {
@@ -107,12 +107,12 @@ public class Person {
 		this.password = password;
 	}
 
-	public Date getBirthday() {
+	public Calendar getBirthday() {
 		return birthday;
 	}
 
 	public void setBirthday(int day, int month, int year) {
-		this.birthday.
+		birthday.set(year, month, day);
 	}
 	
 
