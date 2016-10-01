@@ -19,7 +19,7 @@ public class Person {
 	private String login;
 	private String password;//tipo?
 	private Address address;
-	private Calendar birthday;
+	private Calendar birthday;//tipo?
 	private File photo;
 	private String phoneMobile;
 	private String phoneHome;
