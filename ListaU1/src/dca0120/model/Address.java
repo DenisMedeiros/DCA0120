@@ -17,14 +17,13 @@ public class Address {
 	private String zip;
 	private String city;
 	private String state;
-	
-	
+	private Person person;
 	
 	public Address() {
 		
 	}
 
-	public Address(String street, int num, String complement, String district, String zip, String city, String state) {
+	public Address(String street, int num, String complement, String district, String zip, String city, String state, Person person) {
 		super();
 		this.street = street;
 		this.num = num;
@@ -33,6 +32,7 @@ public class Address {
 		this.zip = zip;
 		this.city = city;
 		this.state = state;
+		this.person = person;
 	}
 
 	public int getNum() {
@@ -77,5 +77,15 @@ public class Address {
 	public void setState(String state) {
 		this.state = state;
 	}
+
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+	
+	
 	
 }

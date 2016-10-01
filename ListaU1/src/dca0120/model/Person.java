@@ -1,6 +1,5 @@
 package dca0120.model;
 
-import java.io.*;
 import java.util.Calendar;
 
 
@@ -17,10 +16,9 @@ public class Person {
 	private String name;
 	private String email;
 	private String login;
-	private String password;//tipo?
-	private Address address;
-	private Calendar birthday;//tipo?
-	private File photo;
+	private String password;
+	private Calendar birthdate;
+	private byte[] photo;
 	private String phoneMobile;
 	private String phoneHome;
 	
@@ -29,24 +27,23 @@ public class Person {
 		
 	}
 	
-	public Person(int id, String Name,  String email, String login, String password, int day, int month, int year, Address address, String phoneMobile, String phoneHome, String photoPath) {
+	public Person(int id, String Name,  String email, String login, String password, Calendar birthdate, String phoneMobile, String phoneHome, byte[] photo) {
 		super();
 		this.id = id;
 		this.name = Name;
-		this.address = address;
 		this.setPassword(password);
 		this.setEmail(email);
 		this.phoneHome = phoneHome;
 		this.phoneMobile = phoneMobile;
-		this.setBirthday(day, month, year);
-		this.setPhoto(photoPath);
+		this.photo = photo;
+		this.birthdate = birthdate;
 	}
 	
-	public void setPhoto(String photoPath) {
-		this.photo = new File(photoPath);
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
 	}
 	
-	public File getPhoto() {
+	public byte[] getPhoto() {
 		return photo;
 	}
 
@@ -64,26 +61,6 @@ public class Person {
 	
 	public void setName(String Name) {
 		this.name = Name;
-	}
-	
-	public String getStreet() {
-		return address.getStreet();
-	}
-	public void setStreet(String street) {
-		this.address.setStreet(street);
-	}
-		
-	public String getCity() {
-		return address.getCity();
-	}
-	public void setCity(String city) {
-		this.address.setCity(city);
-	}
-	public void setAddress(Address address) {
-		this.address = address;
-	}
-	public Address getAddress() {
-		return address;
 	}
 				
 	public String getPhoneMobile() {
@@ -125,14 +102,15 @@ public class Person {
 		this.password = password;
 	}
 
-	public Calendar getBirthday() {
-		return birthday;
+	public Calendar getBirthdate() {
+		return birthdate;
+	}
+	
+	public void setBirthdate(Calendar birthdate) {
+		this.birthdate = birthdate;
 	}
 	
 	
-	public void setBirthday(int day, int month, int year) {
-		this.birthday.set(year, month, day);
-	}
 	
 
 }

@@ -3,10 +3,15 @@ package dca0120.view;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.MaskFormatter;
+
+import dca0120.model.Person;
+import dca0120.model.PersonDAO;
+import dca0120.utils.Password;
 
 import java.awt.GridLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -30,7 +35,7 @@ public class LoginScreen extends JFrame {
 	 */
 	private static final long serialVersionUID = -125543653643154060L;
 	private JPanel contentPane;
-	private JPasswordField textFieldSenha;
+	private JPasswordField textFieldPassword;
 	private JFormattedTextField textFieldLogin;
 	
 	/**
@@ -65,7 +70,7 @@ public class LoginScreen extends JFrame {
 		panel2_1.add(labelLogin);
 		
 				
-		textFieldLogin = new JFormattedTextField(new MaskFormatter("AAAAAAAAAAAAAAAAAAAA"));
+		textFieldLogin = new JFormattedTextField();
 		textFieldLogin.setColumns(20);
 		
 		panel2_1.add(textFieldLogin);
@@ -78,10 +83,10 @@ public class LoginScreen extends JFrame {
 		labelSenha.setHorizontalAlignment(SwingConstants.CENTER);
 		panel2_2.add(labelSenha);
 		
-		textFieldSenha = new JPasswordField();	
+		textFieldPassword = new JPasswordField();	
 		
-		panel2_2.add(textFieldSenha);
-		textFieldSenha.setColumns(20);
+		panel2_2.add(textFieldPassword);
+		textFieldPassword.setColumns(20);
 		
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3);
@@ -100,6 +105,26 @@ public class LoginScreen extends JFrame {
 		panel3_1.add(btnCancelar);
 		
 		JButton btnFazerLogin = new JButton("Fazer Login");
+		btnFazerLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				PersonDAO pd = new PersonDAO();
+				Person p = pd.getPerson(textFieldLogin.getText());
+				
+				if (p != null) {
+					String passwordSHA256 = Password.plainToSHA256(new String(textFieldPassword.getPassword()), p.getEmail().getBytes());
+					if (p.getPassword().equals(passwordSHA256)){
+						dispose();
+						UserInformationScreen uis = new UserInformationScreen();
+						uis.setVisible(true);
+						return;			
+					}
+				}
+				
+				JOptionPane.showMessageDialog(null, "Usuário e/ou senha incorretos!");
+	
+			}
+		});
 		panel3_1.add(btnFazerLogin);
 		
 		JPanel panel3_2 = new JPanel();
