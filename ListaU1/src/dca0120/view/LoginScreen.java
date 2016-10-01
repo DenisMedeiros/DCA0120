@@ -108,6 +108,11 @@ public class LoginScreen extends JFrame {
 		btnFazerLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				if(textFieldLogin.getText().trim().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Digite um login válido!");
+					return;
+				}
+				
 				PersonDAO pd = new PersonDAO();
 				Person p = pd.getPerson(textFieldLogin.getText());
 				
@@ -115,7 +120,7 @@ public class LoginScreen extends JFrame {
 					String passwordSHA256 = Password.plainToSHA256(new String(textFieldPassword.getPassword()), p.getEmail().getBytes());
 					if (p.getPassword().equals(passwordSHA256)){
 						dispose();
-						UserInformationScreen uis = new UserInformationScreen();
+						UserInformationScreen uis = new UserInformationScreen(p);
 						uis.setVisible(true);
 						return;			
 					}

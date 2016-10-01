@@ -79,18 +79,20 @@ public class AddressDAO {
 	 * @param p Objeto da pessoa deste endereço.
 	 * @return a Endereço da pessoa.
 	 */
-	public Address getPerson(Person p) {
+	public Address getAddress(Person p) {
 		Address a = null;
 		try {
 			String sql = "SELECT * FROM Addresses WHERE PersonID=?;";
 			PreparedStatement pst = conexao.prepareStatement(sql);
 			
 			pst.setInt(1, p.getId());
-	        ResultSet res = pst.executeQuery(sql);
+	        ResultSet res = pst.executeQuery();
 	        
 	        if (res.wasNull()) {
 	        	return a;
 	        }
+	        
+	        res.next();
 	        
 	        a = new Address();	
 	        a.setStreet(res.getString("Street"));

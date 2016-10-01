@@ -6,7 +6,6 @@ import javax.swing.UIManager;
 
 import dca0120.model.AddressDAO;
 import dca0120.model.PersonDAO;
-import dca0120.utils.Password;
 import dca0120.view.LoginScreen;
 
 /**

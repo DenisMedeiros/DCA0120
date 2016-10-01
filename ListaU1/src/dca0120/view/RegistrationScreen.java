@@ -66,7 +66,7 @@ public class RegistrationScreen extends JFrame {
 	private JTextField textFieldComplement;
 	private JTextField textFieldDistrict;
 	private JFormattedTextField textFieldZIP;
-	private JTextField textFieldState;
+	private JFormattedTextField textFieldState;
 	private JTextField textFieldCity;
 
 	/**
@@ -116,7 +116,6 @@ public class RegistrationScreen extends JFrame {
 		panel2_1.add(labelLogin);
 		
 		textFieldLogin = new JFormattedTextField();
-		textFieldLogin.setText("denis");
 		textFieldLogin.setColumns(30);
 		
 		textFieldLogin.addFocusListener(new FocusAdapter() {
@@ -158,7 +157,6 @@ public class RegistrationScreen extends JFrame {
 		panel.add(labelNome);
 		
 		textFieldName = new JTextField();
-		textFieldName.setText("Denis Medeiros");
 		textFieldName.setColumns(30);
 		panel.add(textFieldName);
 		
@@ -171,7 +169,6 @@ public class RegistrationScreen extends JFrame {
 		panel_1.add(lblEmail);
 		
 		textFieldEmail = new JFormattedTextField();
-		textFieldEmail.setText("dnsricardo@gmail.com");
 		textFieldEmail.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -285,7 +282,6 @@ public class RegistrationScreen extends JFrame {
 		panel_6.add(lblRua);
 		
 		JTextField textFieldStreet = new JTextField();
-		textFieldStreet.setText("Rua 1");
 		textFieldStreet.setColumns(30);
 		panel_6.add(textFieldStreet);
 		
@@ -298,7 +294,6 @@ public class RegistrationScreen extends JFrame {
 		panel_7.add(lblNumero);
 		
 		textFieldNumber = new JFormattedTextField(new NumberFormatter());
-		textFieldNumber.setText("12");
 		textFieldNumber.setColumns(30);
 		panel_7.add(textFieldNumber);
 		
@@ -311,7 +306,6 @@ public class RegistrationScreen extends JFrame {
 		panel_8.add(lblComplemento);
 		
 		textFieldComplement = new JTextField();
-		textFieldComplement.setText("Casa");
 		textFieldComplement.setColumns(30);
 		panel_8.add(textFieldComplement);
 		
@@ -324,7 +318,6 @@ public class RegistrationScreen extends JFrame {
 		panel_9.add(lblBairro);
 		
 		textFieldDistrict = new JTextField();
-		textFieldDistrict.setText("Luiz Gonzaga");
 		textFieldDistrict.setColumns(30);
 		panel_9.add(textFieldDistrict);
 		
@@ -337,7 +330,7 @@ public class RegistrationScreen extends JFrame {
 		panel_10.add(lblCep);
 		
 		textFieldZIP = new JFormattedTextField(new MaskFormatter("#####-###"));
-		textFieldZIP.setText("59370-000");
+		textFieldZIP.setText("");
 		textFieldZIP.setColumns(30);
 		panel_10.add(textFieldZIP);
 		
@@ -351,8 +344,8 @@ public class RegistrationScreen extends JFrame {
 		lblEstado.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_11.add(lblEstado);
 		
-		textFieldState = new JTextField();
-		textFieldState.setText("RN");
+		textFieldState = new JFormattedTextField(new MaskFormatter("UU"));
+		textFieldState.setText("");
 		textFieldState.setColumns(30);
 		panel_11.add(textFieldState);
 		
@@ -365,7 +358,6 @@ public class RegistrationScreen extends JFrame {
 		panel_12.add(lblCidade);
 		
 		textFieldCity = new JTextField();
-		textFieldCity.setText("Acari");
 		textFieldCity.setColumns(30);
 		panel_12.add(textFieldCity);
 		

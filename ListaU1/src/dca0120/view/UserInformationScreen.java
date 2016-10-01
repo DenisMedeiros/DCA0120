@@ -4,6 +4,11 @@ package dca0120.view;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import dca0120.model.Address;
+import dca0120.model.AddressDAO;
+import dca0120.model.Person;
+
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -17,6 +22,9 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 
 public class UserInformationScreen extends JFrame {
 
@@ -26,23 +34,28 @@ public class UserInformationScreen extends JFrame {
 	private static final long serialVersionUID = 2744639044460401052L;
 	private JPanel contentPane;
 	private JTextField textFieldLogin;
-	private JTextField textFieldNome;
+	private JTextField textFieldName;
 	private JTextField textFieldEmail;
-	private JTextField textFieldDataNascimento;
-	private JTextField textFieldTelefone;
-	private JTextField textFieldCelular;
-	private JTextField textFieldRua;
-	private JTextField textFieldNumero;
-	private JTextField textFieldComplemento;
-	private JTextField textFieldBairro;
-	private JTextField textFieldCEP;
-	private JTextField textFieldEstado;
-	private JTextField textFieldCidade;
+	private JTextField textFieldBirthdate;
+	private JTextField textFieldPhoneHome;
+	private JTextField textFieldPhoneMobile;
+	private JTextField textFieldStreet;
+	private JTextField textFieldNumber;
+	private JTextField textFieldComplement;
+	private JTextField textFieldDistrict;
+	private JTextField textFieldZip;
+	private JTextField textFieldState;
+	private JTextField textFieldCity;
+	private JTextField textFieldPhoto;
 
 	/**
 	 * Create the frame.
 	 */
-	public UserInformationScreen() {
+	public UserInformationScreen(Person p) {
+		
+		AddressDAO ad = new AddressDAO();
+		Address a = ad.getAddress(p);
+		
 		setTitle("Lista U2 - Dados do Usu\u00E1rio");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
@@ -84,7 +97,7 @@ public class UserInformationScreen extends JFrame {
 		labelLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		panel2_1.add(labelLogin);
 		
-		textFieldLogin = new JTextField();
+		textFieldLogin = new JTextField(p.getLogin());
 		textFieldLogin.setEditable(false);
 		textFieldLogin.setToolTipText("");
 		textFieldLogin.setColumns(30);
@@ -98,10 +111,10 @@ public class UserInformationScreen extends JFrame {
 		labelNome.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(labelNome);
 		
-		textFieldNome = new JTextField();
-		textFieldNome.setEditable(false);
-		textFieldNome.setColumns(30);
-		panel.add(textFieldNome);
+		textFieldName = new JTextField(p.getName());
+		textFieldName.setEditable(false);
+		textFieldName.setColumns(30);
+		panel.add(textFieldName);
 		
 		JPanel panel_1 = new JPanel();
 		panel2.add(panel_1);
@@ -111,10 +124,32 @@ public class UserInformationScreen extends JFrame {
 		lblEmail.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(lblEmail);
 		
-		textFieldEmail = new JTextField();
+		textFieldEmail = new JTextField(p.getEmail());
 		textFieldEmail.setEditable(false);
 		textFieldEmail.setColumns(30);
 		panel_1.add(textFieldEmail);
+		
+		JPanel panel_3 = new JPanel();
+		panel2.add(panel_3);
+		panel_3.setLayout(new GridLayout(0, 2, 0, 0));
+		
+		JLabel lblFoto = new JLabel("Foto");
+		lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
+		panel_3.add(lblFoto);
+		
+		textFieldPhoto = new JTextField();
+		textFieldPhoto.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				PictureScreen ps = new PictureScreen(p);
+				ps.setVisible(true);	
+			}
+		});
+		
+		textFieldPhoto.setText("Cliquei aqui para ver sua foto...");
+		textFieldPhoto.setEditable(false);
+		textFieldPhoto.setColumns(30);
+		panel_3.add(textFieldPhoto);
 		
 		JPanel panel_2 = new JPanel();
 		panel2.add(panel_2);
@@ -124,10 +159,13 @@ public class UserInformationScreen extends JFrame {
 		lblDataDeNascimento.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_2.add(lblDataDeNascimento);
 		
-		textFieldDataNascimento = new JTextField();
-		textFieldDataNascimento.setEditable(false);
-		textFieldDataNascimento.setColumns(30);
-		panel_2.add(textFieldDataNascimento);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String formatted = sdf.format(p.getBirthdate().getTime());
+		
+		textFieldBirthdate = new JTextField(formatted);
+		textFieldBirthdate.setEditable(false);
+		textFieldBirthdate.setColumns(30);
+		panel_2.add(textFieldBirthdate);
 		
 		JPanel panel_4 = new JPanel();
 		panel2.add(panel_4);
@@ -137,10 +175,10 @@ public class UserInformationScreen extends JFrame {
 		lblTelefoneResidencial.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_4.add(lblTelefoneResidencial);
 		
-		textFieldTelefone = new JTextField();
-		textFieldTelefone.setEditable(false);
-		textFieldTelefone.setColumns(30);
-		panel_4.add(textFieldTelefone);
+		textFieldPhoneHome = new JTextField(p.getPhoneHome());
+		textFieldPhoneHome.setEditable(false);
+		textFieldPhoneHome.setColumns(30);
+		panel_4.add(textFieldPhoneHome);
 		
 		JPanel panel_5 = new JPanel();
 		panel2.add(panel_5);
@@ -150,10 +188,12 @@ public class UserInformationScreen extends JFrame {
 		lblTelefoneCelular.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_5.add(lblTelefoneCelular);
 		
-		textFieldCelular = new JTextField();
-		textFieldCelular.setEditable(false);
-		textFieldCelular.setColumns(30);
-		panel_5.add(textFieldCelular);
+		textFieldPhoneMobile = new JTextField(p.getPhoneMobile());
+		textFieldPhoneMobile.setEditable(false);
+		textFieldPhoneMobile.setColumns(30);
+		panel_5.add(textFieldPhoneMobile);
+		
+
 		
 		JPanel panel_6 = new JPanel();
 		panel2.add(panel_6);
@@ -163,10 +203,10 @@ public class UserInformationScreen extends JFrame {
 		lblRua.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_6.add(lblRua);
 		
-		textFieldRua = new JTextField();
-		textFieldRua.setEditable(false);
-		textFieldRua.setColumns(30);
-		panel_6.add(textFieldRua);
+		textFieldStreet = new JTextField(a.getStreet());
+		textFieldStreet.setEditable(false);
+		textFieldStreet.setColumns(30);
+		panel_6.add(textFieldStreet);
 		
 		JPanel panel_7 = new JPanel();
 		panel2.add(panel_7);
@@ -176,10 +216,10 @@ public class UserInformationScreen extends JFrame {
 		lblNumero.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_7.add(lblNumero);
 		
-		textFieldNumero = new JTextField();
-		textFieldNumero.setEditable(false);
-		textFieldNumero.setColumns(30);
-		panel_7.add(textFieldNumero);
+		textFieldNumber = new JTextField(String.valueOf(a.getNum()));
+		textFieldNumber.setEditable(false);
+		textFieldNumber.setColumns(30);
+		panel_7.add(textFieldNumber);
 		
 		JPanel panel_8 = new JPanel();
 		panel2.add(panel_8);
@@ -189,10 +229,10 @@ public class UserInformationScreen extends JFrame {
 		lblComplemento.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_8.add(lblComplemento);
 		
-		textFieldComplemento = new JTextField();
-		textFieldComplemento.setEditable(false);
-		textFieldComplemento.setColumns(30);
-		panel_8.add(textFieldComplemento);
+		textFieldComplement = new JTextField(a.getComplement());
+		textFieldComplement.setEditable(false);
+		textFieldComplement.setColumns(30);
+		panel_8.add(textFieldComplement);
 		
 		JPanel panel_9 = new JPanel();
 		panel2.add(panel_9);
@@ -202,10 +242,10 @@ public class UserInformationScreen extends JFrame {
 		lblBairro.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_9.add(lblBairro);
 		
-		textFieldBairro = new JTextField();
-		textFieldBairro.setEditable(false);
-		textFieldBairro.setColumns(30);
-		panel_9.add(textFieldBairro);
+		textFieldDistrict = new JTextField(a.getDistrict());
+		textFieldDistrict.setEditable(false);
+		textFieldDistrict.setColumns(30);
+		panel_9.add(textFieldDistrict);
 		
 		JPanel panel_10 = new JPanel();
 		panel2.add(panel_10);
@@ -215,10 +255,10 @@ public class UserInformationScreen extends JFrame {
 		lblCep.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_10.add(lblCep);
 		
-		textFieldCEP = new JTextField();
-		textFieldCEP.setEditable(false);
-		textFieldCEP.setColumns(30);
-		panel_10.add(textFieldCEP);
+		textFieldZip = new JTextField(a.getZip());
+		textFieldZip.setEditable(false);
+		textFieldZip.setColumns(30);
+		panel_10.add(textFieldZip);
 		
 		JPanel panel_11 = new JPanel();
 		panel2.add(panel_11);
@@ -228,10 +268,10 @@ public class UserInformationScreen extends JFrame {
 		lblEstado.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_11.add(lblEstado);
 		
-		textFieldEstado = new JTextField();
-		textFieldEstado.setEditable(false);
-		textFieldEstado.setColumns(30);
-		panel_11.add(textFieldEstado);
+		textFieldState = new JTextField(a.getState());
+		textFieldState.setEditable(false);
+		textFieldState.setColumns(30);
+		panel_11.add(textFieldState);
 		
 		JPanel panel_12 = new JPanel();
 		panel2.add(panel_12);
@@ -241,34 +281,31 @@ public class UserInformationScreen extends JFrame {
 		lblCidade.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_12.add(lblCidade);
 		
-		textFieldCidade = new JTextField();
-		textFieldCidade.setEditable(false);
-		textFieldCidade.setColumns(30);
-		panel_12.add(textFieldCidade);
+		textFieldCity = new JTextField(a.getCity());
+		textFieldCity.setEditable(false);
+		textFieldCity.setColumns(30);
+		panel_12.add(textFieldCity);
 		
-		JPanel panel_3 = new JPanel();
-		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
-		gbc_panel_3.insets = new Insets(0, 0, 5, 0);
-		gbc_panel_3.fill = GridBagConstraints.BOTH;
-		gbc_panel_3.gridx = 0;
-		gbc_panel_3.gridy = 2;
-		contentPane.add(panel_3, gbc_panel_3);
-		panel_3.setLayout(new GridLayout(1, 1, 0, 0));
+		JPanel panel3 = new JPanel();
+		GridBagConstraints gbc_panel3 = new GridBagConstraints();
+		gbc_panel3.insets = new Insets(0, 0, 5, 0);
+		gbc_panel3.fill = GridBagConstraints.BOTH;
+		gbc_panel3.gridx = 0;
+		gbc_panel3.gridy = 2;
+		contentPane.add(panel3, gbc_panel3);
+		panel3.setLayout(new GridLayout(1, 1, 0, 0));
 		
 		JPanel panel3_1 = new JPanel();
-		panel_3.add(panel3_1);
+		panel3.add(panel3_1);
 		
-		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.addActionListener(new ActionListener() {
+		JButton btnExit = new JButton("Sair");
+		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				dispose();
 			}
 		});
 		
-		panel3_1.add(btnCancelar);
-		
-		JButton btnCadastrar = new JButton("Cadastrar");
-		panel3_1.add(btnCadastrar);
+		panel3_1.add(btnExit);
 		
 	}
 }
