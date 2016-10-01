@@ -10,10 +10,10 @@ package dca0120.model;
 
 public class Address {
 	
-	private String rua;
+	private String street;
 	private int num;
 	private String complement;
-	private String bairro;
+	private String district;
 	private String zip;
 	private String city;
 	private String state;
@@ -24,12 +24,12 @@ public class Address {
 		
 	}
 
-	public Address(String rua, int num, String complement, String bairro, String zip, String city, String state) {
+	public Address(String street, int num, String complement, String district, String zip, String city, String state) {
 		super();
-		this.rua = rua;
+		this.street = street;
 		this.num = num;
 		this.complement = complement;
-		this.bairro = bairro;
+		this.district = district;
 		this.zip = zip;
 		this.city = city;
 		this.state = state;
@@ -41,17 +41,17 @@ public class Address {
 	public void setNum(int num) {
 		this.num = num;
 	}
-	public String getRua() {
-		return rua;
+	public String getStreet() {
+		return street;
 	}
-	public void setRua(String rua) {
-		this.rua = rua;
+	public void setStreet(String street) {
+		this.street = street;
 	}
-	public String getBairro() {
-		return bairro;
+	public String getDistrict() {
+		return district;
 	}
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
+	public void setDistrict(String district) {
+		this.district = district;
 	}
 	public String getComplement() {
 		return complement;
@@ -77,4 +77,5 @@ public class Address {
 	public void setState(String state) {
 		this.state = state;
 	}
+	
 }
