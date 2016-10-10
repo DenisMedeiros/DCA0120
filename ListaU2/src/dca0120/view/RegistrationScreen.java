@@ -117,7 +117,7 @@ public class RegistrationScreen extends JFrame {
 		
 		textFieldLogin = new JFormattedTextField();
 		textFieldLogin.setColumns(30);
-		
+		 
 		textFieldLogin.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -129,7 +129,7 @@ public class RegistrationScreen extends JFrame {
 				
 				if(!textFieldLogin.getText().isEmpty() && !matcher.matches()) {
 					textFieldLogin.setText("");
-					JOptionPane.showMessageDialog(null, "Login inv�lido!");
+					JOptionPane.showMessageDialog(null, "Login inválido!");
 				}
 			}
 		});
@@ -181,7 +181,7 @@ public class RegistrationScreen extends JFrame {
 				
 				if(!textFieldEmail.getText().isEmpty() && !matcher.matches()) {
 					textFieldEmail.setText("");
-					JOptionPane.showMessageDialog(null, "E-mail inv�lido!");
+					JOptionPane.showMessageDialog(null, "E-mail inválido!");
 				}
 			}
 		});
@@ -236,7 +236,7 @@ public class RegistrationScreen extends JFrame {
 			    sdf.setLenient(false);
 			    if(sdf.parse(textFieldBirthdate.getText(), new ParsePosition(0)) == null) {
 			    	textFieldBirthdate.setText("");
-			    	JOptionPane.showMessageDialog(null, "Data de nascimento inv�lida!");
+			    	JOptionPane.showMessageDialog(null, "Data de nascimento inválida!");
 			    }
 			}
 		});
@@ -356,7 +356,7 @@ public class RegistrationScreen extends JFrame {
 		JLabel lblCidade = new JLabel("Cidade");
 		lblCidade.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_12.add(lblCidade);
-		
+		t
 		textFieldCity = new JTextField();
 		textFieldCity.setColumns(30);
 		panel_12.add(textFieldCity);
@@ -376,6 +376,7 @@ public class RegistrationScreen extends JFrame {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+
 				dispose();
 			}
 		});
@@ -390,26 +391,38 @@ public class RegistrationScreen extends JFrame {
 				// Cria o objeto Person.
 				Person p = new Person();
 				
+				PersonDAO pd = new PersonDAO();				
+				AddressDAO ad = new AddressDAO();
+
+				
 				if(textFieldName.getText().trim().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Nome inv�lido!");
+					JOptionPane.showMessageDialog(null, "Nome inválido!");
 					return;
 				}
 				p.setName(textFieldName.getText());
 			
 				if(textFieldLogin.getText().trim().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Login inv�lido!");
+					JOptionPane.showMessageDialog(null, "Login inválido!");
+					return;
+				}
+				if(pd.getPerson(textFieldLogin.getText()) != null) {
+					JOptionPane.showMessageDialog(null, "Login já existe!");
 					return;
 				}
 				p.setLogin(textFieldLogin.getText());
 				
 				if(textFieldEmail.getText().trim().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "E-mail inv�lido!");
+					JOptionPane.showMessageDialog(null, "E-mail inválido!");
+					return;
+				}
+				if(pd.getPersonWithEmail(textFieldEmail.getText()) != null) {
+					JOptionPane.showMessageDialog(null, "E-mail já usado!");
 					return;
 				}
 				p.setEmail(textFieldEmail.getText());
 				
 				if(new String(textFieldPassword.getPassword()).trim().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Senha inv�lida!");
+					JOptionPane.showMessageDialog(null, "Senha inválida!");
 					return;
 				}
 				
@@ -421,7 +434,7 @@ public class RegistrationScreen extends JFrame {
 				p.setPassword(passwordSHA256);
 				
 				if (photo == null) {
-					JOptionPane.showMessageDialog(null, "Foto inv�lida!");
+					JOptionPane.showMessageDialog(null, "Foto inválida!");
 					return;
 				}
 				
@@ -437,9 +450,16 @@ public class RegistrationScreen extends JFrame {
 						Calendar c = Calendar.getInstance();
 						SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 						c.setTime(sdf.parse(textFieldBirthdate.getText()));
-						p.setBirthdate(c);
+						Calendar currentTime = Calendar.getInstance();
+						if(c.getTime().before(currentTime.getTime())) {
+							p.setBirthdate(c);
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Data de nascimento inválida!");
+							return;
+						}						
 					} catch (ParseException e1) {
-						JOptionPane.showMessageDialog(null, "Data de nascimento inv�lida!");
+						JOptionPane.showMessageDialog(null, "Data de nascimento inválida!");
 					}// all done
 				}
 				
@@ -469,10 +489,6 @@ public class RegistrationScreen extends JFrame {
 				a.setCity(textFieldCity.getText());
 				
 				// Insere os dados no BD
-				
-				PersonDAO pd = new PersonDAO();
-				AddressDAO ad = new AddressDAO();
-				
 				pd.inserirPessoa(p);	
 				a.setPerson(pd.getPerson(p.getLogin()));
 				
@@ -480,7 +496,7 @@ public class RegistrationScreen extends JFrame {
 				
 				ad.inserirAddress(a);
 				
-				JOptionPane.showMessageDialog(null, "Usu�rio cadastro com sucesso!");
+				JOptionPane.showMessageDialog(null, "Usuário cadastro com sucesso!");
 				dispose();
 				
 			}
