@@ -35,9 +35,9 @@ public class AddressDAO {
 	                 "Number INTEGER, " +
 	                 "Complement VARCHAR(255), " +
 	                 "District VARCHAR(255), " +
-	                 "Zip VARCHAR(255), " +
+	                 "Zip VARCHAR(20), " +
 	                 "City VARCHAR(255), " +
-	                 "State VARCHAR(255), " +
+	                 "State VARCHAR(2), " +
 	                 "PersonID INTEGER, " +
 	                 "FOREIGN KEY (PersonID) REFERENCES Persons(PersonID), " +
 	                 "PRIMARY KEY (PersonID), " +
@@ -92,16 +92,19 @@ public class AddressDAO {
 	        	return a;
 	        }
 	        
-	        res.next();
 	        
-	        a = new Address();	
-	        a.setStreet(res.getString("Street"));
-	        a.setNum(res.getInt("Number"));
-	        a.setComplement(res.getString("Complement"));
-	        a.setDistrict(res.getString("District"));
-	        a.setZip(res.getString("Zip"));
-	        a.setCity(res.getString("City"));
-	        a.setState(res.getString("State"));
+	        if(res.next()) {
+	        
+		        a = new Address();	
+		        a.setStreet(res.getString("Street"));
+		        a.setNum(res.getInt("Number"));
+		        a.setComplement(res.getString("Complement"));
+		        a.setDistrict(res.getString("District"));
+		        a.setZip(res.getString("Zip"));
+		        a.setCity(res.getString("City"));
+		        a.setState(res.getString("State"));
+	        
+	        }
        
 	        
 		} catch (SQLException e) {

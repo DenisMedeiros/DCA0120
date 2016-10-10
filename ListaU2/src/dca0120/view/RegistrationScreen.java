@@ -12,6 +12,7 @@ import dca0120.model.Address;
 import dca0120.model.AddressDAO;
 import dca0120.model.Person;
 import dca0120.model.PersonDAO;
+import dca0120.utils.JTextEditLimit;
 import dca0120.utils.Password;
 
 import java.awt.GridLayout;
@@ -116,6 +117,7 @@ public class RegistrationScreen extends JFrame {
 		panel2_1.add(labelLogin);
 		
 		textFieldLogin = new JFormattedTextField();
+		textFieldLogin.setDocument(new JTextEditLimit(20));
 		textFieldLogin.setColumns(30);
 		 
 		textFieldLogin.addFocusListener(new FocusAdapter() {
@@ -147,6 +149,7 @@ public class RegistrationScreen extends JFrame {
 		textFieldPassword = new JPasswordField();
 		panel2_2.add(textFieldPassword);
 		textFieldPassword.setColumns(30);
+		textFieldPassword.setDocument(new JTextEditLimit(20));
 		
 		JPanel panel = new JPanel();
 		panel2.add(panel);
@@ -158,6 +161,7 @@ public class RegistrationScreen extends JFrame {
 		
 		textFieldName = new JTextField();
 		textFieldName.setColumns(30);
+		textFieldName.setDocument(new JTextEditLimit(255));
 		panel.add(textFieldName);
 		
 		JPanel panel_1 = new JPanel();
@@ -169,6 +173,7 @@ public class RegistrationScreen extends JFrame {
 		panel_1.add(lblEmail);
 		
 		textFieldEmail = new JFormattedTextField();
+		textFieldEmail.setDocument(new JTextEditLimit(255));
 		textFieldEmail.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -256,8 +261,8 @@ public class RegistrationScreen extends JFrame {
 		panel_4.add(lblTelefoneResidencial);
 		
 		textFieldPhoneHome = new JFormattedTextField(new MaskFormatter("(##) #####-####"));
+		textFieldPhoneHome.setDocument(new JTextEditLimit(40));
 		textFieldPhoneHome.setColumns(30);
-		
 		
 		panel_4.add(textFieldPhoneHome);
 		
@@ -270,6 +275,7 @@ public class RegistrationScreen extends JFrame {
 		panel_5.add(lblTelefoneCelular);
 		
 		textFieldPhoneMobile = new JFormattedTextField(new MaskFormatter("(##) #####-####"));
+		textFieldPhoneMobile.setDocument(new JTextEditLimit(40));
 		textFieldPhoneMobile.setColumns(30);
 		panel_5.add(textFieldPhoneMobile);
 		
@@ -282,6 +288,7 @@ public class RegistrationScreen extends JFrame {
 		panel_6.add(lblRua);
 		
 		JTextField textFieldStreet = new JTextField();
+		textFieldStreet.setDocument(new JTextEditLimit(40));
 		textFieldStreet.setColumns(30);
 		panel_6.add(textFieldStreet);
 		
@@ -294,6 +301,7 @@ public class RegistrationScreen extends JFrame {
 		panel_7.add(lblNumero);
 		
 		textFieldNumber = new JFormattedTextField(new NumberFormatter());
+		textFieldNumber.setDocument(new JTextEditLimit(20));
 		textFieldNumber.setColumns(30);
 		panel_7.add(textFieldNumber);
 		
@@ -306,6 +314,7 @@ public class RegistrationScreen extends JFrame {
 		panel_8.add(lblComplemento);
 		
 		textFieldComplement = new JTextField();
+		textFieldComplement.setDocument(new JTextEditLimit(255));
 		textFieldComplement.setColumns(30);
 		panel_8.add(textFieldComplement);
 		
@@ -318,6 +327,7 @@ public class RegistrationScreen extends JFrame {
 		panel_9.add(lblBairro);
 		
 		textFieldDistrict = new JTextField();
+		textFieldDistrict.setDocument(new JTextEditLimit(255));
 		textFieldDistrict.setColumns(30);
 		panel_9.add(textFieldDistrict);
 		
@@ -331,6 +341,7 @@ public class RegistrationScreen extends JFrame {
 		
 		textFieldZIP = new JFormattedTextField(new MaskFormatter("#####-###"));
 		textFieldZIP.setText("");
+		textFieldDistrict.setDocument(new JTextEditLimit(20));
 		textFieldZIP.setColumns(30);
 		panel_10.add(textFieldZIP);
 		
@@ -356,8 +367,8 @@ public class RegistrationScreen extends JFrame {
 		JLabel lblCidade = new JLabel("Cidade");
 		lblCidade.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_12.add(lblCidade);
-		t
 		textFieldCity = new JTextField();
+		textFieldCity.setDocument(new JTextEditLimit(255));
 		textFieldCity.setColumns(30);
 		panel_12.add(textFieldCity);
 		

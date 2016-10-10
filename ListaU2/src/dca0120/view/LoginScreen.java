@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.JPasswordField;
@@ -26,7 +27,8 @@ import java.awt.event.MouseEvent;
 import java.text.ParseException;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JFormattedTextField;
+
+import dca0120.utils.JTextEditLimit;
 
 public class LoginScreen extends JFrame {
 
@@ -72,6 +74,7 @@ public class LoginScreen extends JFrame {
 				
 		textFieldLogin = new JFormattedTextField();
 		textFieldLogin.setColumns(20);
+		textFieldLogin.setDocument(new JTextEditLimit(20));
 		
 		panel2_1.add(textFieldLogin);
 		

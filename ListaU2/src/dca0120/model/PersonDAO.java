@@ -47,15 +47,16 @@ public class PersonDAO {
 	        String sql = "CREATE TABLE IF NOT EXISTS Persons (" +
 	                 "PersonID INTEGER AUTO_INCREMENT, " +
 	                 "Name VARCHAR(255) NOT NULL, " +
-	                 "Login VARCHAR(255) NOT NULL UNIQUE, " +
-	                 "Password VARCHAR(255) NOT NULL, " +
+	                 "Login VARCHAR(20) NOT NULL UNIQUE, " +
+	                 "Password VARCHAR(20) NOT NULL, " +
 	                 "Email VARCHAR(255) NOT NULL UNIQUE, " +
 	                 "Birthday DATE, " +
 	                 "Photo BLOB NOT NULL, " +
-	                 "PhoneHome VARCHAR(255), " +
-	                 "PhoneMobile VARCHAR(255), " +
+	                 "PhoneHome VARCHAR(40), " +
+	                 "PhoneMobile VARCHAR(40), " +
 	                 "PRIMARY KEY (PersonID), " +
 	                 ")";
+	        
 	        st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -58,13 +58,13 @@ public class UserInformationScreen extends JFrame {
 		
 		setTitle("Lista U2 - Dados do Usu\u00E1rio");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 800, 600);
+		setBounds(100, 100, 800, 634);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{466, 0};
-		gbl_contentPane.rowHeights = new int[] {40, 400, 40, 30};
+		gbl_contentPane.columnWidths = new int[] {466, 0};
+		gbl_contentPane.rowHeights = new int[] {40, 500, 40, 30};
 		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new 
 				double[]{0.0, 0.0, 0.0, 1.0};
