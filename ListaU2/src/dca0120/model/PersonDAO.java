@@ -18,7 +18,7 @@ import java.util.Calendar;
  * @author denis
  * @author ney
  * 
- * Classe responsável por interconectar a classe Person com a tabela Person.
+ * Classe responsÃ¡vel por interconectar a classe Person com a tabela Person.
  *
  */
 public class PersonDAO {
@@ -26,7 +26,7 @@ public class PersonDAO {
 	private Connection conexao;
 	
 	 /**
-	  * Construtor padrão. Ele abre a conexão com o banco de dados.
+	  * Construtor padrÃ£o. Ele abre a conexÃ£o com o banco de dados.
 	  */
 	public PersonDAO() {
 		try {
@@ -108,8 +108,8 @@ public class PersonDAO {
 	 * 	
 	 * Retorna a pessoa que possui o login especificado.
 	 * 
-	 * @param login Login do usu�rio.
-	 * @return p Pessoa com o login especificado (ou null, caso n�o exista).
+	 * @param login Login do usuário.
+	 * @return p Pessoa com o login especificado (ou null, caso não exista).
 	 */
 	public Person getPerson(String login) {
 		Person p = null;
@@ -195,6 +195,56 @@ public class PersonDAO {
 		return lista;
 	}
 	
+	/**
+	 * 	
+	 * Retorna a pessoa que possui o email especificado.
+	 * 
+	 * @param email Email do usu⳩o.
+	 * @return p Pessoa com o email especificado (ou null, caso n䯠exista).
+	 */
+	public Person getPersonWithEmail(String email) {
+		Person p = null;
+		try {
+			String sql = "SELECT * FROM Persons WHERE Email=?;";
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			
+			pst.setString(1, email);
+	        ResultSet res = pst.executeQuery();
+	       
+	        if (res.wasNull()) {
+	        	return p;
+	        }
+	        
+	        if(res.next()) {
+	        
+		        p = new Person();	
+	        	p.setId(res.getInt("PersonID"));
+	        	p.setName(res.getString("Name"));
+	        	p.setLogin(res.getString("Login"));
+	        	p.setPassword(res.getString("Password"));
+	        	p.setEmail(res.getString("Email"));
+	        	
+	        	Calendar c = Calendar.getInstance();
+	        	c.setTime(res.getDate("Birthday"));
+	        	
+	        	p.setBirthdate(c);
+	        	
+	        	Blob blob = res.getBlob("Photo");
+	        	byte[] buffer = blob.getBytes(1, (int)blob.length());
+	        	
+	        	p.setPhoto(buffer);
+	        	p.setPhoneHome(res.getString("PhoneHome"));
+	        	p.setPhoneMobile(res.getString("PhoneMobile"));
+        	
+	        }
+	        
+	        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return p;
+	}
 
 	
 
