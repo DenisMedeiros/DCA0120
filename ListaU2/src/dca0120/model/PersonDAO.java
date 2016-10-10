@@ -124,26 +124,28 @@ public class PersonDAO {
 	        	return p;
 	        }
 	        
-	        res.next();
+	        if(res.next()) {
 	        
-	        p = new Person();	
-        	p.setId(res.getInt("PersonID"));
-        	p.setName(res.getString("Name"));
-        	p.setLogin(res.getString("Login"));
-        	p.setPassword(res.getString("Password"));
-        	p.setEmail(res.getString("Email"));
+		        p = new Person();	
+	        	p.setId(res.getInt("PersonID"));
+	        	p.setName(res.getString("Name"));
+	        	p.setLogin(res.getString("Login"));
+	        	p.setPassword(res.getString("Password"));
+	        	p.setEmail(res.getString("Email"));
+	        	
+	        	Calendar c = Calendar.getInstance();
+	        	c.setTime(res.getDate("Birthday"));
+	        	
+	        	p.setBirthdate(c);
+	        	
+	        	Blob blob = res.getBlob("Photo");
+	        	byte[] buffer = blob.getBytes(1, (int)blob.length());
+	        	
+	        	p.setPhoto(buffer);
+	        	p.setPhoneHome(res.getString("PhoneHome"));
+	        	p.setPhoneMobile(res.getString("PhoneMobile"));
         	
-        	Calendar c = Calendar.getInstance();
-        	c.setTime(res.getDate("Birthday"));
-        	
-        	p.setBirthdate(c);
-        	
-        	Blob blob = res.getBlob("Photo");
-        	byte[] buffer = blob.getBytes(1, (int)blob.length());
-        	
-        	p.setPhoto(buffer);
-        	p.setPhoneHome(res.getString("PhoneHome"));
-        	p.setPhoneMobile(res.getString("PhoneMobile"));
+	        }
 	        
 	        
 		} catch (SQLException e) {

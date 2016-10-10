@@ -9,6 +9,10 @@ import javax.swing.border.EmptyBorder;
 
 public class UserInformationScreen extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1388702774096811185L;
 	private JPanel contentPane;
 
 	/**
