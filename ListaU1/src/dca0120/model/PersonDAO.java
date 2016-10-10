@@ -1,17 +1,12 @@
 package dca0120.model;
 
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-
-import javax.sql.rowset.serial.SerialBlob;
-
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  * 
@@ -41,27 +36,21 @@ public class PersonDAO {
 	/**
 	 * Cria a tabela Person no banco de dados.
 	 */
-	public void criarTabelaPerson() {
+	public void criarTabela() {
 		try {
 			Statement st = conexao.createStatement();
 	        String sql = "CREATE TABLE IF NOT EXISTS Persons (" +
-	                 "PersonID INTEGER AUTO_INCREMENT, " +
-	                 "Name VARCHAR(255) NOT NULL, " +
-	                 "Login VARCHAR(255) NOT NULL UNIQUE, " +
-	                 "Password VARCHAR(255) NOT NULL, " +
-	                 "Email VARCHAR(255) NOT NULL UNIQUE, " +
-	                 "Birthday DATE, " +
-	                 "Photo BLOB NOT NULL, " +
-	                 "PhoneHome VARCHAR(255), " +
-	                 "PhoneMobile VARCHAR(255), " +
-	                 "PRIMARY KEY (PersonID), " +
+	                 " PersonID INTEGER, " +
+	                 " FirstName VARCHAR(255), " +
+	                 " LastName VARCHAR(255), " +
+	                 " Address VARCHAR(255), " +
+	                 " City VARCHAR(255), " +
 	                 ")";
 	        st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
 	
 	
 	/**
@@ -71,88 +60,20 @@ public class PersonDAO {
 	 */
 	public void inserirPessoa(Person p) {
 		try {
-			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Persons(Name, Login, "
-					+ "Password, Email, Birthday, Photo, PhoneHome, PhoneMobile) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Persons(PersonID, LastName, FirstName, "
+					+ "Address, City) VALUES (?, ?, ?, ?, ?)");
 			
-	        pst.setString(1, p.getName());
-	        pst.setString(2, p.getLogin());
-	        pst.setString(3, p.getPassword());
-	        pst.setString(4, p.getEmail());
-	        
-	        Calendar calendar = p.getBirthdate();
-	        java.sql.Date javaSqlDate;
-	        
-	        if(calendar != null) {
-		        calendar.set(Calendar.HOUR_OF_DAY, 0);
-		        calendar.set(Calendar.MINUTE, 0);
-		        calendar.set(Calendar.SECOND, 0);
-		        calendar.set(Calendar.MILLISECOND, 0);
-		        javaSqlDate = new java.sql.Date(calendar.getTime().getTime());  
-	        } else {
-	        	javaSqlDate = new java.sql.Date(0);
-	        }
-	        
-	        pst.setDate(5, javaSqlDate);
-	        
-	        pst.setBlob(6, new SerialBlob(p.getPhoto()));
-	        pst.setString(7, p.getPhoneMobile());
-	        pst.setString(8, p.getPhoneHome());
+	        pst.setInt(1, p.getId());
+	        pst.setString(2, p.getLastName());
+	        pst.setString(3, p.getFirstName());
+	        pst.setString(4, p.getAddress());
+	        pst.setString(5, p.getCity());
 	        pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
-	}
-	
-	
-	/**
-	 * 	
-	 * Retorna a pessoa que possui o login especificado.
-	 * 
-	 * @param login Login do usuário.
-	 * @return p Pessoa com o login especificado (ou null, caso não exista).
-	 */
-	public Person getPerson(String login) {
-		Person p = null;
-		try {
-			String sql = "SELECT * FROM Persons WHERE Login=?;";
-			PreparedStatement pst = conexao.prepareStatement(sql);
-			
-			pst.setString(1, login);
-	        ResultSet res = pst.executeQuery();
-	       
-	        if (res.wasNull()) {
-	        	return p;
-	        }
-	        
-	        res.next();
-	        
-	        p = new Person();	
-        	p.setId(res.getInt("PersonID"));
-        	p.setName(res.getString("Name"));
-        	p.setLogin(res.getString("Login"));
-        	p.setPassword(res.getString("Password"));
-        	p.setEmail(res.getString("Email"));
-        	
-        	Calendar c = Calendar.getInstance();
-        	c.setTime(res.getDate("Birthday"));
-        	
-        	p.setBirthdate(c);
-        	
-        	Blob blob = res.getBlob("Photo");
-        	byte[] buffer = blob.getBytes(1, (int)blob.length());
-        	
-        	p.setPhoto(buffer);
-        	p.setPhoneHome(res.getString("PhoneHome"));
-        	p.setPhoneMobile(res.getString("PhoneMobile"));
-	        
-	        
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
-		
-		return p;
 	}
-		
+	
 	/**
 	 * 	
 	 * Retorna a lista de todas as pessoas cadastradas
@@ -169,21 +90,10 @@ public class PersonDAO {
 	        while (res.next()) {
 	        	Person p = new Person();
 	        	p.setId(res.getInt("PersonID"));
-	        	p.setName(res.getString("Name"));
-	        	p.setLogin(res.getString("Login"));
-	        	p.setPassword(res.getString("Password"));
-	        	p.setEmail(res.getString("Email"));
-	        	
-	        	Calendar c = Calendar.getInstance();
-	        	c.setTime(res.getDate("Birthday"));
-	        	p.setBirthdate(c);
-	        	
-	        	Blob blob = res.getBlob("Photo");
-	        	byte[] buffer = blob.getBytes(1, (int)blob.length());
-	        	p.setPhoto(buffer);
-	        	
-	        	p.setPhoneHome(res.getString("PhoneHome"));
-	        	p.setPhoneMobile(res.getString("PhoneMobile"));
+	        	p.setLastName(res.getString("LastName"));
+	        	p.setFirstName(res.getString("FirstName"));
+	        	p.setAddress(res.getString("Address"));
+	        	p.setCity(res.getString("City"));
 	        	lista.add(p);
 	        }
 	        
@@ -193,9 +103,50 @@ public class PersonDAO {
 		return lista;
 	}
 	
-
+	/**
+	 * Returna a lista de todos os sobrenomes das pessoas cadastradas no sistema.
+	 * 
+	 * @return lista Lista de sobrenomes de todas as pessoas cadastradas.
+	 */
+	public List<String> getLastNames() {
+		List<String> lista = new ArrayList<String>();
+		try {
+			Statement st = conexao.createStatement();
+	        String sql = "SELECT LastName FROM Persons";
+	        ResultSet res = st.executeQuery(sql);
+	       
+	        while (res.next()) {
+	        	String lastName = res.getString("LastName");
+	        	lista.add(lastName);
+	        }
+	        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
 	
+	/**
+	 * Returna a lista de todos os nomes das pessoas cadastradas no sistema.
+	 * 
+	 * @return lista Lista de nomes de todas as pessoas cadastradas.
+	 */
+	public List<String> getFirstNames() {
+		List<String> lista = new ArrayList<String>();
+		try {
+			Statement st = conexao.createStatement();
+	        String sql = "SELECT FirstName FROM Persons";
+	        ResultSet res = st.executeQuery(sql);
+	       
+	        while (res.next()) {
+	        	String firstName = res.getString("FirstName");
+	        	lista.add(firstName);
+	        }
+	        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		return lista;
+	}
 
 }
-
-
