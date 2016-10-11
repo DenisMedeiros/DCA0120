@@ -146,7 +146,7 @@ public class UserInformationScreen extends JFrame {
 			}
 		});
 		
-		textFieldPhoto.setText("Cliquei aqui para ver sua foto...");
+		textFieldPhoto.setText("Clique aqui para ver sua foto...");
 		textFieldPhoto.setEditable(false);
 		textFieldPhoto.setColumns(30);
 		panel_3.add(textFieldPhoto);
