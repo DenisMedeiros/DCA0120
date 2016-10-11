@@ -18,7 +18,7 @@ import java.util.Calendar;
  * @author denis
  * @author ney
  * 
- * Classe responsÃ¡vel por interconectar a classe Person com a tabela Person.
+ * Classe responsável por interconectar a classe Person com a tabela Person.
  *
  */
 public class PersonDAO {
@@ -26,7 +26,7 @@ public class PersonDAO {
 	private Connection conexao;
 	
 	 /**
-	  * Construtor padrÃ£o. Ele abre a conexÃ£o com o banco de dados.
+	  * Construtor padrão. Ele abre a conexão com o banco de dados.
 	  */
 	public PersonDAO() {
 		try {
@@ -48,7 +48,7 @@ public class PersonDAO {
 	                 "PersonID INTEGER AUTO_INCREMENT, " +
 	                 "Name VARCHAR(255) NOT NULL, " +
 	                 "Login VARCHAR(20) NOT NULL UNIQUE, " +
-	                 "Password VARCHAR(20) NOT NULL, " +
+	                 "Password VARCHAR(64) NOT NULL, " +
 	                 "Email VARCHAR(255) NOT NULL UNIQUE, " +
 	                 "Birthday DATE, " +
 	                 "Photo BLOB NOT NULL, " +
@@ -200,8 +200,8 @@ public class PersonDAO {
 	 * 	
 	 * Retorna a pessoa que possui o email especificado.
 	 * 
-	 * @param email Email do usu⳩o.
-	 * @return p Pessoa com o email especificado (ou null, caso n䯠exista).
+	 * @param email Email do usuário.
+	 * @return p Pessoa com o email especificado (ou null, caso não exista).
 	 */
 	public Person getPersonWithEmail(String email) {
 		Person p = null;
