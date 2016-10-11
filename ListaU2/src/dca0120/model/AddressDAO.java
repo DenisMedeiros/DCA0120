@@ -49,7 +49,7 @@ public class AddressDAO {
 	}
 	
 	/**
-	 * Insere um endereço no banco de dados.
+	 * Insere um endereÃ§o no banco de dados.
 	 * 
 	 * @param ad Objeto do tipo Address a ser inserido no banco de dados.
 	 */
@@ -74,10 +74,10 @@ public class AddressDAO {
 	
 	/**
 	 * 	
-	 * Retorna o endereço da pessoa especificada.
+	 * Retorna o endereÃ§o da pessoa especificada.
 	 * 
-	 * @param p Objeto da pessoa deste endereço.
-	 * @return a Endereço da pessoa.
+	 * @param p Objeto da pessoa deste endereÃ§o.
+	 * @return a EndereÃ§o da pessoa.
 	 */
 	public Address getAddress(Person p) {
 		Address a = null;
