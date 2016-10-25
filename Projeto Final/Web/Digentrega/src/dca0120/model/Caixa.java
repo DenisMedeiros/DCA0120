@@ -7,9 +7,9 @@ public class Caixa extends Funcionario {
 	
 	private boolean  administrador;
 
-	public Caixa(int id, String cpf, String nome, Calendar dataNascimento, List<String> telefones, 
+	public Caixa(int id, String cpf, String senha, String nome, Calendar dataNascimento, List<String> telefones, 
 			boolean administrador) {
-		super(id, cpf, nome, dataNascimento, telefones);
+		super(id, cpf, senha, nome, dataNascimento, telefones);
 		this.administrador = administrador;
 	}
 

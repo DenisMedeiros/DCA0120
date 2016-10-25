@@ -9,9 +9,9 @@ public class Entregador extends Funcionario {
 	private String placaVeiculo;
 	
 	
-	public Entregador(int id, String cpf, String nome, Calendar dataNascimento, List<String> telefones,String cnh, 
+	public Entregador(int id, String cpf, String senha, String nome, Calendar dataNascimento, List<String> telefones,String cnh, 
 			String placaVeiculo) {
-		super(id, cpf, nome, dataNascimento, telefones);
+		super(id, cpf, senha, nome, dataNascimento, telefones);
 		this.cnh = cnh;
 		this.placaVeiculo = placaVeiculo;
 	}
