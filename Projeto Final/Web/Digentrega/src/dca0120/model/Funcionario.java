@@ -57,4 +57,8 @@ public abstract class Funcionario {
 	public void setTelefones(List<String> telefones) {
 		this.telefones = telefones;
 	}
+	
+	public String getSenha() {
+		return this.senha;
+	}
 }

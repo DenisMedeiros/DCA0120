@@ -13,12 +13,12 @@ import dca0120.model.Caixa;
  * @author ney
  * @author denis
  *
- * Classe responsável por interconectar a classe Funcionario com a tabela Funcionarios.
+ * Classe responsï¿½vel por interconectar a classe Funcionario com a tabela Funcionarios.
  */
 public class Caixas extends Funcionarios{
 
 	/**
-	 * Construtor padrão da classe Caixas que abre conexão com o banco de dados
+	 * Construtor padrï¿½o da classe Caixas que abre conexï¿½o com o banco de dados
 	 */
 	public Caixas() {
 		super();
@@ -67,7 +67,7 @@ public class Caixas extends Funcionarios{
 	 * Retorna objeto do tipo Caixa que possui o cpf especificado.
 	 * 
 	 * @param cpf CPF do Caixa a ser procurado no banco de dados
-	 * @return c Objeto do tipo Caixa com o cpf especificado (ou null, caso não exista).
+	 * @return c Objeto do tipo Caixa com o cpf especificado (ou null, caso nï¿½o exista).
 	 */
 	public Caixa getCaixaWithCPF(String cpf) {
 		Caixa c = null;
@@ -104,7 +104,7 @@ public class Caixas extends Funcionarios{
 	 * Retorna objeto do tipo Caixa que possui o id especificado.
 	 * 
 	 * @param id ID do Caixa a ser procurado no banco de dados
-	 * @return c Objeto do tipo Caixa com o id especificado (ou null, caso não exista).
+	 * @return c Objeto do tipo Caixa com o id especificado (ou null, caso nï¿½o exista).
 	 */
 	public Caixa getCaixaWithID(int id) {
 		Caixa c = null;
