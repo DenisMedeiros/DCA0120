@@ -16,9 +16,14 @@ import java.util.Calendar;
  */
 public abstract class Funcionarios {
 	
-	protected Connection conexao;
+	private Connection conexao;
 	
-	
+	/**
+	 * @return conexao 
+	 */
+	Connection getConexao() {
+		return conexao;
+	}
 	/**
 	 * Construtor padrão da classe Funcionarios que abre conexão com o banco de dados
 	 */
@@ -68,7 +73,7 @@ public abstract class Funcionarios {
 	public void inserirFuncionario(String nome, String cpf, String senha, Calendar dataNascimento, int AdmID) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Funcionarios(Nome, CPF, "
-					+ "Senha, DataNascimento, AdministradorID) VALUES (?, ?, ?, ?, ?)");
+					+ "Senha, DataNascimento, AdministradorID) VALUES (?, ?, ?, ?, ?);");
 			
 	        pst.setString(1, nome);
 	        pst.setString(2, cpf);

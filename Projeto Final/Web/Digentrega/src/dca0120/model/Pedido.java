@@ -11,7 +11,7 @@ public class Pedido {
 	    ABERTO(1, "Aberto"),
 	    EM_PREPARO(2, "Em preparo"),
 	    AGUARDANDO_ENTREGADOR(3, "Aguardando um entregador"),
-	    EM_TRÂNSITO(4, "Saiu para entrega"),
+	    EM_TRANSITO(4, "Saiu para entrega"),
 	    ENTREGUE(5, "Entregue"),
 	    CANCELADO(6, "Cancelado");
 

@@ -19,7 +19,7 @@ public abstract class Funcionario {
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.telefones = telefones;
-		this.senha = senha;
+		this.setSenha(senha);
 	}
 	
 	public int getId() {
@@ -56,5 +56,13 @@ public abstract class Funcionario {
 	
 	public void setTelefones(List<String> telefones) {
 		this.telefones = telefones;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 }

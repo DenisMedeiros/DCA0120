@@ -13,12 +13,12 @@ import dca0120.model.Caixa;
  * @author ney
  * @author denis
  *
- * Classe responsável por interconectar a classe Funcionario com a tabela Funcionarios.
+ * Classe responsável por interconectar a classe Caixa com a tabela Caixas.
  */
 public class Caixas extends Funcionarios{
 
 	/**
-	 * Construtor padrão da classe Caixas que abre conexão com o banco de dados
+	 * Construtor padrão da classe Caixas que abre conexão com o banco de dados via classe mãe
 	 */
 	public Caixas() {
 		super();
@@ -29,13 +29,13 @@ public class Caixas extends Funcionarios{
 	 */
 	public void criarTabelaCaixas () {
 		try {
-			Statement st = conexao.createStatement();
+			Statement st = this.getConexao().createStatement();
 	        String sql = "CREATE TABLE IF NOT EXISTS Caixas (" +
 	                 "FuncionarioID INTEGER NOT NULL, " +
 	                 "EAdminstrador BOOLEAN DEFAULT false, " +
 	                 "PRIMARY KEY (FuncionarioID), " +
 	                 "FOREIGN KEY (FuncionarioID ) REFERENCES Funcionarios(ID), " +
-	                 ")";
+	                 ");";
 	        st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -46,13 +46,14 @@ public class Caixas extends Funcionarios{
 	 * Insere um Caixa no banco de dados.
 	 * 
 	 * @param c Objeto do tipo Caixa a ser inserido no banco de dados
-	 * @param admID Atributo do tipo int da classe abstrata Funcionario a ser inserido no banco de dados
+	 * @param admID ID do Administrador, tipo int da classe herdada Funcionarios, que adiciona o Caixa 
+	 * no banco de dados
 	 */
-	public void inserirFuncionario(Caixa c, int admID) {
+	public void inserirCaixa(Caixa c, int admID) {
 		try {
 			this.inserirFuncionario(c.getNome(), c.getCpf(), c.getSenha(), c.getDataNascimento(), admID);
-			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Caixas(FuncionarioID, "
-					+ "EAdministrador) VALUES (?, ?)");
+			PreparedStatement pst = this.getConexao().prepareStatement("INSERT INTO Caixas(FuncionarioID, "
+					+ "EAdministrador) VALUES (?, ?);");
 			
 	        pst.setInt(1, this.getID(c.getCpf()));
 	        pst.setBoolean(2, c.isAdministrador());
@@ -76,7 +77,7 @@ public class Caixas extends Funcionarios{
 			String sql = "SELECT * FROM Caixas NATURAL JOIN Funcionarios " +
 					 "ON Funcionarios.ID=Caixas.FuncionarioID " +
 					 "WHERE CPF=?;";
-			PreparedStatement pst = conexao.prepareStatement(sql);
+			PreparedStatement pst = this.getConexao().prepareStatement(sql);
 			
 			pst.setString(1, cpf);
 			ResultSet res = pst.executeQuery();
@@ -88,9 +89,11 @@ public class Caixas extends Funcionarios{
 			if(res.next()) {
 				Calendar dataN = Calendar.getInstance();
 				dataN.setTime(res.getDate("DataNascimento"));
-				List<String> telefones = null;// a definir acesso a Telefones
 				
-				c = new Caixa(res.getInt("Caixas.FuncionarioID"), cpf, res.getString("Senha"), res.getString("Nome"),
+				Telefones t = new Telefones();
+				List<String> telefones = t.getTelefones(res.getInt("FuncionarioID"));
+				
+				c = new Caixa(res.getInt("FuncionarioID"), cpf, res.getString("Senha"), res.getString("Nome"),
 						dataN, telefones, res.getBoolean("EAdministrador"));
 			}
 		} catch (SQLException e) {
@@ -112,8 +115,8 @@ public class Caixas extends Funcionarios{
 		try {
 			String sql = "SELECT * FROM Caixas NATURAL JOIN Funcionarios " +
 						 "ON Funcionarios.ID=Caixas.FuncionarioID " +
-						 "WHERE Funcionarios.ID=?;";
-			PreparedStatement pst = conexao.prepareStatement(sql);
+						 "WHERE Caixas.FuncionarioID=?;";
+			PreparedStatement pst = this.getConexao().prepareStatement(sql);
 			
 			pst.setInt(1, id);
 			ResultSet res = pst.executeQuery();
@@ -125,7 +128,9 @@ public class Caixas extends Funcionarios{
 			if(res.next()) {
 				Calendar dataNasc = Calendar.getInstance();
 				dataNasc.setTime(res.getDate("DataNascimento"));
-				List<String> telefones = null;// a definir acesso a Telefones
+				
+				Telefones t = new Telefones();
+				List<String> telefones = t.getTelefones(id);
 				
 				c = new Caixa(id, res.getString("CPF"), res.getString("Senha"), res.getString("Nome"),
 						dataNasc, telefones, res.getBoolean("EAdministrador"));
@@ -145,7 +150,7 @@ public class Caixas extends Funcionarios{
 	public List<Caixa> getTodosCaixas() {
 		List<Caixa> lista = new ArrayList<Caixa>();
 		try {
-			Statement st = conexao.createStatement();
+			Statement st = this.getConexao().createStatement();
 			String sql = "SELECT * FROM Caixas " + 
 						"NATURAL JOIN Funcionarios " +
 						"ON Funcionarios.ID=Caixas.FuncionarioID;";
@@ -154,7 +159,9 @@ public class Caixas extends Funcionarios{
 	        while (res.next()) {
 	        	Calendar dataNasc = Calendar.getInstance();
 	        	dataNasc.setTime(res.getDate("DataNascimento"));
-	        	List<String> telefones = null; //a ser definido Telefones
+	        	
+	        	Telefones t = new Telefones();
+	        	List<String> telefones = t.getTelefones(res.getInt("FuncionarioID"));
 	        	
 	        	Caixa c = new Caixa(res.getInt("FuncionarioID"), res.getString("CPF"), res.getString("Senha"),
 	        			res.getString("Nome"), dataNasc, telefones, res.getBoolean("EAdministrador"));
