@@ -79,7 +79,7 @@ public class Entregadores extends Funcionarios {
 		Entregador ent = null;
 		
 		try {
-			String sql = "SELECT * FROM Entregadores NATURAL JOIN Funcionarios " +
+			String sql = "SELECT * FROM Entregadores INNER JOIN Funcionarios " +
 						 "ON Funcionarios.ID=Entregadores.FuncionarioID " +
 						 "WHERE Funcionarios.ID=?;";
 			PreparedStatement pst = getConexao().prepareStatement(sql);
@@ -118,7 +118,7 @@ public class Entregadores extends Funcionarios {
 		Entregador ent = null;
 		
 		try {
-			String sql = "SELECT * FROM Entregadores NATURAL JOIN Funcionarios " +
+			String sql = "SELECT * FROM Entregadores INNER JOIN Funcionarios " +
 						 "ON Funcionarios.ID=Entregadores.FuncionarioID " +
 						 "WHERE CPF=?;";
 			PreparedStatement pst = this.getConexao().prepareStatement(sql);
@@ -157,7 +157,7 @@ public class Entregadores extends Funcionarios {
 		try {
 			Statement st = this.getConexao().createStatement();
 			String sql = "SELECT * FROM Entregadores " + 
-						"NATURAL JOIN Funcionarios " +
+						"INNER JOIN Funcionarios " +
 						"ON Funcionarios.ID=Entregadores.FuncionarioID;";
 	        ResultSet res = st.executeQuery(sql);
 	       

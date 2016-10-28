@@ -19,7 +19,8 @@ public abstract class Funcionarios {
 	private Connection conexao;
 	
 	/**
-	 * @return conexao 
+	 * Método para acessar atributo conexão do tipo Connection que gera a conexão com o banco de dados
+	 * @return conexao tipo Connection que gera a conexão com o banco de dados
 	 */
 	Connection getConexao() {
 		return conexao;

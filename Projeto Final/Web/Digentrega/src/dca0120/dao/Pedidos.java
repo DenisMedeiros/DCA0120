@@ -63,7 +63,7 @@ public class Pedidos {
 	 * @param p
 	 * @param entregadorID
 	 */
-	public void inserirPedido(Pedido p, int entregadorID) {
+	public void inserirPedido(Pedido p) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Pedidos(VolumeTotal, PesoTotal, ValorTotal"
 					+ "Status, Descricao, EntregadorID, DataHoraEntrega) VALUES ();");
@@ -73,14 +73,12 @@ public class Pedidos {
 	        pst.setFloat(3, p.getValorTotal());
 	        pst.setInt(4, p.getStatus().getCodigo());
 	        pst.setString(5, p.getDescricao());
-	        pst.setInt(6, entregadorID);
+	        pst.setInt(6, p.getEntregador().getId());
 	        	        	        
 	        Calendar calendar = p.getDataHoraEntrega();
 	        java.sql.Timestamp javaSqlTimestamp = null;
+		    javaSqlTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());  
 	        
-	        if(calendar != null) {
-		        javaSqlTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());  
-	        }
 	        pst.setTimestamp(7, javaSqlTimestamp);
 	        
 	        pst.executeUpdate();
@@ -113,6 +111,20 @@ public class Pedidos {
 	
 	/**
 	 * @param id
+	 */
+	public void removerPedido(int id) {
+		try {       	        
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Pedidos WHERE ID=?;");
+			
+	        pst.setInt(1, id);
+	        
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * @param id
 	 * @param status
 	 */
 	public void alterarStatus(int id, Status status) {
@@ -128,6 +140,10 @@ public class Pedidos {
 		}
 	}
 	
+	/**
+	 * @param id
+	 * @return
+	 */
 	public Pedido getPedidoWithID(int id) {
 		Pedido p = null;
 		
@@ -169,8 +185,10 @@ public class Pedidos {
 				ent = ents.getEntregadorWithID(res.getInt("EntregadorID"));
 				Calendar dataHoraEntrega = Calendar.getInstance(), dataHoraAbertura;
 				dataHoraEntrega.setTimeInMillis(res.getTimestamp("DataHoraEntrega").getTime());
-				dataHoraAbertura = null;//a definir acesso
-				Endereco enderecoEntrega = null;//a definir acesso
+				CaixasGerenciamPedidos cgp = new CaixasGerenciamPedidos(); 
+				dataHoraAbertura = cgp.getDataHoraAbertura(id);
+				EnderecosEntrega endereco = new EnderecosEntrega();
+				Endereco enderecoEntrega = endereco.getEnderecoEntrega(id);
 				p = new Pedido(id, status, res.getString("Descricao"), ent, dataHoraAbertura,
 						dataHoraEntrega, enderecoEntrega);
 			}
@@ -181,6 +199,9 @@ public class Pedidos {
 		return p;
 	}
 	
+	/**
+	 * @return
+	 */
 	public List<Pedido> getPedidos() {
 		List<Pedido> lista = new ArrayList<Pedido>();
 		
@@ -220,8 +241,10 @@ public class Pedidos {
 				ent = ents.getEntregadorWithID(res.getInt("EntregadorID"));
 				Calendar dataHoraEntrega = Calendar.getInstance(), dataHoraAbertura;
 				dataHoraEntrega.setTimeInMillis(res.getTimestamp("DataHoraEntrega").getTime());
-				dataHoraAbertura = null;//a definir acesso
-				Endereco enderecoEntrega = null;//a definir acesso
+				CaixasGerenciamPedidos cgp = new CaixasGerenciamPedidos(); 
+				dataHoraAbertura = cgp.getDataHoraAbertura(res.getInt("ID"));
+				EnderecosEntrega endereco = new EnderecosEntrega();
+				Endereco enderecoEntrega = endereco.getEnderecoEntrega(res.getInt("ID"));
 				Pedido p = new Pedido(res.getInt("ID"), status, res.getString("Descricao"), ent, dataHoraAbertura,
 						dataHoraEntrega, enderecoEntrega);
 				lista.add(p);

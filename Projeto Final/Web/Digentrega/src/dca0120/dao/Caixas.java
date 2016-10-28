@@ -74,7 +74,7 @@ public class Caixas extends Funcionarios{
 		Caixa c = null;
 		
 		try {
-			String sql = "SELECT * FROM Caixas NATURAL JOIN Funcionarios " +
+			String sql = "SELECT * FROM Caixas INNER JOIN Funcionarios " +
 					 "ON Funcionarios.ID=Caixas.FuncionarioID " +
 					 "WHERE CPF=?;";
 			PreparedStatement pst = this.getConexao().prepareStatement(sql);
@@ -113,7 +113,7 @@ public class Caixas extends Funcionarios{
 		Caixa c = null;
 		
 		try {
-			String sql = "SELECT * FROM Caixas NATURAL JOIN Funcionarios " +
+			String sql = "SELECT * FROM Caixas INNER JOIN Funcionarios " +
 						 "ON Funcionarios.ID=Caixas.FuncionarioID " +
 						 "WHERE Caixas.FuncionarioID=?;";
 			PreparedStatement pst = this.getConexao().prepareStatement(sql);
@@ -152,7 +152,7 @@ public class Caixas extends Funcionarios{
 		try {
 			Statement st = this.getConexao().createStatement();
 			String sql = "SELECT * FROM Caixas " + 
-						"NATURAL JOIN Funcionarios " +
+						"INNER JOIN Funcionarios " +
 						"ON Funcionarios.ID=Caixas.FuncionarioID;";
 	        ResultSet res = st.executeQuery(sql);
 	       

@@ -68,6 +68,10 @@ public class EnderecosEntrega {
 		
 	}
 	
+	/**
+	 * @param pedidoID
+	 * @return
+	 */
 	public Endereco getEnderecoEntrega(int pedidoID) {
 		Endereco endereco = null;
 		
