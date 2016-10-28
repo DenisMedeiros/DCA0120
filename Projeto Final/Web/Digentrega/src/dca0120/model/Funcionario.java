@@ -65,4 +65,5 @@ public abstract class Funcionario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
 }
