@@ -19,7 +19,11 @@ public abstract class Funcionario {
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
 		this.telefones = telefones;
+<<<<<<< HEAD
+		this.senha = senha;
+=======
 		this.setSenha(senha);
+>>>>>>> 10de897afc1be0298d656f00203f12a04a7ec5c0
 	}
 	
 	public int getId() {
@@ -57,6 +61,12 @@ public abstract class Funcionario {
 	public void setTelefones(List<String> telefones) {
 		this.telefones = telefones;
 	}
+<<<<<<< HEAD
+	
+	public String getSenha() {
+		return this.senha;
+	}
+=======
 
 	public String getSenha() {
 		return senha;
@@ -66,4 +76,5 @@ public abstract class Funcionario {
 		this.senha = senha;
 	}
 
+>>>>>>> 10de897afc1be0298d656f00203f12a04a7ec5c0
 }

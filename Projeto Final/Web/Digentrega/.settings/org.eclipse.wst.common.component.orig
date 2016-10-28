@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+<<<<<<< HEAD
+    <wb-module deploy-name="Digentrega">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <property name="context-root" value="DigEntrega"/>
+        <property name="java-output-path" value="/Digentrega/build/classes"/>
+=======
+    <wb-module deploy-name="Digentreg">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <property name="context-root" value="digentrega"/>
+        <property name="java-output-path" value="/Digentreg/build/classes"/>
+>>>>>>> 10de897afc1be0298d656f00203f12a04a7ec5c0
+    </wb-module>
+</project-modules>
