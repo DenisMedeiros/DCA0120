@@ -1,0 +1,910 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="297mm"
+   height="210mm"
+   viewBox="49 30 591.624 412.3"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="Diagrama de Casos de Uso.svg">
+  <metadata
+     id="metadata292">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs290" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1001"
+     id="namedview288"
+     showgrid="false"
+     units="mm"
+     inkscape:zoom="0.66378667"
+     inkscape:cx="1279.8169"
+     inkscape:cy="185.78711"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <g
+     id="g4"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <circle
+       style="fill:#ffffff"
+       cx="281.70001"
+       cy="61.019402"
+       id="ellipse6"
+       r="6" />
+    <circle
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       cx="281.70001"
+       cy="61.019402"
+       id="ellipse8"
+       r="6" />
+    <line
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x1="257.70001"
+       y1="73.019402"
+       x2="305.70001"
+       y2="73.019402"
+       id="line10" />
+    <line
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x1="281.70001"
+       y1="67.019402"
+       x2="281.70001"
+       y2="97.019402"
+       id="line12" />
+    <line
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x1="281.70001"
+       y1="97.019402"
+       x2="257.70001"
+       y2="123.019"
+       id="line14" />
+    <line
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x1="281.70001"
+       y1="97.019402"
+       x2="305.70001"
+       y2="123.019"
+       id="line16" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="281.70001"
+       y="146.91901"
+       id="text18">
+      <tspan
+         x="281.70001"
+         y="146.91901"
+         id="tspan20">Caixa</tspan>
+    </text>
+  </g>
+  <g
+     id="g22"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <circle
+       style="fill:#ffffff"
+       cx="284.078"
+       cy="503.28601"
+       id="ellipse24"
+       r="6" />
+    <circle
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       cx="284.078"
+       cy="503.28601"
+       id="ellipse26"
+       r="6" />
+    <line
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x1="260.078"
+       y1="515.28601"
+       x2="308.078"
+       y2="515.28601"
+       id="line28" />
+    <line
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x1="284.078"
+       y1="509.28601"
+       x2="284.078"
+       y2="539.28601"
+       id="line30" />
+    <line
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x1="284.078"
+       y1="539.28601"
+       x2="260.078"
+       y2="565.28601"
+       id="line32" />
+    <line
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x1="284.078"
+       y1="539.28601"
+       x2="308.078"
+       y2="565.28601"
+       id="line34" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="284.078"
+       y="589.18597"
+       id="text36">
+      <tspan
+         x="284.078"
+         y="589.18597"
+         id="tspan38">Entregador</tspan>
+    </text>
+  </g>
+  <g
+     id="g40"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <circle
+       style="fill:#ffffff"
+       cx="281.51199"
+       cy="310.10001"
+       id="ellipse42"
+       r="6" />
+    <circle
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       cx="281.51199"
+       cy="310.10001"
+       id="ellipse44"
+       r="6" />
+    <line
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x1="257.51199"
+       y1="322.10001"
+       x2="305.51199"
+       y2="322.10001"
+       id="line46" />
+    <line
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x1="281.51199"
+       y1="316.10001"
+       x2="281.51199"
+       y2="346.10001"
+       id="line48" />
+    <line
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x1="281.51199"
+       y1="346.10001"
+       x2="257.51199"
+       y2="372.10001"
+       id="line50" />
+    <line
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x1="281.51199"
+       y1="346.10001"
+       x2="305.51199"
+       y2="372.10001"
+       id="line52" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="281.51199"
+       y="396"
+       id="text54">
+      <tspan
+         x="281.51199"
+         y="396"
+         id="tspan56">Administrador</tspan>
+    </text>
+  </g>
+  <g
+     id="g58"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <polyline
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       points="281.7,170.262 281.7,229.56 281.512,229.56 281.512,291.093 "
+       id="polyline60" />
+    <polygon
+       style="fill:#ffffff"
+       points="281.7,154.262 273.7,170.262 289.7,170.262 "
+       id="polygon62" />
+    <polygon
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       points="281.7,154.262 273.7,170.262 289.7,170.262 "
+       id="polygon64" />
+  </g>
+  <g
+     id="g66"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <circle
+       style="fill:#ffffff"
+       cx="94.446198"
+       cy="196.16299"
+       id="ellipse68"
+       r="6" />
+    <circle
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       cx="94.446198"
+       cy="196.16299"
+       id="ellipse70"
+       r="6" />
+    <line
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x1="70.446198"
+       y1="208.16299"
+       x2="118.446"
+       y2="208.16299"
+       id="line72" />
+    <line
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x1="94.446198"
+       y1="202.16299"
+       x2="94.446198"
+       y2="232.16299"
+       id="line74" />
+    <line
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x1="94.446198"
+       y1="232.16299"
+       x2="70.446198"
+       y2="258.16299"
+       id="line76" />
+    <line
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x1="94.446198"
+       y1="232.16299"
+       x2="118.446"
+       y2="258.16299"
+       id="line78" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="94.446198"
+       y="282.06299"
+       id="text80">
+      <tspan
+         x="94.446198"
+         y="282.06299"
+         id="tspan82">Funcionário</tspan>
+    </text>
+  </g>
+  <g
+     id="g84"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <polyline
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       points="149.641,232.163 201.549,232.163 201.549,97.0194 255.694,97.0194 "
+       id="polyline86" />
+    <polygon
+       style="fill:#ffffff"
+       points="133.641,232.163 149.641,240.163 149.641,224.163 "
+       id="polygon88" />
+    <polygon
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       points="133.641,232.163 149.641,240.163 149.641,224.163 "
+       id="polygon90" />
+  </g>
+  <g
+     id="g92"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <polyline
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       points="94.4462,304.399 94.4462,539.286 259.078,539.286 "
+       id="polyline94" />
+    <polygon
+       style="fill:#ffffff"
+       points="94.4462,288.399 86.4462,304.399 102.446,304.399 "
+       id="polygon96" />
+    <polygon
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       points="94.4462,288.399 86.4462,304.399 102.446,304.399 "
+       id="polygon98" />
+  </g>
+  <g
+     id="g100"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <rect
+       style="fill:#ffffff"
+       x="537.242"
+       y="356.58401"
+       width="198.7"
+       height="52"
+       rx="20"
+       ry="20"
+       id="rect102" />
+    <rect
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x="537.242"
+       y="356.58401"
+       width="198.7"
+       height="52"
+       rx="20"
+       ry="20"
+       id="rect104" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="636.59198"
+       y="378.48401"
+       id="text106">
+      <tspan
+         x="636.59198"
+         y="378.48401"
+         id="tspan108">Gerenciar funcionário</tspan>
+      <tspan
+         x="636.59198"
+         y="394.48401"
+         id="tspan110">(cadastrar, editar, remover)</tspan>
+    </text>
+  </g>
+  <g
+     id="g112"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <rect
+       style="fill:#ffffff"
+       x="50.3806"
+       y="31.4104"
+       width="89.150002"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect114" />
+    <rect
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x="50.3806"
+       y="31.4104"
+       width="89.150002"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect116" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="94.955597"
+       y="53.310398"
+       id="text118">
+      <tspan
+         x="94.955597"
+         y="53.310398"
+         id="tspan120">Fazer login</tspan>
+    </text>
+  </g>
+  <g
+     id="g122"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <rect
+       style="fill:#ffffff"
+       x="515.914"
+       y="66.2258"
+       width="198.7"
+       height="52"
+       rx="20"
+       ry="20"
+       id="rect124" />
+    <rect
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x="515.914"
+       y="66.2258"
+       width="198.7"
+       height="52"
+       rx="20"
+       ry="20"
+       id="rect126" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="615.26398"
+       y="88.125801"
+       id="text128">
+      <tspan
+         x="615.26398"
+         y="88.125801"
+         id="tspan130">Gerenciar produto</tspan>
+      <tspan
+         x="615.26398"
+         y="104.126"
+         id="tspan132">(cadastrar, editar, remover)</tspan>
+    </text>
+  </g>
+  <g
+     id="g134"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <rect
+       style="fill:#ffffff"
+       x="565.74597"
+       y="152.106"
+       width="98.650002"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect136" />
+    <rect
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x="565.74597"
+       y="152.106"
+       width="98.650002"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect138" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="615.07098"
+       y="174.006"
+       id="text140">
+      <tspan
+         x="615.07098"
+         y="174.006"
+         id="tspan142">Criar pedido</tspan>
+    </text>
+  </g>
+  <g
+     id="g144"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <rect
+       style="fill:#ffffff"
+       x="916.60602"
+       y="216.748"
+       width="111.4"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect146" />
+    <rect
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x="916.60602"
+       y="216.748"
+       width="111.4"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect148" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="972.30603"
+       y="238.64799"
+       id="text150">
+      <tspan
+         x="972.30603"
+         y="238.64799"
+         id="tspan152">Gerar QRCode</tspan>
+    </text>
+  </g>
+  <g
+     id="g154"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <rect
+       style="fill:#ffffff"
+       x="871.15002"
+       y="151.911"
+       width="170.60001"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect156" />
+    <rect
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x="871.15002"
+       y="151.911"
+       width="170.60001"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect158" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="956.45001"
+       y="173.811"
+       id="text160">
+      <tspan
+         x="956.45001"
+         y="173.811"
+         id="tspan162">Definir local de entrega</tspan>
+    </text>
+  </g>
+  <g
+     id="g164"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <rect
+       style="fill:#ffffff"
+       x="529.34802"
+       y="308.80801"
+       width="200.55"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect166" />
+    <rect
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x="529.34802"
+       y="308.80801"
+       width="200.55"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect168" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="629.62299"
+       y="330.70801"
+       id="text170">
+      <tspan
+         x="629.62299"
+         y="330.70801"
+         id="tspan172">Designar próximas entregas</tspan>
+    </text>
+  </g>
+  <g
+     id="g174"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <rect
+       style="fill:#ffffff"
+       x="575.96399"
+       y="474.18799"
+       width="126.95"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect176" />
+    <rect
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x="575.96399"
+       y="474.18799"
+       width="126.95"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect178" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="639.43903"
+       y="496.08801"
+       id="text180">
+      <tspan
+         x="639.43903"
+         y="496.08801"
+         id="tspan182">Receber pedidos</tspan>
+    </text>
+  </g>
+  <g
+     id="g184"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <rect
+       style="fill:#ffffff"
+       x="555.22198"
+       y="528.13397"
+       width="214.25"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect186" />
+    <rect
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x="555.22198"
+       y="528.13397"
+       width="214.25"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect188" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="662.34698"
+       y="550.034"
+       id="text190">
+      <tspan
+         x="662.34698"
+         y="550.034"
+         id="tspan192">Visualizar pedidos em entrega</tspan>
+    </text>
+  </g>
+  <g
+     id="g194"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <rect
+       style="fill:#ffffff"
+       x="549.48999"
+       y="202.61"
+       width="135.95"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect196" />
+    <rect
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x="549.48999"
+       y="202.61"
+       width="135.95"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect198" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="617.46503"
+       y="224.50999"
+       id="text200">
+      <tspan
+         x="617.46503"
+         y="224.50999"
+         id="tspan202">Visualizar pedidos</tspan>
+    </text>
+  </g>
+  <g
+     id="g204"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <rect
+       style="fill:#ffffff"
+       x="899.62799"
+       y="527.88397"
+       width="144.60001"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect206" />
+    <rect
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x="899.62799"
+       y="527.88397"
+       width="144.60001"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect208" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="971.92798"
+       y="549.784"
+       id="text210">
+      <tspan
+         x="971.92798"
+         y="549.784"
+         id="tspan212">Ver rota de entrega</tspan>
+    </text>
+  </g>
+  <g
+     id="g214"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <rect
+       style="fill:#ffffff"
+       x="576.89801"
+       y="582.09198"
+       width="120.6"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect216" />
+    <rect
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x="576.89801"
+       y="582.09198"
+       width="120.6"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect218" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="637.198"
+       y="603.992"
+       id="text220">
+      <tspan
+         x="637.198"
+         y="603.992"
+         id="tspan222">Finalizar pedido</tspan>
+    </text>
+  </g>
+  <text
+     font-size="12.8"
+     style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:start;fill:#000000"
+     x="-127.304"
+     y="267.48001"
+     id="text224">
+    <tspan
+       x="-127.304"
+       y="267.48001"
+       id="tspan226" />
+  </text>
+  <g
+     id="g228"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <polyline
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2;stroke-dasharray:8"
+       points="769.472,546.134 841.4,546.134 841.4,545.884 892.923,545.884 "
+       id="polyline230" />
+    <polyline
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       points="880.275,550.884 896.275,545.884 880.275,540.884 "
+       id="polyline232" />
+  </g>
+  <text
+     font-size="12.8"
+     style="font-style:normal;font-weight:normal;font-size:7.49381685px;font-family:sans-serif;text-anchor:start;fill:#000000"
+     x="503.23685"
+     y="343.2142"
+     id="text234"
+     transform="scale(0.93512213,1.069379)">
+    <tspan
+       x="503.23685"
+       y="343.2142"
+       id="tspan236">&lt;&lt;include&gt;&gt;</tspan>
+  </text>
+  <line
+     style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:1.17090881"
+     x1="208.92728"
+     y1="89.282288"
+     x2="323.46594"
+     y2="86.281151"
+     id="line238" />
+  <line
+     style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:1.17090881"
+     x1="210.40764"
+     y1="90.317192"
+     x2="350.74753"
+     y2="135.03981"
+     id="line240" />
+  <line
+     style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:1.17090881"
+     x1="208.92728"
+     y1="89.282288"
+     x2="341.84787"
+     y2="166.659"
+     id="line242" />
+  <line
+     style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:1.17090881"
+     x1="208.92728"
+     y1="89.282288"
+     x2="330.82068"
+     y2="233.14665"
+     id="line244" />
+  <line
+     style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:1.17090881"
+     x1="208.82433"
+     y1="245.22485"
+     x2="335.1424"
+     y2="268.0665"
+     id="line246" />
+  <line
+     style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:1.17090881"
+     x1="210.22916"
+     y1="366.17334"
+     x2="356.34158"
+     y2="336.68655"
+     id="line248" />
+  <line
+     style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:1.17090881"
+     x1="210.22916"
+     y1="366.17334"
+     x2="344.98593"
+     y2="370.46063"
+     id="line250" />
+  <line
+     style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:1.17090881"
+     x1="210.22916"
+     y1="366.17334"
+     x2="356.85294"
+     y2="404.24228"
+     id="line252" />
+  <g
+     id="g254"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <polyline
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2;stroke-dasharray:8"
+       points="664.396,170.106 763.773,170.106 763.773,169.911 864.445,169.911 "
+       id="polyline256" />
+    <polyline
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       points="851.797,174.911 867.797,169.911 851.797,164.911 "
+       id="polyline258" />
+  </g>
+  <text
+     font-size="12.8"
+     style="font-style:normal;font-weight:normal;font-size:7.49381685px;font-family:sans-serif;text-anchor:start;fill:#000000"
+     x="462.36508"
+     y="118.9266"
+     id="text260"
+     transform="scale(0.93512213,1.069379)">
+    <tspan
+       x="462.36508"
+       y="118.9266"
+       id="tspan262">&lt;&lt;include&gt;&gt;</tspan>
+  </text>
+  <g
+     id="g264"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <polyline
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2;stroke-dasharray:8"
+       points="664.396,188.106 786.501,188.106 786.501,234.748 909.901,234.748 "
+       id="polyline266" />
+    <polyline
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       points="897.253,239.748 913.253,234.748 897.253,229.748 "
+       id="polyline268" />
+  </g>
+  <text
+     font-size="12.8"
+     style="font-style:normal;font-weight:normal;font-size:7.49381685px;font-family:sans-serif;text-anchor:start;fill:#000000"
+     x="516.9892"
+     y="158.65317"
+     id="text270"
+     transform="scale(0.93512213,1.069379)">
+    <tspan
+       x="516.9892"
+       y="158.65317"
+       id="tspan272">&lt;&lt;include&gt;&gt;</tspan>
+  </text>
+  <line
+     style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:1.17090881"
+     x1="92.72438"
+     y1="140.08408"
+     x2="93.003265"
+     y2="70.744904"
+     id="line274" />
+  <g
+     id="g276"
+     transform="matrix(0.54747138,0,0,0.62607265,41.017793,28.541095)">
+    <rect
+       style="fill:#ffffff"
+       x="558.58801"
+       y="252.672"
+       width="124.3"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect278" />
+    <rect
+       style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:2"
+       x="558.58801"
+       y="252.672"
+       width="124.3"
+       height="36"
+       rx="20"
+       ry="20"
+       id="rect280" />
+    <text
+       font-size="12.8"
+       style="font-style:normal;font-weight:normal;font-size:12.80000019px;font-family:sans-serif;text-anchor:middle;fill:#000000"
+       x="620.73798"
+       y="274.57199"
+       id="text282">
+      <tspan
+         x="620.73798"
+         y="274.57199"
+         id="tspan284">Cancelar pedido</tspan>
+    </text>
+  </g>
+  <line
+     style="fill:none;fill-opacity:0;stroke:#000000;stroke-width:1.17090881"
+     x1="208.92728"
+     y1="89.282288"
+     x2="346.82874"
+     y2="198.00143"
+     id="line286" />
+</svg>

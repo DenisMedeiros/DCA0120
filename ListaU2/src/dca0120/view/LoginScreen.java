@@ -1,23 +1,34 @@
 package dca0120.view;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import dca0120.model.Person;
+import dca0120.model.PersonDAO;
+import dca0120.utils.Password;
+
 import java.awt.GridLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.SwingConstants;
 import java.awt.Font;
-import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.Cursor;
 
 import java.awt.FlowLayout;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import dca0120.utils.JTextEditLimit;
 
 public class LoginScreen extends JFrame {
 
@@ -26,29 +37,14 @@ public class LoginScreen extends JFrame {
 	 */
 	private static final long serialVersionUID = -125543653643154060L;
 	private JPanel contentPane;
-	private JPasswordField textFieldSenha;
-	private JTextField textFieldLogin;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginScreen frame = new LoginScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	private JPasswordField textFieldPassword;
+	private JFormattedTextField textFieldLogin;
+	
 	/**
 	 * Create the frame.
+	 * @throws ParseException 
 	 */
-	public LoginScreen() {
+	public LoginScreen() throws ParseException {
 		setResizable(false);
 		setTitle("Lista U2 - Tela de Login");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,8 +71,11 @@ public class LoginScreen extends JFrame {
 		labelLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		panel2_1.add(labelLogin);
 		
-		textFieldLogin = new JTextField();
+				
+		textFieldLogin = new JFormattedTextField();
 		textFieldLogin.setColumns(20);
+		textFieldLogin.setDocument(new JTextEditLimit(20));
+		
 		panel2_1.add(textFieldLogin);
 		
 		JPanel panel2_2 = new JPanel();
@@ -87,9 +86,10 @@ public class LoginScreen extends JFrame {
 		labelSenha.setHorizontalAlignment(SwingConstants.CENTER);
 		panel2_2.add(labelSenha);
 		
-		textFieldSenha = new JPasswordField();
-		panel2_2.add(textFieldSenha);
-		textFieldSenha.setColumns(20);
+		textFieldPassword = new JPasswordField();	
+		
+		panel2_2.add(textFieldPassword);
+		textFieldPassword.setColumns(20);
 		
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3);
@@ -99,9 +99,40 @@ public class LoginScreen extends JFrame {
 		panel_3.add(panel3_1);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		
 		panel3_1.add(btnCancelar);
 		
 		JButton btnFazerLogin = new JButton("Fazer Login");
+		btnFazerLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(textFieldLogin.getText().trim().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Digite um login válido!");
+					return;
+				}
+				
+				PersonDAO pd = new PersonDAO();
+				Person p = pd.getPerson(textFieldLogin.getText());
+				
+				if (p != null) {
+					String passwordSHA256 = Password.plainToSHA256(new String(textFieldPassword.getPassword()), p.getEmail().getBytes());
+					if (p.getPassword().equals(passwordSHA256)){
+						dispose();
+						UserInformationScreen uis = new UserInformationScreen(p);
+						uis.setVisible(true);
+						return;			
+					}
+				}
+				
+				JOptionPane.showMessageDialog(null, "Usuário e/ou senha incorretos!");
+	
+			}
+		});
 		panel3_1.add(btnFazerLogin);
 		
 		JPanel panel3_2 = new JPanel();
@@ -120,10 +151,16 @@ public class LoginScreen extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				
-				// Abre a tela de cadastro.
-				
-				System.out.println("OK");
-				
+				RegistrationScreen rs = null;
+				try {
+					rs = new RegistrationScreen();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				rs.setVisible(true);
+
+			
 			}
 		});
 		lblCadastro.setHorizontalAlignment(SwingConstants.CENTER);

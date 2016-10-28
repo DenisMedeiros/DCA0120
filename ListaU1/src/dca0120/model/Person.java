@@ -1,8 +1,5 @@
 package dca0120.model;
 
-import java.util.Calendar;
-
-
 /**
  * Classe Person.
  * 
@@ -13,40 +10,25 @@ import java.util.Calendar;
 public class Person {
 	
 	private int id;
-	private String name;
-	private String email;
-	private String login;
-	private String password;
-	private Calendar birthdate;
-	private byte[] photo;
-	private String phoneMobile;
-	private String phoneHome;
+	private String lastName;
+	private String firstName;
+	private String address;
+	private String city;
 	
 	
 	public Person() {
 		
 	}
 	
-	public Person(int id, String Name,  String email, String login, String password, Calendar birthdate, String phoneMobile, String phoneHome, byte[] photo) {
+	public Person(int id, String lastName, String firstName, String address, String city) {
 		super();
 		this.id = id;
-		this.name = Name;
-		this.setPassword(password);
-		this.setEmail(email);
-		this.phoneHome = phoneHome;
-		this.phoneMobile = phoneMobile;
-		this.photo = photo;
-		this.birthdate = birthdate;
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.address = address;
+		this.city = city;
 	}
 	
-	public void setPhoto(byte[] photo) {
-		this.photo = photo;
-	}
-	
-	public byte[] getPhoto() {
-		return photo;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -55,61 +37,37 @@ public class Person {
 		this.id = id;
 	}
 	
-	public String getName() {
-		return name;
+	public String getLastName() {
+		return lastName;
 	}
 	
-	public void setName(String Name) {
-		this.name = Name;
-	}
-				
-	public String getPhoneMobile() {
-		return phoneMobile;
-	}
-
-	public void setPhoneMobile(String phoneMobile) {
-		this.phoneMobile = phoneMobile;
-	}
-	public String getPhoneHome() {
-		return phoneHome;
-	}
-
-	public void setPhoneHome(String phoneHome) {
-		this.phoneHome = phoneHome;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public Calendar getBirthdate() {
-		return birthdate;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	
-	public void setBirthdate(Calendar birthdate) {
-		this.birthdate = birthdate;
+	public String getFirstName() {
+		return firstName;
 	}
 	
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getAddress() {
+		return address;
+	}
+	
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	public String getCity() {
+		return city;
+	}
+	
+	public void setCity(String city) {
+		this.city = city;
+	}
 	
 	
 
