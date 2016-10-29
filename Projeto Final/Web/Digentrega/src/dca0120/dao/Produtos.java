@@ -12,18 +12,21 @@ import dca0120.model.Caixa;
 import dca0120.model.Produto;
 
 /**
- * @author neypi
- *
- * Classe responsável por interconectar a classe Produto com a tabela Produtos no banco de dados.
+ * @author ney
+ * @author denis
+ *         <hr>
+ *         Classe responsável por interconectar a classe Produto com a tabela
+ *         Produtos no banco de dados.
+ *         </hr>
  */
 public class Produtos {
 
-	public Connection conexao;
-	
+	private Connection conexao;
+
 	/**
-	 * 
+	 * Construtor da classe Produtos que abre conexão com o banco de dados
 	 */
-	public Produtos () {
+	public Produtos() {
 		try {
 			conexao = ConnectionFactory.getConexao();
 		} catch (ClassNotFoundException e) {
@@ -32,35 +35,30 @@ public class Produtos {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * 
+	 * Cria a tabela Produtos no banco de dados.
 	 */
 	public void criarTabelaProdutos() {
 		try {
 			Statement st = conexao.createStatement();
-	        String sql = "CREATE TABLE IF NOT EXISTS Produtos (" +
-			        "ID INTEGER AUTO_INCREMENT, " +
-		            "Nome VARCHAR(80) NOT NULL, " +
-		            "Preco FLOAT NOT NULL, " +
-		            "Foto VARCHAR(200), " +
-		            "Peso FLOAT, " +
-		            "Volume FLOAT, " +
-		            "Descricao VARCHAR(800), " +
-		            "CaixaID INTEGER NOT NULL, " +
-		            "QuantidadeEmEstoque INTEGER NOT NULL, " +
-		            "CONSTRAINT chk_Estoque CHECK (QuantidadeEmEstoque>=0), " +
-		            "PRIMARY KEY (ID), " +
-		            "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID), " +
-		            ")";
-	        st.executeUpdate(sql);
+			String sql = "CREATE TABLE IF NOT EXISTS Produtos (ID INTEGER AUTO_INCREMENT, "
+					+ "Nome VARCHAR(80) NOT NULL, Preco FLOAT NOT NULL, Foto VARCHAR(200), Peso FLOAT, "
+					+ "Volume FLOAT, Descricao VARCHAR(800), CaixaID INTEGER NOT NULL, "
+					+ "QuantidadeEmEstoque INTEGER NOT NULL, "
+					+ "CONSTRAINT chk_Estoque CHECK (QuantidadeEmEstoque>=0), PRIMARY KEY (ID), "
+					+ "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID))";
+			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
+	 * Insere um especificado objeto de Produto no banco de dados
+	 * 
 	 * @param p
+	 *            objeto de Produto a ser adicionado no banco de dados
 	 */
 	public void inserirProduto(Produto p) {
 		try {
@@ -78,32 +76,36 @@ public class Produtos {
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
-	
+
 	/**
+	 * Busca um produto especifico no banco de dados pelo seu id
+	 * 
 	 * @param id
-	 * @return
+	 *            referencia do Produto a ser buscado
+	 * @return objeto do tipo Produto (ou null, caso nao exista tal Produto com
+	 *         id especificado)
 	 */
 	public Produto getProduto(int id) {
 		Produto p = null;
-		
+
 		try {
 			String sql = "SELECT * FROM Produtos WHERE ID=?;";
-			
+
 			PreparedStatement pst = conexao.prepareStatement(sql);
 			pst.setInt(1, id);
 			ResultSet res = pst.executeQuery();
-			
-			if(res.wasNull()) {
+
+			if (res.wasNull()) {
 				return p;
 			}
-			
-			if(res.next()) {
+
+			if (res.next()) {
 				Caixas caixas = new Caixas();
 				Caixa c = caixas.getCaixaWithID(res.getInt("CaixaID"));
-				p = new Produto(id, res.getString("Nome"), res.getFloat("Preco"), res.getString("Foto"), 
-						res.getFloat("Peso"), res.getFloat("Volume"), res.getString("Descricao"), c, 
+				p = new Produto(id, res.getString("Nome"), res.getFloat("Preco"), res.getString("Foto"),
+						res.getFloat("Peso"), res.getFloat("Volume"), res.getString("Descricao"), c,
 						res.getInt("QuantidadeEmEstoque"));
 			}
 		} catch (SQLException e) {
@@ -111,61 +113,70 @@ public class Produtos {
 		}
 		return p;
 	}
-	
+
 	/**
-	 * @param id
-	 * @param novaQuantidade
+	 * Altera a quantidade de um Produto no banco de dados
+	 * 
+	 * @param p
+	 *            objeto do tipo Produto a ter o estoque alterado no banco de
+	 *            dados
 	 */
-	public void alterarEstoque(int id, int novaQuantidade) {
-		
-		try {       	        
+	public void alterarEstoque(Produto p) {
+
+		try {
 			PreparedStatement pst = conexao.prepareStatement("UPDATE Produtos SET QuantidadeEmEstoque=? WHERE ID=?;");
-			
-			pst.setInt(1, novaQuantidade);
-	        pst.setInt(2, id);
-	        
+
+			pst.setInt(1, p.getQuantidadeEstoque());
+			pst.setInt(2, p.getId());
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
+	 * Altera o preço do Produto no banco de dados
+	 * 
 	 * @param id
+	 *            Int de referencia do Produto a ter alterdo o seu preco
 	 * @param novoPreco
+	 *            tipo float com o novo valor do Produto
 	 */
 	public void alterarPreco(int id, float novoPreco) {
-		try {       	        
+		try {
 			PreparedStatement pst = conexao.prepareStatement("UPDATE Produtos SET Preco=? WHERE ID=?;");
-			
+
 			pst.setFloat(1, novoPreco);
-	        pst.setInt(2, id);
-	        
+			pst.setInt(2, id);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * @return
+	 * Pegar todos os Produtos registrados no banco de dados
+	 * 
+	 * @return Lista objetos de Produto com todos os produtos do banco de dados
 	 */
 	public List<Produto> getTodosProdutos() {
 		List<Produto> lista = new ArrayList<Produto>();
-		
+
 		try {
 			Statement st = conexao.createStatement();
 			String sql = "SELECT * FROM Produtos;";
 			ResultSet res = st.executeQuery(sql);
-			
-			if(res.wasNull()) {
+
+			if (res.wasNull()) {
 				return lista;
 			}
-			
+
 			while (res.next()) {
 				Caixas caixas = new Caixas();
 				Caixa c = caixas.getCaixaWithID(res.getInt("CaixaID"));
-				Produto p = new Produto(res.getInt("ID"), res.getString("Nome"), res.getFloat("Preco"), 
-						res.getString("Foto"), res.getFloat("Peso"), res.getFloat("Volume"), 
-						res.getString("Descricao"), c, res.getInt("QuantidadeEmEstoque"));
+				Produto p = new Produto(res.getInt("ID"), res.getString("Nome"), res.getFloat("Preco"),
+						res.getString("Foto"), res.getFloat("Peso"), res.getFloat("Volume"), res.getString("Descricao"),
+						c, res.getInt("QuantidadeEmEstoque"));
 				lista.add(p);
 			}
 		} catch (SQLException e) {
@@ -173,19 +184,22 @@ public class Produtos {
 		}
 		return lista;
 	}
-	
+
 	/**
+	 * Remove o Produto especificado pelo id no banco de dados
+	 * 
 	 * @param id
+	 *            referencia do Produto a ser procurado no banco de dados
 	 */
 	public void removerProduto(int id) {
-		try {       	        
+		try {
 			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Produtos WHERE ID=?;");
-			
-	        pst.setInt(1, id);
-	        
+
+			pst.setInt(1, id);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

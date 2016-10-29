@@ -15,15 +15,19 @@ import dca0120.model.Pedido;
 import dca0120.model.Pedido.Status;
 
 /**
- * @author neypi
- *
+ * @author ney
+ * @author denis
+ *         <hr>
+ *         Classe responsável por interconectar a classe Pedido com a tabela
+ *         Pedidos.
+ *         </hr>
  */
 public class Pedidos {
-	
+
 	private Connection conexao;
-	
+
 	/**
-	 * Cria a tabela Pedidos no banco de dados.
+	 * Construtor da classe Pedidos que abre conexão com o banco de dados
 	 */
 	public Pedidos() {
 		try {
@@ -34,25 +38,17 @@ public class Pedidos {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * 
+	 * Cria a tabela Pedidos no banco de dados.
 	 */
 	public void CriaTabelaPedidos() {
 		try {
 			Statement st = conexao.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS Pedidos (" +
-						"ID  INTEGER AUTO_INCREMENT, " +
-						"VolumeTotal FLOAT, " +
-						"PesoTotal FLOAT, " +
-						"ValorTotal FLOAT, " +
-						"Status INTEGER, " +
-						"Descricao VARCHAR(800), " +
-						"EntregadorID INTEGER NOT NULL, " +
-						"DataHoraEntrega TIMESTAMP, " +
-						"PRIMARY KEY (ID), " +
-						"FOREIGN KEY ( EntregadorID ) REFERENCES Entregadores (FuncionarioID), " +
-						");";
+			String sql = "CREATE TABLE IF NOT EXISTS Pedidos (ID  INTEGER AUTO_INCREMENT, VolumeTotal FLOAT, "
+					+ "PesoTotal FLOAT, ValorTotal FLOAT, Status INTEGER, Descricao VARCHAR(800), "
+					+ "EntregadorID INTEGER NOT NULL, DataHoraEntrega TIMESTAMP, PRIMARY KEY (ID), "
+					+ "FOREIGN KEY ( EntregadorID ) REFERENCES Entregadores (FuncionarioID));";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -60,107 +56,118 @@ public class Pedidos {
 	}
 
 	/**
+	 * Insere o objeto Pedido no banco de dados
+	 * 
 	 * @param p
-	 * @param entregadorID
+	 *            objeto a ser inserido no banco de dados
 	 */
 	public void inserirPedido(Pedido p) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Pedidos(VolumeTotal, PesoTotal, ValorTotal"
 					+ "Status, Descricao, EntregadorID, DataHoraEntrega) VALUES ();");
-			
-	        pst.setFloat(1, p.getVolumeTotal());
-	        pst.setFloat(2, p.getPesoTotal());
-	        pst.setFloat(3, p.getValorTotal());
-	        pst.setInt(4, p.getStatus().getCodigo());
-	        pst.setString(5, p.getDescricao());
-	        pst.setInt(6, p.getEntregador().getId());
-	        	        	        
-	        Calendar calendar = p.getDataHoraEntrega();
-	        java.sql.Timestamp javaSqlTimestamp = null;
-		    javaSqlTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());  
-	        
-	        pst.setTimestamp(7, javaSqlTimestamp);
-	        
-	        pst.executeUpdate();
+
+			pst.setFloat(1, p.getVolumeTotal());
+			pst.setFloat(2, p.getPesoTotal());
+			pst.setFloat(3, p.getValorTotal());
+			pst.setInt(4, p.getStatus().getCodigo());
+			pst.setString(5, p.getDescricao());
+			pst.setInt(6, p.getEntregador().getId());
+
+			Calendar calendar = p.getDataHoraEntrega();
+			java.sql.Timestamp javaSqlTimestamp = null;
+			javaSqlTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+
+			pst.setTimestamp(7, javaSqlTimestamp);
+
+			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
-	
+
 	/**
+	 * Muda a data e hora de entrega de um Pedido pelo <b>id</b>
+	 * 
 	 * @param id
+	 *            referência de tipo inteiro do pedido que terá alterado a data
+	 *            e hora da entega
 	 * @param dataHoraEntrega
+	 *            objeto do tipo Calendar a ser usado para alterar a data e hora
+	 *            de entrega do pedido especificado pelo id
 	 */
 	public void setDataHoraEntrega(int id, Calendar dataHoraEntrega) {
-		
+
 		try {
 			java.sql.Timestamp entrega = null;
-			if(dataHoraEntrega != null) {
-				entrega = new java.sql.Timestamp(dataHoraEntrega.getTime().getTime());  
-	        }
-	        	        
+			if (dataHoraEntrega != null) {
+				entrega = new java.sql.Timestamp(dataHoraEntrega.getTime().getTime());
+			}
+
 			PreparedStatement pst = conexao.prepareStatement("UPDATE Pedidos SET DataHoraEntrega = ? WHERE ID=?;");
-			
+
 			pst.setTimestamp(1, entrega);
-	        pst.setInt(2, id);
-	        
+			pst.setInt(2, id);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * @param id
+	 * Remove um pedido especifico pelo id
+	 * @param id referencia de tipo Int a ser usado para deletar o tal pedido
 	 */
 	public void removerPedido(int id) {
-		try {       	        
+		try {
 			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Pedidos WHERE ID=?;");
-			
-	        pst.setInt(1, id);
-	        
+
+			pst.setInt(1, id);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * @param id
-	 * @param status
+	 * Altera o Status de um pedido pelo id
+	 * @param id tipo inteiro que referencia o pedido
+	 * @param status novo Status desejado para o pedido
 	 */
 	public void alterarStatus(int id, Status status) {
-		
-		try {       	        
+
+		try {
 			PreparedStatement pst = conexao.prepareStatement("UPDATE Pedidos SET Status=? WHERE ID=?;");
-			
+
 			pst.setInt(1, status.getCodigo());
-	        pst.setInt(2, id);
-	        
+			pst.setInt(2, id);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
-	 * @param id
-	 * @return
+	 * Retorna um pedido pelo id
+	 * @param id inteiro que referencia um objeto de tipo Pedido
+	 * @return objeto de tipo Pedido (ou null caso não exista o pedido com o especificado id)
 	 */
 	public Pedido getPedidoWithID(int id) {
 		Pedido p = null;
-		
+
 		try {
 			String sql = "SELECT * FROM Pedidos WHERE ID=?;";
 			PreparedStatement pst = conexao.prepareStatement(sql);
-			
+
 			pst.setInt(1, id);
 			ResultSet res = pst.executeQuery();
-			
-			if(res.wasNull()) {
+
+			if (res.wasNull()) {
 				return p;
 			}
-			
-			if(res.next()) {
+
+			if (res.next()) {
 				Status status = Status.ABERTO;
-				switch(res.getInt("Status")) {
+				switch (res.getInt("Status")) {
 				case 1:
 					status = Status.ABERTO;
 					break;
@@ -185,38 +192,39 @@ public class Pedidos {
 				ent = ents.getEntregadorWithID(res.getInt("EntregadorID"));
 				Calendar dataHoraEntrega = Calendar.getInstance(), dataHoraAbertura;
 				dataHoraEntrega.setTimeInMillis(res.getTimestamp("DataHoraEntrega").getTime());
-				CaixasGerenciamPedidos cgp = new CaixasGerenciamPedidos(); 
+				CaixasGerenciamPedidos cgp = new CaixasGerenciamPedidos();
 				dataHoraAbertura = cgp.getDataHoraAbertura(id);
 				EnderecosEntrega endereco = new EnderecosEntrega();
 				Endereco enderecoEntrega = endereco.getEnderecoEntrega(id);
-				p = new Pedido(id, status, res.getString("Descricao"), ent, dataHoraAbertura,
-						dataHoraEntrega, enderecoEntrega);
+				p = new Pedido(id, status, res.getString("Descricao"), ent, dataHoraAbertura, dataHoraEntrega,
+						enderecoEntrega);
 			}
-				
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return p;
 	}
-	
+
 	/**
-	 * @return
+	 * Retorna uma lista com todos os pedidos registrados
+	 * @return Lista com os objetos de tipo Pedido registrados no banco de dados
 	 */
 	public List<Pedido> getPedidos() {
 		List<Pedido> lista = new ArrayList<Pedido>();
-		
+
 		try {
 			Statement st = conexao.createStatement();
 			String sql = "SELECT * FROM Pedidos;";
 			ResultSet res = st.executeQuery(sql);
-			
-			if(res.wasNull()) {
+
+			if (res.wasNull()) {
 				return lista;
 			}
-			
+
 			while (res.next()) {
 				Status status = Status.ABERTO;
-				switch(res.getInt("Status")) {
+				switch (res.getInt("Status")) {
 				case 1:
 					status = Status.ABERTO;
 					break;
@@ -241,7 +249,7 @@ public class Pedidos {
 				ent = ents.getEntregadorWithID(res.getInt("EntregadorID"));
 				Calendar dataHoraEntrega = Calendar.getInstance(), dataHoraAbertura;
 				dataHoraEntrega.setTimeInMillis(res.getTimestamp("DataHoraEntrega").getTime());
-				CaixasGerenciamPedidos cgp = new CaixasGerenciamPedidos(); 
+				CaixasGerenciamPedidos cgp = new CaixasGerenciamPedidos();
 				dataHoraAbertura = cgp.getDataHoraAbertura(res.getInt("ID"));
 				EnderecosEntrega endereco = new EnderecosEntrega();
 				Endereco enderecoEntrega = endereco.getEnderecoEntrega(res.getInt("ID"));

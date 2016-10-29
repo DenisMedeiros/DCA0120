@@ -9,8 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author neypi
- *
+ * @author ney
+ * @author denis
+ * <hr>
+ *  Classe responsavel por ligar um telefone com seu dono, um Funcionario, no banco de dados
+ *</hr>
  */
 public class Telefones {
 	
@@ -30,7 +33,7 @@ public class Telefones {
 	}
 	
 	/**
-	 * 
+	 * Cria a tabela Telefones
 	 */
 	public void criarTabelaTelefones() {
 		try {
@@ -48,8 +51,9 @@ public class Telefones {
 	}
 	
 	/**
-	 * @param funcionarioID
-	 * @param telefone
+	 * Insere o telefone de um Funcionario no banco de dados
+	 * @param funcionarioID Int que referencia um Funcionario
+	 * @param telefone String a ser usada para guardar o telefone no banco de dados
 	 */
 	public void inserirTelefone(int funcionarioID, String telefone) {
 		try {
@@ -66,8 +70,9 @@ public class Telefones {
 	}
 	
 	/**
-	 * @param id
-	 * @return
+	 * Lista com todas os telefones de um funcionario
+	 * @param id referencia do Funcionario
+	 * @return Lista de String com os telefones do Funcionario especificado pelo id
 	 */
 	public List<String> getTelefones(int id) {
 		List<String> telefones = new ArrayList<String>();
