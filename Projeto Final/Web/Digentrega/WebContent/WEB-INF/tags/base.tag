@@ -17,7 +17,7 @@
     <title> DigEntrega - <jsp:invoke fragment="titulo"/> </title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" type="text/css" href="/digentrega/static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/bootstrap.min.css">
     <!-- Bootstrap theme -->
     <link href="${pageContext.request.contextPath}/static/css/bootstrap-theme.min.css" rel="stylesheet">
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

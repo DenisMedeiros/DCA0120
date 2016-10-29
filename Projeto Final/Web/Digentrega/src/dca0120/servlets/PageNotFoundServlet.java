@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("abc")  
 public class PageNotFoundServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -999600673680107168L;
