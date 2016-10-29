@@ -8,7 +8,7 @@ import java.sql.SQLException;
  * @author denis
  * @author ney
  * 
- * Classe respons√°vel por abrir a conex√£o com o banco de dados.
+ * Classe respons·vel por abrir a conex„o com o banco de dados.
  *
  */
 public class ConnectionFactory {
@@ -17,9 +17,9 @@ public class ConnectionFactory {
 	private final static String usuario = "usuario";
 	private final static String senha = "123";
 	
-	/** Abre a conex√£o com o banco de dados e retorna-a.
+	/** Abre a conex„o com o banco de dados e retorna-a.
 	 *
-	 * @return conexao Conex√£o com o banco de dados.
+	 * @return conexao Conex„o com o banco de dados.
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
