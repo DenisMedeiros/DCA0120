@@ -9,14 +9,52 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
- 
-	 <servlet>
-	    <servlet-name>NotFound</servlet-name>
-	    <servlet-class>dca0120.servlets.PageNotFoundServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-	    <servlet-name>NotFound</servlet-name>
-	    <url-pattern>/</url-pattern>
-	</servlet-mapping>
+  
+  
+  <servlet>
+    <servlet-name>PaginaInicialServlet</servlet-name>
+    <servlet-class>dca0120.servlets.PaginaInicialServlet</servlet-class>
+  </servlet> 
+  <servlet-mapping>
+    <servlet-name>PaginaInicialServlet</servlet-name>
+    <url-pattern></url-pattern>
+</servlet-mapping>
  	  
+  <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>dca0120.servlets.LoginServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/login/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>dca0120.servlets.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/sair/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>PedidoServlet</servlet-name>
+    <servlet-class>dca0120.servlets.PedidoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PedidoServlet</servlet-name>
+    <url-pattern>/pedido/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>FuncionarioServlet</servlet-name>
+    <servlet-class>dca0120.servlets.FuncionarioServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FuncionarioServlet</servlet-name>
+    <url-pattern>/funcionario/*</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>

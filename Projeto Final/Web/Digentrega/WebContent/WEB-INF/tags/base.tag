@@ -51,29 +51,29 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">DigEntrega</a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/">DigEntrega</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav"> 
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Pedidos <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="/pedido/novo/">Novo Pedido</a></li>
-                  <li><a href="/pedido/abertos/">Ver Pedidos Abertos</a></li>
-                  <li><a href="/pedido/finalizados/">Ver Pedidos Finalizados</a></li>
+                  <li><a href="${pageContext.request.contextPath}/pedido/novo/">Novo Pedido</a></li>
+                  <li><a href="${pageContext.request.contextPath}/pedido/abertos/">Ver Pedidos Abertos</a></li>
+                  <li><a href="${pageContext.request.contextPath}/pedido/finalizados/">Ver Pedidos Finalizados</a></li>
                 </ul>
               </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Funcionários <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Cadastrar Caixa</a></li>
-                  <li><a href="#">Cadastrar Entregador</a></li>
-                  <li><a href="#">Listar Funcionários</a></li>
+                  <li><a href="${pageContext.request.contextPath}/funcionario/cadastar/">Cadastrar Caixa</a></li>
+                  <li><a href="${pageContext.request.contextPath}/funcionario/cadastar/">Cadastrar Entregador</a></li>
+                  <li><a href="${pageContext.request.contextPath}/funcionario/listar/">Listar Funcionários</a></li>
                 </ul>
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="#">Sair</a></li>
+              <li><a href="${pageContext.request.contextPath}/sair/">Sair</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
