@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
+import java.sql.Types;
 
 /**
  * 
@@ -43,7 +44,7 @@ public abstract class FuncionariosDAO {
 			String sql = "CREATE TABLE IF NOT EXISTS Funcionarios (ID INTEGER AUTO_INCREMENT, "
 					+ "Nome VARCHAR(255) NOT NULL, CPF VARCHAR(11) NOT NULL UNIQUE, "
 					+ "Senha VARCHAR(64) NOT NULL, DataNascimento DATE NOT NULL, "
-					+ "AdministradorID INTEGER NOT NULL, PRIMARY KEY (ID), "
+					+ "AdministradorID INTEGER, PRIMARY KEY (ID), "
 					+ "FOREIGN KEY (AdministradorID ) REFERENCES Funcionarios(ID))";
 			// testar o primeiro dado inserido na tabela (foreign key)
 			st.executeUpdate(sql);
@@ -70,9 +71,9 @@ public abstract class FuncionariosDAO {
 	 * @param AdmID
 	 *            Atributo do tipo int da classe abstrata Funcionario a ser
 	 *            inserido no banco de dados
+	 * @throws SQLException 
 	 */
-	public void inserirFuncionario(String nome, String cpf, String senha, Calendar dataNascimento, int AdmID) {
-		try {
+	public void inserirFuncionario(String nome, String cpf, String senha, Calendar dataNascimento, int AdmID) throws SQLException {
 			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Funcionarios(Nome, CPF, "
 					+ "Senha, DataNascimento, AdministradorID) VALUES (?, ?, ?, ?, ?);");
 
@@ -94,12 +95,15 @@ public abstract class FuncionariosDAO {
 			}
 
 			pst.setDate(4, javaSqlDate);
-			pst.setInt(5, AdmID);
-
+			
+			if(AdmID != -1) {
+				pst.setInt(5, AdmID);
+			} else {
+				pst.setNull(5, Types.NULL);
+			}
+			
 			pst.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+
 	}
 
 	/**

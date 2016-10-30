@@ -35,7 +35,7 @@ public class CaixasDAO extends FuncionariosDAO {
 		try {
 			Statement st = conexao.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS Caixas (FuncionarioID INTEGER NOT NULL, "
-					+ "EAdminstrador BOOLEAN DEFAULT false, PRIMARY KEY (FuncionarioID), "
+					+ "EAdministrador BOOLEAN DEFAULT false, PRIMARY KEY (FuncionarioID), "
 					+ "FOREIGN KEY (FuncionarioID ) REFERENCES Funcionarios(ID), " + ");";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -55,12 +55,13 @@ public class CaixasDAO extends FuncionariosDAO {
 	public void inserirCaixa(Caixa c, int admID) {
 		try {
 			this.inserirFuncionario(c.getNome(), c.getCpf(), c.getSenha(), c.getDataNascimento(), admID);
+
 			PreparedStatement pst = conexao
 					.prepareStatement("INSERT INTO Caixas(FuncionarioID, EAdministrador) VALUES (?, ?);");
-
+	
 			pst.setInt(1, this.getID(c.getCpf()));
 			pst.setBoolean(2, c.isAdministrador());
-
+			
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -81,8 +82,6 @@ public class CaixasDAO extends FuncionariosDAO {
 		try {
 			String sql = "SELECT * FROM Caixas INNER JOIN Funcionarios ON Funcionarios.ID=Caixas.FuncionarioID "
 					+ "WHERE CPF=?;";
-			
-			System.out.println(conexao);
 			
 			PreparedStatement pst = conexao.prepareStatement(sql);
 
