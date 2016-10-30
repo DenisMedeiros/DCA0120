@@ -16,19 +16,9 @@ import java.util.Calendar;
  *         tabela Funcionarios.
  *         </hr>
  */
-public class FuncionariosDAO {
+public abstract class FuncionariosDAO {
 
-	private Connection conexao;
-
-	/**
-	 * Método para acessar o objeto de tipo Connection que gera a conexão com o
-	 * banco de dados
-	 * 
-	 * @return objeto tipo Connection que gera a conexão com o banco de dados
-	 */
-	Connection getConexao() {
-		return conexao;
-	}
+	protected Connection conexao;
 
 	/**
 	 * Construtor padrão da classe Funcionarios que abre conexão com o banco de

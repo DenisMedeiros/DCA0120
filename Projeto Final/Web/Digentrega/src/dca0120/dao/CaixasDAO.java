@@ -33,7 +33,7 @@ public class CaixasDAO extends FuncionariosDAO {
 	 */
 	public void criarTabelaCaixas() {
 		try {
-			Statement st = this.getConexao().createStatement();
+			Statement st = conexao.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS Caixas (FuncionarioID INTEGER NOT NULL, "
 					+ "EAdminstrador BOOLEAN DEFAULT false, PRIMARY KEY (FuncionarioID), "
 					+ "FOREIGN KEY (FuncionarioID ) REFERENCES Funcionarios(ID), " + ");";
@@ -55,7 +55,7 @@ public class CaixasDAO extends FuncionariosDAO {
 	public void inserirCaixa(Caixa c, int admID) {
 		try {
 			this.inserirFuncionario(c.getNome(), c.getCpf(), c.getSenha(), c.getDataNascimento(), admID);
-			PreparedStatement pst = this.getConexao()
+			PreparedStatement pst = conexao
 					.prepareStatement("INSERT INTO Caixas(FuncionarioID, EAdministrador) VALUES (?, ?);");
 
 			pst.setInt(1, this.getID(c.getCpf()));
@@ -81,7 +81,10 @@ public class CaixasDAO extends FuncionariosDAO {
 		try {
 			String sql = "SELECT * FROM Caixas INNER JOIN Funcionarios ON Funcionarios.ID=Caixas.FuncionarioID "
 					+ "WHERE CPF=?;";
-			PreparedStatement pst = this.getConexao().prepareStatement(sql);
+			
+			System.out.println(conexao);
+			
+			PreparedStatement pst = conexao.prepareStatement(sql);
 
 			pst.setString(1, cpf);
 			ResultSet res = pst.executeQuery();
@@ -121,7 +124,7 @@ public class CaixasDAO extends FuncionariosDAO {
 		try {
 			String sql = "SELECT * FROM Caixas INNER JOIN Funcionarios ON Funcionarios.ID=Caixas.FuncionarioID "
 					+ "WHERE Caixas.FuncionarioID=?;";
-			PreparedStatement pst = this.getConexao().prepareStatement(sql);
+			PreparedStatement pst = conexao.prepareStatement(sql);
 
 			pst.setInt(1, id);
 			ResultSet res = pst.executeQuery();
@@ -155,7 +158,7 @@ public class CaixasDAO extends FuncionariosDAO {
 	public List<Caixa> getTodosCaixas() {
 		List<Caixa> lista = new ArrayList<Caixa>();
 		try {
-			Statement st = this.getConexao().createStatement();
+			Statement st = conexao.createStatement();
 			String sql = "SELECT * FROM Caixas INNER JOIN Funcionarios ON Funcionarios.ID=Caixas.FuncionarioID;";
 			ResultSet res = st.executeQuery(sql);
 

@@ -12,7 +12,6 @@ import dca0120.dao.CaixasGerenciamPedidosDAO;
 import dca0120.dao.CaixasGerenciamProdutosDAO;
 import dca0120.dao.EnderecosEntregaDAO;
 import dca0120.dao.EntregadoresDAO;
-import dca0120.dao.FuncionariosDAO;
 import dca0120.dao.PedidosContemProdutosDAO;
 import dca0120.dao.PedidosDAO;
 import dca0120.dao.ProdutosDAO;
@@ -28,9 +27,8 @@ public class PrepararBDServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
 		
-		FuncionariosDAO fd = new FuncionariosDAO();
-		fd.criarTabelaFuncionarios();
 		CaixasDAO cd = new CaixasDAO();
+		cd.criarTabelaFuncionarios();
 		cd.criarTabelaCaixas();
 		EntregadoresDAO ed = new EntregadoresDAO();
 		ed.criarTabelaEntregadores();

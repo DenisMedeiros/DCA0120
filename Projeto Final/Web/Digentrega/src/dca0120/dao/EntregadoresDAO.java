@@ -35,7 +35,7 @@ public class EntregadoresDAO extends FuncionariosDAO {
 	 */
 	public void criarTabelaEntregadores() {
 		try {
-			Statement st = this.getConexao().createStatement();
+			Statement st = conexao.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS Entregadores (FuncionarioID INTEGER NOT NULL, "
 					+ "CNH VARCHAR(20) NOT NULL, Placa VARCHAR(7) NOT NULL, PRIMARY KEY (FuncionarioID), "
 					+ "FOREIGN KEY (FuncionarioID ) REFERENCES Funcionarios(ID));";
@@ -57,7 +57,7 @@ public class EntregadoresDAO extends FuncionariosDAO {
 	public void inserirEntregador(Entregador e, int admID) {
 		try {
 			this.inserirFuncionario(e.getNome(), e.getCpf(), e.getSenha(), e.getDataNascimento(), admID);
-			PreparedStatement pst = this.getConexao()
+			PreparedStatement pst = conexao
 					.prepareStatement("INSERT INTO Entregador(FuncionarioID, CNH, Placa) VALUES (?, ?, ?);");
 
 			pst.setInt(1, this.getID(e.getCpf()));
@@ -84,7 +84,7 @@ public class EntregadoresDAO extends FuncionariosDAO {
 		try {
 			String sql = "SELECT * FROM Entregadores INNER JOIN Funcionarios "
 					+ "ON Funcionarios.ID=Entregadores.FuncionarioID WHERE Funcionarios.ID=?;";
-			PreparedStatement pst = getConexao().prepareStatement(sql);
+			PreparedStatement pst = conexao.prepareStatement(sql);
 
 			pst.setInt(1, id);
 			ResultSet res = pst.executeQuery();
@@ -124,7 +124,7 @@ public class EntregadoresDAO extends FuncionariosDAO {
 		try {
 			String sql = "SELECT * FROM Entregadores INNER JOIN Funcionarios "
 					+ "ON Funcionarios.ID=Entregadores.FuncionarioID WHERE CPF=?;";
-			PreparedStatement pst = this.getConexao().prepareStatement(sql);
+			PreparedStatement pst = conexao.prepareStatement(sql);
 
 			pst.setString(1, cpf);
 			ResultSet res = pst.executeQuery();
@@ -158,7 +158,7 @@ public class EntregadoresDAO extends FuncionariosDAO {
 	public List<Entregador> getTodosEntregadores() {
 		List<Entregador> lista = new ArrayList<Entregador>();
 		try {
-			Statement st = this.getConexao().createStatement();
+			Statement st = conexao.createStatement();
 			String sql = "SELECT * FROM Entregadores INNER JOIN Funcionarios "
 					+ "ON Funcionarios.ID=Entregadores.FuncionarioID;";
 			ResultSet res = st.executeQuery(sql);

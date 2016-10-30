@@ -29,6 +29,9 @@ public class EntrarServlet extends HttpServlet {
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
+		
+		HttpSession session = request.getSession(true);
+		
         String cpf = request.getParameter("cpf");
         String senha = request.getParameter("senha");
         
@@ -38,7 +41,11 @@ public class EntrarServlet extends HttpServlet {
         Caixa c = cd.getCaixaWithCPF(cpf);
         Entregador e = ed.getEntregadorWithCpf(cpf);
         
-		HttpSession session = request.getSession(true);
+        if(c == null && e == null) { // Não existe funcionário com este CPF.
+        	session.setAttribute("mensagem", "CPF e/ou senha incorretos.");
+        	response.sendRedirect(request.getContextPath() + "/entrar/");
+        	return;
+        }
         
         String senhaCriptografada = Hashing.plainToSHA256(senha, c.getCpf().getBytes());
         

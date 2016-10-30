@@ -100,6 +100,19 @@
     </div> 
     <!-- Fim da barra de menu. -->
     
+    <c:if test="${ mensagem ne null }">
+    
+	    <div class="container theme-showcase" role="main">
+		    <div class="alert alert-info alert-dismissible" role="alert">
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			 <c:out value="${mensagem}"></c:out>
+			</div>
+		</div>
+		
+		<% request.getSession().removeAttribute("mensagem"); %>
+	
+	 </c:if>
+	
    	<jsp:invoke fragment="conteudoPrincipal"/>
     
     <footer class="footer">
