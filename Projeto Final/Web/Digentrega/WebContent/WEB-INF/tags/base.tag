@@ -57,8 +57,7 @@
           
           <div id="navbar" class="navbar-collapse collapse">
         
-          <c:choose>
-		  <c:when test="${usuario ne null }"> <%-- Verifica se existe um usuário logado. --%>
+		  <c:if test="${(caixa ne null)}"> <%-- Verifica se existe um usuário logado. --%>
           	
           	
             <ul class="nav navbar-nav"> 
@@ -70,6 +69,9 @@
                   <li><a href="${pageContext.request.contextPath}/pedido/finalizados/">Ver Pedidos Finalizados</a></li>
                 </ul>
               </li>
+   
+               <c:if test="${(administrador ne null)}"> <%-- Verifica se existe um usuário logado. --%>
+              
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Funcionários <span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -78,10 +80,13 @@
                   <li><a href="${pageContext.request.contextPath}/funcionario/listar/">Listar Funcionários</a></li>
                 </ul>
               </li>
+              
+              </c:if>
+              
+              
             </ul>
             
-            </c:when>
-            </c:choose> <%-- Fim do teste se existe um usuário logado. --%>
+            </c:if> <%-- Fim do teste se existe um usuário logado. --%>
 
             
             <ul class="nav navbar-nav navbar-right">

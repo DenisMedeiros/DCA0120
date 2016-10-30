@@ -50,13 +50,15 @@ public class EntrarServlet extends HttpServlet {
         String senhaCriptografada = Hashing.plainToSHA256(senha, c.getCpf().getBytes());
         
         if(c.getSenha().equals(senhaCriptografada)) { // Verifica se é um Caixa.
-		    if (session.isNew()){
-		        session.setAttribute("caixa", c.getId());
-		    } else {
-		    	session.setAttribute("caixa", c.getId());
-		    }
-		    
-		    session.setAttribute("mensagem", "Caixa logado com sucesso!");
+        	
+        	if(c.isAdministrador()) {
+        		session.setAttribute("administrador", c.getId());
+        		session.setAttribute("mensagem", "Administrador logado com sucesso!");
+        	} else {
+        		session.setAttribute("mensagem", "Caixa logado com sucesso!");
+        	}
+			    
+        	session.setAttribute("caixa", c.getId());
 		    response.sendRedirect(request.getContextPath());    
         
         } else if (e.getSenha().equals(senhaCriptografada)) {  // Verifica se é um Entregador.
