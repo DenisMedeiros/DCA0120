@@ -17,14 +17,14 @@ import dca0120.model.Produto;
  *         Produtos com a tabela CaixasGerenciamProdutos.
  *         </hr>
  */
-public final class CaixasGerenciamProdutos {
+public final class CaixasGerenciamProdutosDAO {
 	private Connection conexao;
 
 	/**
 	 * Construtor padrão da classe CaixasGerenciamProdutos que abre conexão com
 	 * o banco de dados
 	 */
-	public CaixasGerenciamProdutos() {
+	public CaixasGerenciamProdutosDAO() {
 		try {
 			conexao = ConnectionFactory.getConexao();
 		} catch (ClassNotFoundException e) {
@@ -92,9 +92,9 @@ public final class CaixasGerenciamProdutos {
 			}
 
 			while (res.next()) {
-				Produtos ps = new Produtos();
+				ProdutosDAO ps = new ProdutosDAO();
 				Produto p = ps.getProduto(res.getInt("ProdutoID"));
-				Caixas cs = new Caixas();
+				CaixasDAO cs = new CaixasDAO();
 				Caixa c = cs.getCaixaWithID(res.getInt("CaixaID"));
 				m.put(p, c);
 			}

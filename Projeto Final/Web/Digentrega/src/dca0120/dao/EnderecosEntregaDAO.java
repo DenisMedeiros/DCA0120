@@ -17,7 +17,7 @@ import dca0120.model.Pedido;
  *         objeto Pedido com seu respectivo Objeto Endereco
  *         </hr>
  */
-public class EnderecosEntrega {
+public class EnderecosEntregaDAO {
 
 	private Connection conexao;
 
@@ -25,7 +25,7 @@ public class EnderecosEntrega {
 	 * Construtor padrão da classe EnderecosEntrega que abre conexão com o banco
 	 * de dados
 	 */
-	public EnderecosEntrega() {
+	public EnderecosEntregaDAO() {
 		try {
 			conexao = ConnectionFactory.getConexao();
 		} catch (ClassNotFoundException e) {

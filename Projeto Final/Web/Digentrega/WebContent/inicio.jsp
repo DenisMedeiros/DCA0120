@@ -17,9 +17,13 @@
 	      <div class="jumbotron">
 	        <h1>DigEntrega</h1>
 	        <p> O DigEntrega é uma ferramenta que facilita o processo de logística de entregas de encomendas.</p>
-	        <p> Por favor, escolha uma função na barra de menu.
+	        <p> Por favor, escolha uma função na barra de menu.			
 	      </div>
       </div>
+      
+     
     </jsp:attribute> 
            
 </template:base>
+
+<% String a = "123"; %>

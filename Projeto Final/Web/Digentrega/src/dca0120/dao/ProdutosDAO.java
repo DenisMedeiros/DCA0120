@@ -19,14 +19,14 @@ import dca0120.model.Produto;
  *         Produtos no banco de dados.
  *         </hr>
  */
-public class Produtos {
+public class ProdutosDAO {
 
 	private Connection conexao;
 
 	/**
 	 * Construtor da classe Produtos que abre conexão com o banco de dados
 	 */
-	public Produtos() {
+	public ProdutosDAO() {
 		try {
 			conexao = ConnectionFactory.getConexao();
 		} catch (ClassNotFoundException e) {
@@ -102,7 +102,7 @@ public class Produtos {
 			}
 
 			if (res.next()) {
-				Caixas caixas = new Caixas();
+				CaixasDAO caixas = new CaixasDAO();
 				Caixa c = caixas.getCaixaWithID(res.getInt("CaixaID"));
 				p = new Produto(id, res.getString("Nome"), res.getFloat("Preco"), res.getString("Foto"),
 						res.getFloat("Peso"), res.getFloat("Volume"), res.getString("Descricao"), c,
@@ -172,7 +172,7 @@ public class Produtos {
 			}
 
 			while (res.next()) {
-				Caixas caixas = new Caixas();
+				CaixasDAO caixas = new CaixasDAO();
 				Caixa c = caixas.getCaixaWithID(res.getInt("CaixaID"));
 				Produto p = new Produto(res.getInt("ID"), res.getString("Nome"), res.getFloat("Preco"),
 						res.getString("Foto"), res.getFloat("Peso"), res.getFloat("Volume"), res.getString("Descricao"),

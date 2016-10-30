@@ -3,6 +3,7 @@
 <%@attribute name="conteudoPrincipal" fragment="true" %>
 <%@attribute name="rodapeExtra" fragment="true" %>
 <%@attribute name="titulo" fragment="true" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
@@ -31,7 +32,7 @@
     
     <!-- Custom styles for this template -->
     <link href="${pageContext.request.contextPath}/static/css/navbar.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/digentrega/static/css/digentrega.css" rel="stylesheet"> 
+    <link href="${pageContext.request.contextPath}/static/css/digentrega.css" rel="stylesheet"> 
    
    	<jsp:invoke fragment="cabecalhoExtra"/>
    
@@ -53,7 +54,13 @@
             </button>
             <a class="navbar-brand" href="${pageContext.request.contextPath}/">DigEntrega</a>
           </div>
+          
           <div id="navbar" class="navbar-collapse collapse">
+        
+          <c:choose>
+		  <c:when test="${usuario ne null }"> <%-- Verifica se existe um usuário logado. --%>
+          	
+          	
             <ul class="nav navbar-nav"> 
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Pedidos <span class="caret"></span></a>
@@ -72,8 +79,20 @@
                 </ul>
               </li>
             </ul>
+            
+            </c:when>
+            </c:choose> <%-- Fim do teste se existe um usuário logado. --%>
+
+            
             <ul class="nav navbar-nav navbar-right">
+            <c:choose>
+		  	<c:when test="${usuario ne null }"> <%-- Verifica se existe um usuário logado. --%>
               <li><a href="${pageContext.request.contextPath}/sair/">Sair</a></li>
+            </c:when>
+            <c:when test="${usuario eq null }"> <%-- Verifica se existe um usuário logado. --%>
+              <li><a href="${pageContext.request.contextPath}/entrar/">Entrar</a></li>
+            </c:when>
+            </c:choose>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->

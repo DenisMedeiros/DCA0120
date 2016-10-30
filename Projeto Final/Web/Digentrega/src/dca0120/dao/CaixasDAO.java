@@ -18,13 +18,13 @@ import dca0120.model.Caixa;
  *         Caixas.
  *         </hr>
  */
-public class Caixas extends Funcionarios {
+public class CaixasDAO extends FuncionariosDAO {
 
 	/**
 	 * Construtor padrão da classe Caixas que abre conexão com o banco de dados
 	 * via classe mãe
 	 */
-	public Caixas() {
+	public CaixasDAO() {
 		super();
 	}
 
@@ -94,7 +94,7 @@ public class Caixas extends Funcionarios {
 				Calendar dataN = Calendar.getInstance();
 				dataN.setTime(res.getDate("DataNascimento"));
 
-				Telefones t = new Telefones();
+				TelefonesDAO t = new TelefonesDAO();
 				List<String> telefones = t.getTelefones(res.getInt("FuncionarioID"));
 
 				c = new Caixa(res.getInt("FuncionarioID"), cpf, res.getString("Senha"), res.getString("Nome"), dataN,
@@ -134,7 +134,7 @@ public class Caixas extends Funcionarios {
 				Calendar dataNasc = Calendar.getInstance();
 				dataNasc.setTime(res.getDate("DataNascimento"));
 
-				Telefones t = new Telefones();
+				TelefonesDAO t = new TelefonesDAO();
 				List<String> telefones = t.getTelefones(id);
 
 				c = new Caixa(id, res.getString("CPF"), res.getString("Senha"), res.getString("Nome"), dataNasc,
@@ -163,7 +163,7 @@ public class Caixas extends Funcionarios {
 				Calendar dataNasc = Calendar.getInstance();
 				dataNasc.setTime(res.getDate("DataNascimento"));
 
-				Telefones t = new Telefones();
+				TelefonesDAO t = new TelefonesDAO();
 				List<String> telefones = t.getTelefones(res.getInt("FuncionarioID"));
 
 				Caixa c = new Caixa(res.getInt("FuncionarioID"), res.getString("CPF"), res.getString("Senha"),

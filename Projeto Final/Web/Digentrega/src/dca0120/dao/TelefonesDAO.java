@@ -15,14 +15,14 @@ import java.util.List;
  *  Classe responsavel por ligar um telefone com seu dono, um Funcionario, no banco de dados
  *</hr>
  */
-public class Telefones {
+public class TelefonesDAO {
 	
 	private Connection conexao;
 
 	/**
 	 * Construtor padrão da classe Telefones que abre conexão com o banco de dados
 	 */
-	public Telefones() {
+	public TelefonesDAO() {
 		try {
 			conexao = ConnectionFactory.getConexao();
 		} catch (ClassNotFoundException e) {

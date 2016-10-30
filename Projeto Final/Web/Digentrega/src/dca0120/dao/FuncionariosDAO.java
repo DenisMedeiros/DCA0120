@@ -16,7 +16,7 @@ import java.util.Calendar;
  *         tabela Funcionarios.
  *         </hr>
  */
-public abstract class Funcionarios {
+public class FuncionariosDAO {
 
 	private Connection conexao;
 
@@ -34,7 +34,7 @@ public abstract class Funcionarios {
 	 * Construtor padrão da classe Funcionarios que abre conexão com o banco de
 	 * dados
 	 */
-	public Funcionarios() {
+	public FuncionariosDAO() {
 		try {
 			conexao = ConnectionFactory.getConexao();
 		} catch (ClassNotFoundException e) {
@@ -241,4 +241,6 @@ public abstract class Funcionarios {
 
 		return cpf;
 	}
+		
+	
 }

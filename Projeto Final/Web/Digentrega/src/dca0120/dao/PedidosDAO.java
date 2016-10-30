@@ -22,14 +22,14 @@ import dca0120.model.Pedido.Status;
  *         Pedidos.
  *         </hr>
  */
-public class Pedidos {
+public class PedidosDAO {
 
 	private Connection conexao;
 
 	/**
 	 * Construtor da classe Pedidos que abre conexão com o banco de dados
 	 */
-	public Pedidos() {
+	public PedidosDAO() {
 		try {
 			conexao = ConnectionFactory.getConexao();
 		} catch (ClassNotFoundException e) {
@@ -42,7 +42,7 @@ public class Pedidos {
 	/**
 	 * Cria a tabela Pedidos no banco de dados.
 	 */
-	public void CriaTabelaPedidos() {
+	public void criarTabelaPedidos() {
 		try {
 			Statement st = conexao.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS Pedidos (ID  INTEGER AUTO_INCREMENT, VolumeTotal FLOAT, "
@@ -188,13 +188,13 @@ public class Pedidos {
 					break;
 				}
 				Entregador ent;
-				Entregadores ents = new Entregadores();
+				EntregadoresDAO ents = new EntregadoresDAO();
 				ent = ents.getEntregadorWithID(res.getInt("EntregadorID"));
 				Calendar dataHoraEntrega = Calendar.getInstance(), dataHoraAbertura;
 				dataHoraEntrega.setTimeInMillis(res.getTimestamp("DataHoraEntrega").getTime());
-				CaixasGerenciamPedidos cgp = new CaixasGerenciamPedidos();
+				CaixasGerenciamPedidosDAO cgp = new CaixasGerenciamPedidosDAO();
 				dataHoraAbertura = cgp.getDataHoraAbertura(id);
-				EnderecosEntrega endereco = new EnderecosEntrega();
+				EnderecosEntregaDAO endereco = new EnderecosEntregaDAO();
 				Endereco enderecoEntrega = endereco.getEnderecoEntrega(id);
 				p = new Pedido(id, status, res.getString("Descricao"), ent, dataHoraAbertura, dataHoraEntrega,
 						enderecoEntrega);
@@ -245,13 +245,13 @@ public class Pedidos {
 					break;
 				}
 				Entregador ent;
-				Entregadores ents = new Entregadores();
+				EntregadoresDAO ents = new EntregadoresDAO();
 				ent = ents.getEntregadorWithID(res.getInt("EntregadorID"));
 				Calendar dataHoraEntrega = Calendar.getInstance(), dataHoraAbertura;
 				dataHoraEntrega.setTimeInMillis(res.getTimestamp("DataHoraEntrega").getTime());
-				CaixasGerenciamPedidos cgp = new CaixasGerenciamPedidos();
+				CaixasGerenciamPedidosDAO cgp = new CaixasGerenciamPedidosDAO();
 				dataHoraAbertura = cgp.getDataHoraAbertura(res.getInt("ID"));
-				EnderecosEntrega endereco = new EnderecosEntrega();
+				EnderecosEntregaDAO endereco = new EnderecosEntregaDAO();
 				Endereco enderecoEntrega = endereco.getEnderecoEntrega(res.getInt("ID"));
 				Pedido p = new Pedido(res.getInt("ID"), status, res.getString("Descricao"), ent, dataHoraAbertura,
 						dataHoraEntrega, enderecoEntrega);

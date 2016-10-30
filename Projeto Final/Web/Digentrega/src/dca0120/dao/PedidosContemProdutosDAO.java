@@ -16,7 +16,7 @@ import dca0120.model.Produto;
  *         PedidosContemProdutos.
  *         </hr>
  */
-public final class PedidosContemProdutos {
+public final class PedidosContemProdutosDAO {
 
 	private Connection conexao;
 
@@ -24,7 +24,7 @@ public final class PedidosContemProdutos {
 	 * Construtor padrão da classe PedidosContemProdutos que abre conexão com o
 	 * banco de dados
 	 */
-	public PedidosContemProdutos() {
+	public PedidosContemProdutosDAO() {
 		try {
 			conexao = ConnectionFactory.getConexao();
 		} catch (ClassNotFoundException e) {

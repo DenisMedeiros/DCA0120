@@ -6,8 +6,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class LogoutServlet extends HttpServlet {
+public class SairServlet extends HttpServlet {
 
 
 	private static final long serialVersionUID = -7552123270167571493L;
@@ -15,8 +16,15 @@ public class LogoutServlet extends HttpServlet {
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
-
-        request.getRequestDispatcher("/login.jsp").forward(request, response);
+		
+		HttpSession session = request.getSession(true);
+		
+		if(session.getAttribute("usuario") != null) {
+			session.setAttribute("usuario", null);
+			session.invalidate();
+		}
+		
+		response.sendRedirect(request.getContextPath());
     }
 
 	@Override

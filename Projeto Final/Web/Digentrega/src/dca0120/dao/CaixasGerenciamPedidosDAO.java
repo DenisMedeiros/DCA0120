@@ -18,14 +18,14 @@ import dca0120.model.Pedido;
  *         Pedidos com a tabela CaixasGerenciamPedidos.
  *         </hr>
  */
-public final class CaixasGerenciamPedidos {
+public final class CaixasGerenciamPedidosDAO {
 	private Connection conexao;
 
 	/**
 	 * Construtor padrão da classe CaixasGerenciamPedidos que abre conexão com o
 	 * banco de dados
 	 */
-	public CaixasGerenciamPedidos() {
+	public CaixasGerenciamPedidosDAO() {
 		try {
 			conexao = ConnectionFactory.getConexao();
 		} catch (ClassNotFoundException e) {

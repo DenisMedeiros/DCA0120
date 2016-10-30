@@ -20,13 +20,13 @@ import dca0120.model.Entregador;
  *         Entregadores.
  *         </hr>
  */
-public class Entregadores extends Funcionarios {
+public class EntregadoresDAO extends FuncionariosDAO {
 
 	/**
 	 * Construtor padrão da classe Entregadores que abre conexão com o banco de
 	 * dados via classe mãe
 	 */
-	public Entregadores() {
+	public EntregadoresDAO() {
 		super();
 	}
 
@@ -97,7 +97,7 @@ public class Entregadores extends Funcionarios {
 				Calendar dataNasc = Calendar.getInstance();
 				dataNasc.setTime(res.getDate("DataNascimento"));
 
-				Telefones t = new Telefones();
+				TelefonesDAO t = new TelefonesDAO();
 				List<String> telefones = t.getTelefones(id);
 
 				ent = new Entregador(id, res.getString("CPF"), res.getString("Senha"), res.getString("Nome"), dataNasc,
@@ -137,7 +137,7 @@ public class Entregadores extends Funcionarios {
 				Calendar dataNasc = Calendar.getInstance();
 				dataNasc.setTime(res.getDate("DataNascimento"));
 
-				Telefones t = new Telefones();
+				TelefonesDAO t = new TelefonesDAO();
 				List<String> telefones = t.getTelefones(res.getInt("FuncionarioID"));
 
 				ent = new Entregador(res.getInt("FuncionarioID"), cpf, res.getString("Senha"), res.getString("Nome"),
@@ -167,7 +167,7 @@ public class Entregadores extends Funcionarios {
 				Calendar dataNasc = Calendar.getInstance();
 				dataNasc.setTime(res.getDate("DataNascimento"));
 
-				Telefones t = new Telefones();
+				TelefonesDAO t = new TelefonesDAO();
 				List<String> telefones = t.getTelefones(res.getInt("FuncionarioID"));
 
 				Entregador ent = new Entregador(res.getInt("FuncionarioID"), res.getString("CPF"),
