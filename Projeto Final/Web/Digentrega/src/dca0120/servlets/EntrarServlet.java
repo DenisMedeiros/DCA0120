@@ -42,7 +42,7 @@ public class EntrarServlet extends HttpServlet {
         Entregador e = ed.getEntregadorWithCpf(cpf);
         
         if(c == null && e == null) { // Não existe funcionário com este CPF.
-        	session.setAttribute("mensagem", "CPF e/ou senha incorretos.");
+        	session.setAttribute("mensagem", "Falha de autenticação: CPF e/ou senha incorretos.");
         	response.sendRedirect(request.getContextPath() + "/entrar/");
         	return;
         }

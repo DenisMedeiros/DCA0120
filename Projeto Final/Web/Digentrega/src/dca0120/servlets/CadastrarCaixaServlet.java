@@ -6,8 +6,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class FuncionarioServlet extends HttpServlet {
+public class CadastrarCaixaServlet extends HttpServlet {
 
 
 	private static final long serialVersionUID = -7552123270167571493L;
@@ -15,8 +16,18 @@ public class FuncionarioServlet extends HttpServlet {
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
-
-        request.getRequestDispatcher("/login.jsp").forward(request, response);
+		
+		HttpSession session = request.getSession(false);
+		
+		// Verifica se o usuário que quer acessar esta função é o administrador.
+		Integer administrador = (Integer) session.getAttribute("administrador");
+		if(administrador == null) {
+	     	session.setAttribute("mensagem", "Apenas o administrador pode cadastrar funcionários.");
+        	response.sendRedirect(request.getContextPath());
+        	return;
+		}
+		
+        request.getRequestDispatcher("/cadastrarCaixa.jsp").forward(request, response);
     }
 
 	@Override
@@ -33,7 +44,7 @@ public class FuncionarioServlet extends HttpServlet {
         }
 
         request.setAttribute("message", message);
-        request.getRequestDispatcher("/login.jsp").forward(request, response);
+        request.getRequestDispatcher("/cadastrar.jsp").forward(request, response);
     }
 
 } 

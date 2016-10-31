@@ -19,29 +19,17 @@ public class SairServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession(true);
 		
-		if(session.getAttribute("usuario") != null) {
-			session.setAttribute("usuario", null);
-			session.invalidate();
-		}
-		
+		session.setAttribute("caixa", null);
+		session.setAttribute("administrador", null);
+		session.setAttribute("entregador", null);
+		session.invalidate();
+
 		response.sendRedirect(request.getContextPath());
     }
 
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String message = null;
-
-        if ((username.equals("kiran")) && (password.equals("kiran"))) {
-            message = "Welcome "+username+" thanks for login...";
-        } else {
-            message = "You are not the valid user...";
-        }
-
-        request.setAttribute("message", message);
-        request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 
 } 

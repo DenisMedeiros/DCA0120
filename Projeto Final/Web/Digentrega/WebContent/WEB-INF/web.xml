@@ -48,12 +48,21 @@
   </servlet-mapping>
   
   <servlet>
-    <servlet-name>FuncionarioServlet</servlet-name>
-    <servlet-class>dca0120.servlets.FuncionarioServlet</servlet-class>
+    <servlet-name>CadastrarCaixaServlet</servlet-name>
+    <servlet-class>dca0120.servlets.CadastrarCaixaServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>FuncionarioServlet</servlet-name>
-    <url-pattern>/funcionario/*</url-pattern>
+    <servlet-name>CadastrarCaixaServlet</servlet-name>
+    <url-pattern>/cadastrar/caixa/*</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>CadastrarEntregadorServlet</servlet-name>
+    <servlet-class>dca0120.servlets.CadastrarEntregadorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CadastrarEntregadorServlet</servlet-name>
+    <url-pattern>/cadastrar/entregador/*</url-pattern>
   </servlet-mapping>
   
   <servlet>

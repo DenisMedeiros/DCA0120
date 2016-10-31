@@ -75,8 +75,8 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Funcionários <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="${pageContext.request.contextPath}/funcionario/cadastar/">Cadastrar Caixa</a></li>
-                  <li><a href="${pageContext.request.contextPath}/funcionario/cadastar/">Cadastrar Entregador</a></li>
+                  <li><a href="${pageContext.request.contextPath}/cadastrar/caixa/">Cadastrar Caixa</a></li>
+                  <li><a href="${pageContext.request.contextPath}/cadastrar/entregador/">Cadastrar Entregador</a></li>
                   <li><a href="${pageContext.request.contextPath}/funcionario/listar/">Listar Funcionários</a></li>
                 </ul>
               </li>
@@ -91,10 +91,10 @@
             
             <ul class="nav navbar-nav navbar-right">
             <c:choose>
-		  	<c:when test="${usuario ne null }"> <%-- Verifica se existe um usuário logado. --%>
+		  	<c:when test="${(caixa ne null) || (entregador ne null) }"> <%-- Verifica se existe um usuário logado. --%>
               <li><a href="${pageContext.request.contextPath}/sair/">Sair</a></li>
             </c:when>
-            <c:when test="${usuario eq null }"> <%-- Verifica se existe um usuário logado. --%>
+            <c:when test="${ !((caixa ne null) || (entregador ne null)) }"> <%-- Verifica se existe um usuário logado. --%>
               <li><a href="${pageContext.request.contextPath}/entrar/">Entrar</a></li>
             </c:when>
             </c:choose>
