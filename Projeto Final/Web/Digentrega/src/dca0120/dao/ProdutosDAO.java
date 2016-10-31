@@ -47,7 +47,7 @@ public class ProdutosDAO {
 					+ "Volume FLOAT, Descricao VARCHAR(800), CaixaID INTEGER NOT NULL, "
 					+ "QuantidadeEmEstoque INTEGER NOT NULL, "
 					+ "CONSTRAINT chk_Estoque CHECK (QuantidadeEmEstoque>=0), PRIMARY KEY (ID), "
-					+ "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID))";
+					+ "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID));";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -63,7 +63,7 @@ public class ProdutosDAO {
 	public void inserirProduto(Produto p) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Produtos(Nome, Preco, Foto, Peso, Volume,"
-					+ "CaixaID, QuantidadeEmEstoque) VALUES (?, ?, ?, ?, ?, ?, ?);");
+					+ "CaixaID, QuantidadeEmEstoque) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
 			pst.setString(1, p.getNome());
 			pst.setFloat(2, p.getPreco());
@@ -91,7 +91,7 @@ public class ProdutosDAO {
 		Produto p = null;
 
 		try {
-			String sql = "SELECT * FROM Produtos WHERE ID=?;";
+			String sql = "SELECT * FROM Produtos WHERE ID=?";
 
 			PreparedStatement pst = conexao.prepareStatement(sql);
 			pst.setInt(1, id);
@@ -101,9 +101,10 @@ public class ProdutosDAO {
 				return p;
 			}
 
+			CaixasDAO caixas = new CaixasDAO();
+			Caixa c = null;
 			if (res.next()) {
-				CaixasDAO caixas = new CaixasDAO();
-				Caixa c = caixas.getCaixaWithID(res.getInt("CaixaID"));
+				c = caixas.getCaixaWithID(res.getInt("CaixaID"));
 				p = new Produto(id, res.getString("Nome"), res.getFloat("Preco"), res.getString("Foto"),
 						res.getFloat("Peso"), res.getFloat("Volume"), res.getString("Descricao"), c,
 						res.getInt("QuantidadeEmEstoque"));
@@ -124,10 +125,12 @@ public class ProdutosDAO {
 	public void alterarEstoque(Produto p) {
 
 		try {
-			PreparedStatement pst = conexao.prepareStatement("UPDATE Produtos SET QuantidadeEmEstoque=? WHERE ID=?;");
-
+			PreparedStatement pst = conexao.prepareStatement("UPDATE Produtos SET QuantidadeEmEstoque=? WHERE ID=?");
+			
 			pst.setInt(1, p.getQuantidadeEstoque());
 			pst.setInt(2, p.getId());
+			
+			pst.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -144,10 +147,12 @@ public class ProdutosDAO {
 	 */
 	public void alterarPreco(int id, float novoPreco) {
 		try {
-			PreparedStatement pst = conexao.prepareStatement("UPDATE Produtos SET Preco=? WHERE ID=?;");
+			PreparedStatement pst = conexao.prepareStatement("UPDATE Produtos SET Preco=? WHERE ID=?");
 
 			pst.setFloat(1, novoPreco);
 			pst.setInt(2, id);
+			
+			pst.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -155,7 +160,7 @@ public class ProdutosDAO {
 	}
 
 	/**
-	 * Pegar todos os Produtos registrados no banco de dados
+	 * Pega todos os Produtos registrados no banco de dados
 	 * 
 	 * @return Lista objetos de Produto com todos os produtos do banco de dados
 	 */
@@ -164,16 +169,17 @@ public class ProdutosDAO {
 
 		try {
 			Statement st = conexao.createStatement();
-			String sql = "SELECT * FROM Produtos;";
+			String sql = "SELECT * FROM Produtos";
 			ResultSet res = st.executeQuery(sql);
 
 			if (res.wasNull()) {
 				return lista;
 			}
 
+			CaixasDAO caixas = new CaixasDAO();
+			Caixa c = null;
 			while (res.next()) {
-				CaixasDAO caixas = new CaixasDAO();
-				Caixa c = caixas.getCaixaWithID(res.getInt("CaixaID"));
+				c = caixas.getCaixaWithID(res.getInt("CaixaID"));
 				Produto p = new Produto(res.getInt("ID"), res.getString("Nome"), res.getFloat("Preco"),
 						res.getString("Foto"), res.getFloat("Peso"), res.getFloat("Volume"), res.getString("Descricao"),
 						c, res.getInt("QuantidadeEmEstoque"));
@@ -193,13 +199,28 @@ public class ProdutosDAO {
 	 */
 	public void removerProduto(int id) {
 		try {
-			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Produtos WHERE ID=?;");
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Produtos WHERE ID=?");
 
 			pst.setInt(1, id);
+			
+			pst.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
+	public boolean isEmpty() {
+		String sql = "SELECT * FROM Produtos;";
+
+		try {
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			ResultSet res = pst.executeQuery();
+			
+			return res.wasNull();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
 }

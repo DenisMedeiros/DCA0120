@@ -38,7 +38,7 @@ public class EntregadoresDAO extends FuncionariosDAO {
 			Statement st = conexao.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS Entregadores (FuncionarioID INTEGER NOT NULL, "
 					+ "CNH VARCHAR(20) NOT NULL, Placa VARCHAR(7) NOT NULL, PRIMARY KEY (FuncionarioID), "
-					+ "FOREIGN KEY (FuncionarioID ) REFERENCES Funcionarios(ID));";
+					+ "FOREIGN KEY (FuncionarioID ) REFERENCES Funcionarios(ID))";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -58,7 +58,7 @@ public class EntregadoresDAO extends FuncionariosDAO {
 		try {
 			this.inserirFuncionario(e.getNome(), e.getCpf(), e.getSenha(), e.getDataNascimento(), admID);
 			PreparedStatement pst = conexao
-					.prepareStatement("INSERT INTO Entregador(FuncionarioID, CNH, Placa) VALUES (?, ?, ?);");
+					.prepareStatement("INSERT INTO Entregadores (FuncionarioID, CNH, Placa) VALUES (?, ?, ?)");
 
 			pst.setInt(1, this.getID(e.getCpf()));
 			pst.setString(2, e.getCnh());
@@ -83,7 +83,7 @@ public class EntregadoresDAO extends FuncionariosDAO {
 
 		try {
 			String sql = "SELECT * FROM Entregadores INNER JOIN Funcionarios "
-					+ "ON Funcionarios.ID=Entregadores.FuncionarioID WHERE Funcionarios.ID=?;";
+					+ "ON Funcionarios.ID=Entregadores.FuncionarioID WHERE Funcionarios.ID=?";
 			PreparedStatement pst = conexao.prepareStatement(sql);
 
 			pst.setInt(1, id);
@@ -123,7 +123,7 @@ public class EntregadoresDAO extends FuncionariosDAO {
 
 		try {
 			String sql = "SELECT * FROM Entregadores INNER JOIN Funcionarios "
-					+ "ON Funcionarios.ID=Entregadores.FuncionarioID WHERE CPF=?;";
+					+ "ON Funcionarios.ID=Entregadores.FuncionarioID WHERE CPF=?";
 			PreparedStatement pst = conexao.prepareStatement(sql);
 
 			pst.setString(1, cpf);
@@ -183,4 +183,18 @@ public class EntregadoresDAO extends FuncionariosDAO {
 		return lista;
 	}
 
+	public boolean isEmpty() {
+		String sql = "SELECT * FROM Entregadores INNER JOIN Funcionarios "
+				+ "ON Funcionarios.ID=Entregadores.FuncionarioID;";
+
+		try {
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			ResultSet res = pst.executeQuery();
+			
+			return res.wasNull();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
 }

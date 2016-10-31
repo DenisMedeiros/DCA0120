@@ -41,9 +41,9 @@ public class EnderecosEntregaDAO {
 	public void criarTabelaEnderecosEntrega() {
 		try {
 			Statement st = conexao.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS EnderecosEntrega (PedidoID  INTEGER NOT NULL, "
+			String sql = "CREATE TABLE IF NOT EXISTS EnderecosEntrega (PedidoID INTEGER NOT NULL, "
 					+ "Latitude FLOAT NOT NULL, Longitude FLOAT NOT NULL, Descricao VARCHAR(800), "
-					+ "PRIMARY KEY (PedidoID), FOREIGN KEY ( PedidoID ) REFERENCES Pedidos (ID));";
+					+ "PRIMARY KEY (PedidoID), FOREIGN KEY (PedidoID) REFERENCES Pedidos (ID));";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -61,7 +61,7 @@ public class EnderecosEntregaDAO {
 
 		try {
 			PreparedStatement pst = conexao.prepareStatement(
-					"INSERT INTO EnderecosEntrega(PedidoID, Latitude, Longitude, Descricao) VALUES (?, ?, ?, ?);");
+					"INSERT INTO EnderecosEntrega(PedidoID, Latitude, Longitude, Descricao) VALUES (?, ?, ?, ?)");
 
 			pst.setInt(1, p.getId());
 			pst.setFloat(2, p.getEnderecoEntrega().getLatitude());
@@ -87,7 +87,7 @@ public class EnderecosEntregaDAO {
 		Endereco endereco = null;
 
 		try {
-			String sql = "SELECT * FROM EnderecosEntrega WHERE ID=?;";
+			String sql = "SELECT * FROM EnderecosEntrega WHERE PedidoID=?;";
 			PreparedStatement pst = conexao.prepareStatement(sql);
 
 			pst.setInt(1, pedidoID);
@@ -106,5 +106,19 @@ public class EnderecosEntregaDAO {
 			e.printStackTrace();
 		}
 		return endereco;
+	}
+	
+	public boolean isEmpty() {
+		String sql = "SELECT * FROM EnderecosEntrega;";
+
+		try {
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			ResultSet res = pst.executeQuery();
+			
+			return res.wasNull();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
 	}
 }

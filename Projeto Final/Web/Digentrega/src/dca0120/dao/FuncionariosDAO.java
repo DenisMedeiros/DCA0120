@@ -75,7 +75,7 @@ public abstract class FuncionariosDAO {
 	 */
 	public void inserirFuncionario(String nome, String cpf, String senha, Calendar dataNascimento, int AdmID) throws SQLException {
 			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Funcionarios(Nome, CPF, "
-					+ "Senha, DataNascimento, AdministradorID) VALUES (?, ?, ?, ?, ?);");
+					+ "Senha, DataNascimento, AdministradorID) VALUES (?, ?, ?, ?, ?)");
 
 			pst.setString(1, nome);
 			pst.setString(2, cpf);
@@ -118,7 +118,7 @@ public abstract class FuncionariosDAO {
 	public int getID(String cpf) {
 		int id = -1;
 		try {
-			String sql = "SELECT ID FROM Funcionarios WHERE CPF=?;";
+			String sql = "SELECT ID FROM Funcionarios WHERE CPF=?";
 			PreparedStatement pst = conexao.prepareStatement(sql);
 
 			pst.setString(1, cpf);
@@ -142,7 +142,7 @@ public abstract class FuncionariosDAO {
 	public String getNome(int ID) {
 		String nome = null;
 		try {
-			String sql = "SELECT Nome FROM Funcionarios WHERE ID=?;";
+			String sql = "SELECT Nome FROM Funcionarios WHERE ID=?";
 			PreparedStatement pst = conexao.prepareStatement(sql);
 
 			pst.setInt(1, ID);
@@ -166,7 +166,7 @@ public abstract class FuncionariosDAO {
 	public String getSenha(int ID) {
 		String senha = null;
 		try {
-			String sql = "SELECT Senha FROM Funcionarios WHERE ID=?;";
+			String sql = "SELECT Senha FROM Funcionarios WHERE ID=?";
 			PreparedStatement pst = conexao.prepareStatement(sql);
 
 			pst.setInt(1, ID);
@@ -190,7 +190,7 @@ public abstract class FuncionariosDAO {
 	public Calendar getDataNascimento(int ID) {
 		Calendar dataNascimento = null;
 		try {
-			String sql = "SELECT DataNascimento FROM Funcionarios WHERE ID=?;";
+			String sql = "SELECT DataNascimento FROM Funcionarios WHERE ID=?";
 			PreparedStatement pst = conexao.prepareStatement(sql);
 
 			pst.setInt(1, ID);
@@ -215,7 +215,7 @@ public abstract class FuncionariosDAO {
 	public String getCPF(int ID) {
 		String cpf = null;
 		try {
-			String sql = "SELECT CPF FROM Funcionarios WHERE ID=?;";
+			String sql = "SELECT CPF FROM Funcionarios WHERE ID=?";
 			PreparedStatement pst = conexao.prepareStatement(sql);
 
 			pst.setInt(1, ID);
@@ -236,5 +236,18 @@ public abstract class FuncionariosDAO {
 		return cpf;
 	}
 		
+	public boolean isEmpty() {
+		String sql = "SELECT * FROM Funcionarios;";
+
+		try {
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			ResultSet res = pst.executeQuery();
+			
+			return res.wasNull();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
 	
 }

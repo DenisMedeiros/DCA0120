@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
-import dca0120.model.Caixa;
 import dca0120.model.Produto;
 
 /**
@@ -40,10 +39,10 @@ public final class CaixasGerenciamProdutosDAO {
 	public void criarTabelaCaixasGerenciamProdutos() {
 		try {
 			Statement st = conexao.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS CaixasGerenciamProdutos (ProdutoID  INTEGER NOT NULL, "
+			String sql = "CREATE TABLE IF NOT EXISTS CaixasGerenciamProdutos (ProdutoID INTEGER NOT NULL, "
 					+ "CaixaID INTEGER NOT NULL, PRIMARY KEY (ProdutoID,CaixaID), "
 					+ "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID), "
-					+ "FOREIGN KEY (ProdutoID) REFERENCES Produtos(ID), " + ")";
+					+ "FOREIGN KEY (ProdutoID) REFERENCES Produtos(ID));";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -60,10 +59,11 @@ public final class CaixasGerenciamProdutosDAO {
 	public void inserirCaixasGerenciamProdutos(Produto p) {
 		try {
 			PreparedStatement pst = conexao
-					.prepareStatement("INSERT INTO CaixasGerenciamProdutos(CaixaID, ProdutoID) VALUES (?, ?);");
+					.prepareStatement("INSERT INTO CaixasGerenciamProdutos(ProdutoID, CaixaID) VALUES (?, ?);");
+		
+			pst.setInt(1, p.getId());
+			pst.setInt(2, p.getResponsavelCadastro().getId());
 
-			pst.setInt(1, p.getResponsavelCadastro().getId());
-			pst.setInt(2, p.getId());
 
 			pst.executeUpdate();
 		} catch (SQLException e) {
@@ -78,8 +78,8 @@ public final class CaixasGerenciamProdutosDAO {
 	 * @return Collection do tipo {@link HashMap} com os parametros
 	 *         {@code HashMap<Produto, Caixa>}.
 	 */
-	public HashMap<Produto, Caixa> getCaixasGerenciamProdutos() {
-		HashMap<Produto, Caixa> m = new HashMap<Produto, Caixa>();
+	public HashMap<Integer, Integer> getCaixasGerenciamProdutos() {
+		HashMap<Integer, Integer> m = new HashMap<Integer, Integer>();
 
 		try {
 			String sql = "SELECT * FROM CaixasGerenciamProdutos;";
@@ -92,16 +92,25 @@ public final class CaixasGerenciamProdutosDAO {
 			}
 
 			while (res.next()) {
-				ProdutosDAO ps = new ProdutosDAO();
-				Produto p = ps.getProduto(res.getInt("ProdutoID"));
-				CaixasDAO cs = new CaixasDAO();
-				Caixa c = cs.getCaixaWithID(res.getInt("CaixaID"));
-				m.put(p, c);
+				m.put(res.getInt("ProdutoID"), res.getInt("CaixaID"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return m;
 	}
+	
+	public boolean isEmpty() {
+		String sql = "SELECT * FROM CaixasGerenciamProdutos;";
 
+		try {
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			ResultSet res = pst.executeQuery();
+			
+			return res.wasNull();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
 }

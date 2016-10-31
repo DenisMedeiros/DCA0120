@@ -44,7 +44,7 @@ public final class CaixasGerenciamPedidosDAO {
 			String sql = "CREATE TABLE IF NOT EXISTS CaixasGerenciamPedidos (CaixaID INTEGER NOT NULL, "
 					+ "PedidoID  INTEGER NOT NULL, DataHoraAbertura TIMESTAMP NOT NULL, "
 					+ "PRIMARY KEY (CaixaID, PedidoID), FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID), "
-					+ "FOREIGN KEY (PedidoID) REFERENCES Pedidos(ID), " + ")";
+					+ "FOREIGN KEY (PedidoID) REFERENCES Pedidos(ID))";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -64,7 +64,7 @@ public final class CaixasGerenciamPedidosDAO {
 	public void inserirCaixasGerenciamPedidos(Pedido p, int caixaID) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement(
-					"INSERT INTO CaixasGerenciamPedidos(CaixaID, PedidoID, DataHoraAbertura) VALUES (?, ?, ?);");
+					"INSERT INTO CaixasGerenciamPedidos(CaixaID, PedidoID, DataHoraAbertura) VALUES (?, ?, ?)");
 
 			Calendar calendar = p.getDataHoraAbertura();
 			java.sql.Timestamp javaSqlTimestamp = null;
@@ -94,7 +94,7 @@ public final class CaixasGerenciamPedidosDAO {
 		dataHoraAbertura.setTimeInMillis(0);
 
 		try {
-			String sql = "SELECT DataHoraAbertura FROM CaixasGerenciamPedidos WHERE PedidoID=?;";
+			String sql = "SELECT DataHoraAbertura FROM CaixasGerenciamPedidos WHERE PedidoID=?";
 
 			PreparedStatement pst = conexao.prepareStatement(sql);
 			pst.setInt(1, pedidoID);
@@ -111,5 +111,19 @@ public final class CaixasGerenciamPedidosDAO {
 			e.printStackTrace();
 		}
 		return dataHoraAbertura;
+	}
+	
+	public boolean isEmpty() {
+		String sql = "SELECT * FROM CaixasGerenciamPedidos;";
+
+		try {
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			ResultSet res = pst.executeQuery();
+			
+			return res.wasNull();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
 	}
 }

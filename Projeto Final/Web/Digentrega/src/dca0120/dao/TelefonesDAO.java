@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -41,9 +42,9 @@ public class TelefonesDAO {
 			String sql = "CREATE TABLE IF NOT EXISTS Telefones (" +
 					"DDDeNumero VARCHAR(11) NOT NULL, " +
 					"FuncionarioID INTEGER NOT NULL, " +
-					"PRIMARY KEY (DDDeNumero), " +
+					"PRIMARY KEY (DDDeNumero, FuncionarioID), " +
 					"FOREIGN KEY (FuncionarioID ) REFERENCES Funcionarios (ID), " +
-					");";
+					")";
 	        st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -58,7 +59,7 @@ public class TelefonesDAO {
 	public void inserirTelefone(int funcionarioID, String telefone) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Telefones(DDDeNumero, FuncionarioID) "
-					+ "VALUES (?, ?);");
+					+ "VALUES (?, ?)");
 			
 			pst.setString(1, telefone);
 			pst.setInt(2, funcionarioID);
@@ -77,7 +78,7 @@ public class TelefonesDAO {
 	public List<String> getTelefones(int id) {
 		List<String> telefones = new ArrayList<String>();
 		try {
-			String sql = "SELECT * FROM Telefones Where FuncionarioID=?;";
+			String sql = "SELECT * FROM Telefones Where FuncionarioID=?";
 			
 			PreparedStatement pst = conexao.prepareStatement(sql);
 			pst.setInt(1, id);
@@ -97,4 +98,47 @@ public class TelefonesDAO {
 		return telefones;
 	}
 	
+	/**
+	 * Mapa que referencia cada um dos telefones com o ID do seu dono
+	 * 
+	 * @return Collection do tipo {@link HashMap} com os parametros
+	 *         {@code HashMap<String, Integer>}.
+	 */
+	public HashMap<String, Integer> getMapTelefones() {
+		HashMap<String, Integer> m = new HashMap<String, Integer>();
+		
+		try {
+			String sql = "SELECT * FROM Telefones;";
+
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			ResultSet res = pst.executeQuery();
+
+			if (res.wasNull()) {
+				return m;
+			}
+
+			while (res.next()) {
+				String tel = res.getString("DDDeNumero");
+				int id = res.getInt("FuncionarioID");
+				m.put(tel, id);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return m;
+	}
+	
+	public boolean isEmpty() {
+		String sql = "SELECT * FROM Telefones;";
+
+		try {
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			ResultSet res = pst.executeQuery();
+			
+			return res.wasNull();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
 }

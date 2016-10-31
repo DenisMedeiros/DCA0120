@@ -13,6 +13,7 @@ import dca0120.model.Endereco;
 import dca0120.model.Entregador;
 import dca0120.model.Pedido;
 import dca0120.model.Pedido.Status;
+import dca0120.model.Produto;
 
 /**
  * @author ney
@@ -45,10 +46,10 @@ public class PedidosDAO {
 	public void criarTabelaPedidos() {
 		try {
 			Statement st = conexao.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS Pedidos (ID  INTEGER AUTO_INCREMENT, VolumeTotal FLOAT, "
+			String sql = "CREATE TABLE IF NOT EXISTS Pedidos (ID INTEGER AUTO_INCREMENT, VolumeTotal FLOAT, "
 					+ "PesoTotal FLOAT, ValorTotal FLOAT, Status INTEGER, Descricao VARCHAR(800), "
 					+ "EntregadorID INTEGER NOT NULL, DataHoraEntrega TIMESTAMP, PRIMARY KEY (ID), "
-					+ "FOREIGN KEY ( EntregadorID ) REFERENCES Entregadores (FuncionarioID));";
+					+ "FOREIGN KEY (EntregadorID) REFERENCES Entregadores (FuncionarioID))";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -63,8 +64,8 @@ public class PedidosDAO {
 	 */
 	public void inserirPedido(Pedido p) {
 		try {
-			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Pedidos(VolumeTotal, PesoTotal, ValorTotal"
-					+ "Status, Descricao, EntregadorID, DataHoraEntrega) VALUES ();");
+			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Pedidos(VolumeTotal, PesoTotal, ValorTotal,"
+					+ "Status, Descricao, EntregadorID, DataHoraEntrega) VALUES (?,?,?,?,?,?,?)");
 
 			pst.setFloat(1, p.getVolumeTotal());
 			pst.setFloat(2, p.getPesoTotal());
@@ -103,11 +104,12 @@ public class PedidosDAO {
 				entrega = new java.sql.Timestamp(dataHoraEntrega.getTime().getTime());
 			}
 
-			PreparedStatement pst = conexao.prepareStatement("UPDATE Pedidos SET DataHoraEntrega = ? WHERE ID=?;");
+			PreparedStatement pst = conexao.prepareStatement("UPDATE Pedidos SET DataHoraEntrega = ? WHERE ID=?");
 
 			pst.setTimestamp(1, entrega);
 			pst.setInt(2, id);
 
+			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -119,9 +121,11 @@ public class PedidosDAO {
 	 */
 	public void removerPedido(int id) {
 		try {
-			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Pedidos WHERE ID=?;");
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Pedidos WHERE ID=?");
 
 			pst.setInt(1, id);
+			
+			pst.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -136,10 +140,12 @@ public class PedidosDAO {
 	public void alterarStatus(int id, Status status) {
 
 		try {
-			PreparedStatement pst = conexao.prepareStatement("UPDATE Pedidos SET Status=? WHERE ID=?;");
+			PreparedStatement pst = conexao.prepareStatement("UPDATE Pedidos SET Status=? WHERE ID=?");
 
 			pst.setInt(1, status.getCodigo());
 			pst.setInt(2, id);
+			
+			pst.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -155,7 +161,7 @@ public class PedidosDAO {
 		Pedido p = null;
 
 		try {
-			String sql = "SELECT * FROM Pedidos WHERE ID=?;";
+			String sql = "SELECT * FROM Pedidos WHERE ID=?";
 			PreparedStatement pst = conexao.prepareStatement(sql);
 
 			pst.setInt(1, id);
@@ -190,14 +196,22 @@ public class PedidosDAO {
 				Entregador ent;
 				EntregadoresDAO ents = new EntregadoresDAO();
 				ent = ents.getEntregadorWithID(res.getInt("EntregadorID"));
+				
 				Calendar dataHoraEntrega = Calendar.getInstance(), dataHoraAbertura;
 				dataHoraEntrega.setTimeInMillis(res.getTimestamp("DataHoraEntrega").getTime());
 				CaixasGerenciamPedidosDAO cgp = new CaixasGerenciamPedidosDAO();
 				dataHoraAbertura = cgp.getDataHoraAbertura(id);
+				
 				EnderecosEntregaDAO endereco = new EnderecosEntregaDAO();
 				Endereco enderecoEntrega = endereco.getEnderecoEntrega(id);
+				
 				p = new Pedido(id, status, res.getString("Descricao"), ent, dataHoraAbertura, dataHoraEntrega,
 						enderecoEntrega);
+				PedidosContemProdutosDAO pcp = new PedidosContemProdutosDAO();
+				List<Produto> lprod = pcp.getProdutosDoPedido(p);
+				for(Produto pr: lprod) {
+					p.addProduto(pr, pcp.getQuantidade(pr, p));
+				}
 			}
 
 		} catch (SQLException e) {
@@ -215,7 +229,7 @@ public class PedidosDAO {
 
 		try {
 			Statement st = conexao.createStatement();
-			String sql = "SELECT * FROM Pedidos;";
+			String sql = "SELECT * FROM Pedidos";
 			ResultSet res = st.executeQuery(sql);
 
 			if (res.wasNull()) {
@@ -247,14 +261,24 @@ public class PedidosDAO {
 				Entregador ent;
 				EntregadoresDAO ents = new EntregadoresDAO();
 				ent = ents.getEntregadorWithID(res.getInt("EntregadorID"));
+				
 				Calendar dataHoraEntrega = Calendar.getInstance(), dataHoraAbertura;
 				dataHoraEntrega.setTimeInMillis(res.getTimestamp("DataHoraEntrega").getTime());
 				CaixasGerenciamPedidosDAO cgp = new CaixasGerenciamPedidosDAO();
 				dataHoraAbertura = cgp.getDataHoraAbertura(res.getInt("ID"));
+				
 				EnderecosEntregaDAO endereco = new EnderecosEntregaDAO();
 				Endereco enderecoEntrega = endereco.getEnderecoEntrega(res.getInt("ID"));
+				
 				Pedido p = new Pedido(res.getInt("ID"), status, res.getString("Descricao"), ent, dataHoraAbertura,
 						dataHoraEntrega, enderecoEntrega);
+				
+				PedidosContemProdutosDAO pcp = new PedidosContemProdutosDAO();
+				List<Produto> lprod = pcp.getProdutosDoPedido(p);
+				for(Produto pr: lprod) {
+					p.addProduto(pr, pcp.getQuantidade(pr, p));
+				}
+				
 				lista.add(p);
 			}
 		} catch (SQLException e) {
@@ -262,4 +286,19 @@ public class PedidosDAO {
 		}
 		return lista;
 	}
+	
+	public boolean isEmpty() {
+		String sql = "SELECT * FROM Pedidos;";
+
+		try {
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			ResultSet res = pst.executeQuery();
+			
+			return res.wasNull();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return true;
+	}
+	
 }

@@ -153,13 +153,26 @@ public class Pedido {
 	public void removerProduto(Produto p, int quantidade) {	
 		for(ProdutoQuantidade pq: produtosQuantidade) {
 			if(pq.produto.getId() == p.getId()) {
-				produtosQuantidade.remove(pq);
+				if(pq.quantidade <= quantidade) { 
+					produtosQuantidade.remove(pq);
+				}else {
+					produtosQuantidade.get(produtosQuantidade.indexOf(pq)).quantidade -= quantidade;
+				}
 				valorTotal -= p.getPreco() * pq.quantidade;
 				pesoTotal -= p.getPeso() * pq.quantidade;
 				volumeTotal -= p.getVolume() * pq.quantidade;
 				break;
 			}
 		}		
+	}
+	
+	public int getQuantidadeProduto(Produto p) {
+		for(ProdutoQuantidade pq: produtosQuantidade) {
+			if(pq.produto.getId() == p.getId()) {
+				return pq.quantidade;
+			}
+		}
+		return -1;
 	}
 	
 }
