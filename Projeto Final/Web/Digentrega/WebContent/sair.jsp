@@ -16,7 +16,11 @@
     	<%-- Parte principal da página. --%>
 	    <p> Saiu </p>
     </jsp:attribute>
-    
+
+
+	<jsp:attribute name="rodapeExtra">  
+	</jsp:attribute>
+	    
 </template:base>
 
 

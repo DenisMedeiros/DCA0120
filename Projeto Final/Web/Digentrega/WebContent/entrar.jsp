@@ -9,7 +9,7 @@
 		
 	<jsp:attribute name="cabecalhoExtra">   
 		<%-- Mais arquivos CSS e Javascript aqui. --%>
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/signin.css">
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/formulario.css">
 	</jsp:attribute>
 
 
@@ -17,12 +17,34 @@
     	<%-- Parte principal da página. --%>
 	    
 		<div class="container theme-showcase" role="main">
-	      <form method="post" class="form-signin">
-	        <h2 class="form-signin-heading"> Entrar no sistema</h2>
-	        <label for="cpf" class="sr-only">CPF</label>
-	        <input type="text" name="cpf" id="cpf" class="form-control" placeholder="CPF (Somente números)" required autofocus>
-	        <label for="senha" class="sr-only">Senha</label>
-	        <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha" required>
+		   <div class="panel-heading">
+              <div class="panel-title text-center">
+              		<h1 class="title">Entrar no Sistema</h1>
+              		<hr />
+              	</div>
+           </div>
+	      <form method="post" class="form-signup">
+				<div class="form-group">
+					<label for="name" class="cols-sm-2 control-label">CPF</label>
+					<div class="cols-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+							<input type="text" class="form-control" name="cpf" id="cpf"  placeholder="Apenas números"/>
+						</div>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="email" class="cols-sm-2 control-label">Senha</label>
+					<div class="cols-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+							<input type="password" class="form-control" name="senha" id="senha"  placeholder="Senha"/>
+						</div>
+					</div>
+				</div>
+
+
 	        <div class="checkbox">
 	          <label>
 	            <input type="checkbox" value="remember-me"> Lembrar?
@@ -33,6 +55,9 @@
 	    </div> <!-- /container -->
 	    
     </jsp:attribute>
+    
+    	<jsp:attribute name="rodapeExtra">  
+	</jsp:attribute>
     
 </template:base>
 

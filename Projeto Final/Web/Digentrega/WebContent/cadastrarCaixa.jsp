@@ -9,7 +9,8 @@
 		
 	<jsp:attribute name="cabecalhoExtra">   
 		<%-- Mais arquivos CSS e Javascript aqui. --%>
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/signup.css">
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/formulario.css">
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap-datepicker3.css"/>
 	</jsp:attribute>
 
 
@@ -24,34 +25,45 @@
            </div>
 			<form class="form-signup" method="post" action="#">
 				<div class="form-group">
-					<label for="name" class="cols-sm-2 control-label">Your Name</label>
+					<label for="name" class="cols-sm-2 control-label">Nome completo</label>
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="name" id="name"  placeholder="Enter your Name"/>
+							<input type="text" class="form-control" name="nome" id="nome"  placeholder="Digite seu nome"/>
 						</div>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="email" class="cols-sm-2 control-label">Your Email</label>
+					<label for="email" class="cols-sm-2 control-label">CPF</label>
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="email" id="email"  placeholder="Enter your Email"/>
+							<input type="text" class="form-control" name="cpf" id="cpf"  placeholder="Apenas números"/>
 						</div>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="username" class="cols-sm-2 control-label">Username</label>
+					<label for="username" class="cols-sm-2 control-label">Data de Nascimento</label>
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="username" id="username"  placeholder="Enter your Username"/>
+							<input type="text" class="form-control" name="dataNascimento" id="dataNascimento"  placeholder="dd/mm/aaaa"/>
 						</div>
 					</div>
 				</div>
+				
+			<div class="form-group">
+					<label for="email" class="cols-sm-2 control-label">Telefones</label>
+					<div class="cols-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+							<input type="text" class="form-control" name="cpf" id="cpf"  placeholder="Apenas números"/>
+						</div>
+					</div>
+				</div>
+
 
 				<div class="form-group">
 					<label for="password" class="cols-sm-2 control-label">Password</label>
@@ -81,7 +93,26 @@
 	    
     </jsp:attribute>
     
+        
+	<jsp:attribute name="rodapeExtra">  
+		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap-datepicker.min.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap-datepicker.pt-BR.min.js"></script>
+		<script>
+		    $(document).ready(function(){
+		      var date_input=$('#dataNascimento');
+		      var options={
+		        format: 'dd/mm/yyyy',
+		        todayHighlight: true,
+		        autoclose: true,
+		        language: "pt-BR",
+		      };
+		      date_input.datepicker(options);
+		    })
+		</script>
+	</jsp:attribute>
+	
 </template:base>
+
 
 
 
