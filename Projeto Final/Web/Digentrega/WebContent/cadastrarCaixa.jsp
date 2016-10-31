@@ -11,6 +11,7 @@
 		<%-- Mais arquivos CSS e Javascript aqui. --%>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/formulario.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap-datepicker3.css"/>
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap-tokenfield.min.css"/>
 	</jsp:attribute>
 
 
@@ -23,7 +24,7 @@
               		<hr />
               	</div>
            </div>
-			<form class="form-signup" method="post" action="#">
+			<form class="form-signup" method="post">
 				<div class="form-group">
 					<label for="name" class="cols-sm-2 control-label">Nome completo</label>
 					<div class="cols-sm-10">
@@ -54,39 +55,40 @@
 					</div>
 				</div>
 				
+				
 			<div class="form-group">
 					<label for="email" class="cols-sm-2 control-label">Telefones</label>
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="cpf" id="cpf"  placeholder="Apenas números"/>
+							<input type="text" class="form-control" name="telefones" id="telefones"  placeholder="Apenas números"/>
 						</div>
 					</div>
 				</div>
 
 
 				<div class="form-group">
-					<label for="password" class="cols-sm-2 control-label">Password</label>
+					<label for="password" class="cols-sm-2 control-label">Senha</label>
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-							<input type="password" class="form-control" name="password" id="password"  placeholder="Enter your Password"/>
+							<input type="password" class="form-control" name="senha1" id="senha1"  placeholder="Senha"/>
 						</div>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="confirm" class="cols-sm-2 control-label">Confirm Password</label>
+					<label for="confirm" class="cols-sm-2 control-label">Confirmar Senha</label>
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-							<input type="password" class="form-control" name="confirm" id="confirm"  placeholder="Confirm your Password"/>
+							<input type="password" class="form-control" name="senha2" id="senha2"  placeholder="Confirm your Password"/>
 						</div>
 					</div>
 				</div>
 
 				<div class="form-group ">
-					<button type="button" class="btn btn-primary btn-lg btn-block login-button">Register</button>
+					<button type="submit" class="btn btn-primary btn-lg btn-block login-button">Cadastrar</button>
 				</div>
 			</form>
 	    </div> <!-- /container -->
@@ -97,6 +99,8 @@
 	<jsp:attribute name="rodapeExtra">  
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap-datepicker.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap-datepicker.pt-BR.min.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap-tokenfield.min.js"></script>
+		
 		<script>
 		    $(document).ready(function(){
 		      var date_input=$('#dataNascimento');
@@ -108,6 +112,15 @@
 		      };
 		      date_input.datepicker(options);
 		    })
+		</script>
+		
+		<script>
+		
+			$('#telefones').tokenfield({
+				minLength: 8,
+				delimiter: ",",
+			})
+		
 		</script>
 	</jsp:attribute>
 	
