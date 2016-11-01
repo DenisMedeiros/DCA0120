@@ -13,7 +13,8 @@ import java.sql.SQLException;
  */
 public class ConnectionFactory {
 	
-	private final static String caminhoCompleto = "jdbc:h2:~/dados";
+	//private final static String caminhoCompleto = "jdbc:h2:~/dados";jdbc:h2:tcp://localhost/~/banco
+	private final static String caminhoCompleto = "jdbc:h2:tcp://localhost/~/banco";
 	private final static String usuario = "usuario";
 	private final static String senha = "123";
 	
