@@ -48,33 +48,36 @@ public class EntrarServlet extends HttpServlet {
         }
         
         String senhaCriptografada = Hashing.plainToSHA256(senha, c.getCpf().getBytes());
+       
         
-        if(c.getSenha().equals(senhaCriptografada)) { // Verifica se é um Caixa.
-        	
-        	if(c.isAdministrador()) {
-        		session.setAttribute("administrador", c.getId());
-        		session.setAttribute("mensagem", "Administrador logado com sucesso!");
-        	} else {
-        		session.setAttribute("mensagem", "Caixa logado com sucesso!");
+        if(c != null) {
+
+	        if(c.getSenha().equals(senhaCriptografada)) { // Verifica se é um Caixa.
+	        		        	
+	        	if(c.isAdministrador()) {
+	        		session.setAttribute("administrador", c.getId());
+	        		session.setAttribute("mensagem", "Administrador logado com sucesso!");
+	        	} else {
+	        		session.setAttribute("mensagem", "Caixa logado com sucesso!");
+	        	}
+				    
+	        	session.setAttribute("caixa", c.getId());
+			    response.sendRedirect(request.getContextPath());    
+			    return;     
+	        }
+        } 
+        
+        if (e != null) { // Se e != null
+        	if (e.getSenha().equals(senhaCriptografada)) {  // Verifica se é um Entregador.
+        		session.setAttribute("entregador", c.getId());
+			    session.setAttribute("mensagem", "Entregador logado com sucesso!");
+			    response.sendRedirect(request.getContextPath());
+			    return;
         	}
-			    
-        	session.setAttribute("caixa", c.getId());
-		    response.sendRedirect(request.getContextPath());    
-        
-        } else if (e.getSenha().equals(senhaCriptografada)) {  // Verifica se é um Entregador.
-        	
-		    if (session.isNew()){
-		        session.setAttribute("entregador", c.getId());
-		    } else {
-		    	session.setAttribute("entregador", c.getId());
-		    }
-		    
-		    session.setAttribute("mensagem", "Entregador logado com sucesso!");
-		    response.sendRedirect(request.getContextPath());
-		    
-        } else { // Login falhou.
-        	response.sendRedirect(request.getContextPath() + "/entrar");
         }
-    }
+        	
+		// Se chegou até aqui, é porque a senha está errada.
+        response.sendRedirect(request.getContextPath() + "/entrar");
+	}
 
 } 

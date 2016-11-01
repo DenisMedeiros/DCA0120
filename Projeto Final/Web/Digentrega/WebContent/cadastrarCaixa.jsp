@@ -4,14 +4,13 @@
 <template:base>
 
 	<jsp:attribute name="titulo">   
-		Autenticação
+		Cadastrar Caixa
 	</jsp:attribute>
 		
 	<jsp:attribute name="cabecalhoExtra">   
 		<%-- Mais arquivos CSS e Javascript aqui. --%>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/formulario.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap-datepicker3.css"/>
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap-tokenfield.min.css"/>
 	</jsp:attribute>
 
 
@@ -30,7 +29,7 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="nome" id="nome"  placeholder="Digite seu nome"/>
+							<input type="text" class="form-control" name="nome" id="nome"  placeholder="Digite seu nome" required />
 						</div>
 					</div>
 				</div>
@@ -61,7 +60,7 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="telefones" id="telefones"  placeholder="Apenas números"/>
+							<input type="text" class="form-control" name="telefones" id="telefones"  placeholder="Apenas números (mais de um telefone separado por virgula)"/>
 						</div>
 					</div>
 				</div>
@@ -99,7 +98,6 @@
 	<jsp:attribute name="rodapeExtra">  
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap-datepicker.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap-datepicker.pt-BR.min.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap-tokenfield.min.js"></script>
 		
 		<script>
 		    $(document).ready(function(){
@@ -112,15 +110,6 @@
 		      };
 		      date_input.datepicker(options);
 		    })
-		</script>
-		
-		<script>
-		
-			$('#telefones').tokenfield({
-				minLength: 8,
-				delimiter: ",",
-			})
-		
 		</script>
 	</jsp:attribute>
 	

@@ -3,7 +3,6 @@ package dca0120.servlets;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -16,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import dca0120.dao.CaixasDAO;
 import dca0120.model.Caixa;
+import dca0120.utils.Hashing;
 import dca0120.utils.ValidadorCPF;
 
 public class CadastrarCaixaServlet extends HttpServlet {
@@ -45,7 +45,6 @@ public class CadastrarCaixaServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
 		
-		
 		HttpSession session = request.getSession(false);
 		
 		// Verifica se o usuário que quer acessar esta função é o administrador.
@@ -64,9 +63,8 @@ public class CadastrarCaixaServlet extends HttpServlet {
         String senha1 = request.getParameter("senha1");
         String senha2 = request.getParameter("senha2");
         
-        System.out.println(nome);
-        
-        
+        CaixasDAO cd = new CaixasDAO();
+                
         if(nome.isEmpty() || cpf.isEmpty() || dataNascimentoStr.isEmpty() || telefonesStr.isEmpty() || senha1.isEmpty()
         		|| senha2.isEmpty() ) {
             session.setAttribute("mensagem", "Algum dos campos está em branco!");
@@ -76,13 +74,17 @@ public class CadastrarCaixaServlet extends HttpServlet {
         
         // Valida o CPF.
         if(!ValidadorCPF.isValidCPF(cpf)) {
-        	System.out.println("CPF inválido!");
         	session.setAttribute("mensagem", "CPF inválido!");
             response.sendRedirect(request.getHeader("referer"));
             return;
         }
         
-        // Verifica de o CPF já existe. TODO
+        // Verifica de o CPF já existe para algum funcionário.
+        if(cd.getID(cpf) != -1) {
+        	session.setAttribute("mensagem", "Já existe um funcionário com este CPF.");
+            response.sendRedirect(request.getHeader("referer"));
+            return;
+        }
         
         // Verifica se as senhas são iguais.
         if(!senha1.equals(senha2)) {
@@ -106,11 +108,13 @@ public class CadastrarCaixaServlet extends HttpServlet {
         String[] telefonesArray = telefonesStr.trim().split(","); // Obtém um array de telefones.
         List<String> telefones = Arrays.asList(telefonesArray);
          
+        
+        String senhaCriptografada = Hashing.plainToSHA256(senha1, cpf.getBytes());
+        
         // Cria o objeto Caixa.
-        Caixa caixa = new Caixa(0, cpf, senha1, nome, dataNascimento, telefones, false);
+        Caixa caixa = new Caixa(0, cpf, senhaCriptografada, nome, dataNascimento, telefones, false);
        
         // Insere-o no BD.
-        CaixasDAO cd = new CaixasDAO();
         cd.inserirCaixa(caixa, administradorID);
 
         session.setAttribute("mensagem", "Cadastrado com sucesso!");

@@ -17,6 +17,7 @@ public class ConnectionFactory {
 	private final static String usuario = "usuario";
 	private final static String senha = "123";
 	
+	
 	/** Abre a conexão com o banco de dados e retorna-a.
 	 *
 	 * @return conexao Conexão com o banco de dados.

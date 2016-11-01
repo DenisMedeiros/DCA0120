@@ -40,7 +40,7 @@ public class CaixasDAO extends FuncionariosDAO {
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} 
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class CaixasDAO extends FuncionariosDAO {
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} 
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class CaixasDAO extends FuncionariosDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} 
 
 		return c;
 	}
@@ -144,8 +144,8 @@ public class CaixasDAO extends FuncionariosDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-
+		} 
+		
 		return c;
 	}
 
@@ -177,6 +177,7 @@ public class CaixasDAO extends FuncionariosDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return lista;
 	}
 
