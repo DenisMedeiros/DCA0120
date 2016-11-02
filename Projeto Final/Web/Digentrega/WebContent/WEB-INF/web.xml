@@ -39,15 +39,6 @@
   </servlet-mapping>
   
   <servlet>
-    <servlet-name>PedidoServlet</servlet-name>
-    <servlet-class>dca0120.views.PedidoServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>PedidoServlet</servlet-name>
-    <url-pattern>/pedido/*</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
     <servlet-name>CadastrarCaixaServlet</servlet-name>
     <servlet-class>dca0120.views.CadastrarCaixaServlet</servlet-class>
   </servlet>
@@ -56,7 +47,25 @@
     <url-pattern>/cadastrar/caixa/*</url-pattern>
   </servlet-mapping>
   
-   <servlet>
+    <servlet>
+    <servlet-name>EditarCaixaServlet</servlet-name>
+    <servlet-class>dca0120.views.EditarCaixaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditarCaixaServlet</servlet-name>
+    <url-pattern>/editar/caixa/*</url-pattern>
+  </servlet-mapping>
+  
+      <servlet>
+    <servlet-name>RemoverCaixaServlet</servlet-name>
+    <servlet-class>dca0120.views.RemoverCaixaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RemoverCaixaServlet</servlet-name>
+    <url-pattern>/remover/caixa/*</url-pattern>
+  </servlet-mapping>
+  
+     <servlet>
     <servlet-name>CadastrarEntregadorServlet</servlet-name>
     <servlet-class>dca0120.views.CadastrarEntregadorServlet</servlet-class>
   </servlet>
@@ -64,6 +73,34 @@
     <servlet-name>CadastrarEntregadorServlet</servlet-name>
     <url-pattern>/cadastrar/entregador/*</url-pattern>
   </servlet-mapping>
+  
+       <servlet>
+    <servlet-name>EditarEntregadorServlet</servlet-name>
+    <servlet-class>dca0120.views.EditarEntregadorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditarEntregadorServlet</servlet-name>
+    <url-pattern>/editar/entregador/*</url-pattern>
+  </servlet-mapping>
+  
+       <servlet>
+    <servlet-name>RemoverEntregadorServlet</servlet-name>
+    <servlet-class>dca0120.views.RemoverEntregadorServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RemoverEntregadorServlet</servlet-name>
+    <url-pattern>/remover/entregador/*</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>ListarFuncionariosServlet</servlet-name>
+    <servlet-class>dca0120.views.ListarFuncionariosServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListarFuncionariosServlet</servlet-name>
+    <url-pattern>/funcionarios/listar/*</url-pattern>
+  </servlet-mapping>
+  
+
   
   <servlet>
     <servlet-name>PrepararBDServlet</servlet-name>
@@ -82,6 +119,52 @@
     <servlet-name>VerificarCPFServlet</servlet-name>
     <url-pattern>/verificarCPF/*</url-pattern>
 	</servlet-mapping>
+	
+		<servlet>
+    <servlet-name>CadastrarProdutoServlet</servlet-name>
+    <servlet-class>dca0120.views.CadastrarProdutoServlet</servlet-class>
+  </servlet> 
+  <servlet-mapping>
+    <servlet-name>CadastrarProdutoServlet</servlet-name>
+    <url-pattern>/cadastrar/produto/*</url-pattern>
+	</servlet-mapping>
+	
+		<servlet>
+    <servlet-name>ListarProdutoServlet</servlet-name>
+    <servlet-class>dca0120.views.ListarProdutoServlet</servlet-class>
+  </servlet> 
+  <servlet-mapping>
+    <servlet-name>ListarProdutoServlet</servlet-name>
+    <url-pattern>/listar/produtos/*</url-pattern>
+	</servlet-mapping>
+	
+			<servlet>
+    <servlet-name>EditarProdutoServlet</servlet-name>
+    <servlet-class>dca0120.views.EditarProdutoServlet</servlet-class>
+  </servlet> 
+  <servlet-mapping>
+    <servlet-name>EditarProdutoServlet</servlet-name>
+    <url-pattern>/editar/produto/*</url-pattern>
+	</servlet-mapping>
+	
+			<servlet>
+    <servlet-name>RemoverProdutoServlet</servlet-name>
+    <servlet-class>dca0120.views.RemoverProdutoServlet</servlet-class>
+  </servlet> 
+  <servlet-mapping>
+    <servlet-name>RemoverProdutoServlet</servlet-name>
+    <url-pattern>/remover/produto/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+    <servlet-name>CadastrarPedidoServlet</servlet-name>
+    <servlet-class>dca0120.views.CadastrarPedidoServlet</servlet-class>
+  </servlet> 
+  <servlet-mapping>
+    <servlet-name>CadastrarPedidoServlet</servlet-name>
+    <url-pattern>/cadastrar/pedido/*</url-pattern>
+	</servlet-mapping>
+  
   
   
 </web-app>

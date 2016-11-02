@@ -64,9 +64,17 @@
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Pedidos <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="${pageContext.request.contextPath}/pedido/novo/">Novo Pedido</a></li>
-                  <li><a href="${pageContext.request.contextPath}/pedido/abertos/">Ver Pedidos Abertos</a></li>
-                  <li><a href="${pageContext.request.contextPath}/pedido/finalizados/">Ver Pedidos Finalizados</a></li>
+                  <li><a href="${pageContext.request.contextPath}/cadastrar/pedido/">Novo Pedido</a></li>
+                  <li><a href="${pageContext.request.contextPath}/listar/pedidos/abertos/">Listar Pedidos Abertos</a></li>
+                  <li><a href="${pageContext.request.contextPath}/listar/pedidos/abertos/">Listar Pedidos Finalizados</a></li>
+                </ul>
+              </li>
+              
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Produtos <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="${pageContext.request.contextPath}/cadastrar/produto/">Cadastrar Produto</a></li>
+                  <li><a href="${pageContext.request.contextPath}/listar/produtos/">Listar Produtos</a></li>
                 </ul>
               </li>
    
@@ -77,7 +85,7 @@
                 <ul class="dropdown-menu">
                   <li><a href="${pageContext.request.contextPath}/cadastrar/caixa/">Cadastrar Caixa</a></li>
                   <li><a href="${pageContext.request.contextPath}/cadastrar/entregador/">Cadastrar Entregador</a></li>
-                  <li><a href="${pageContext.request.contextPath}/funcionario/listar/">Listar Funcionários</a></li>
+                  <li><a href="${pageContext.request.contextPath}/funcionarios/listar/">Listar Funcionários</a></li>
                 </ul>
               </li>
               
