@@ -4,7 +4,7 @@
 <template:base>
 
 	<jsp:attribute name="titulo">   
-		Autenticação
+		Cadastrar Entregador
 	</jsp:attribute>
 		
 	<jsp:attribute name="cabecalhoExtra">   

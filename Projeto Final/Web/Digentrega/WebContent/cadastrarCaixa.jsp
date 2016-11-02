@@ -37,8 +37,6 @@
 					</div>
 				</div>
 				
-										
-	
 				<div class="form-group">
 					<label for="email" class="cols-sm-2 control-label">CPF</label>
 					<div class="cols-sm-10">
@@ -92,12 +90,12 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-							<input type="password" class="form-control" name="senha2" id="senha2" maxlength="64"  placeholder="Confirm your Password" data-parsley-required/>
+							<input type="password" class="form-control" name="senha2" id="senha2" maxlength="64"  placeholder="Connfirme sua senha" data-parsley-required/>
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>
 				</div>
-
+				
 				<div class="form-group ">
 					<button type="submit" class="btn btn-primary btn-lg btn-block login-button">Cadastrar</button>
 				</div>

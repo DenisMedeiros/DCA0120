@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dca0120.dao.CaixasDAO;
-import dca0120.dao.TelefonesDAO;
 import dca0120.model.Caixa;
 import dca0120.utils.Hashing;
 import dca0120.utils.ValidadorCPF;

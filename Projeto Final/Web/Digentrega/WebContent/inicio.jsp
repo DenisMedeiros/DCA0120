@@ -4,7 +4,7 @@
 <template:base>
 
 	<jsp:attribute name="titulo">   
-		Página inicial
+		Página Inicial
 	</jsp:attribute>
 	
 	<jsp:attribute name="cabecalhoExtra">   
