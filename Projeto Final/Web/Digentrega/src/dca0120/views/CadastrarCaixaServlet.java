@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dca0120.dao.CaixasDAO;
+import dca0120.dao.TelefonesDAO;
 import dca0120.model.Caixa;
 import dca0120.utils.Hashing;
 import dca0120.utils.ValidadorCPF;
@@ -60,8 +61,10 @@ public class CadastrarCaixaServlet extends HttpServlet {
         	response.sendRedirect(request.getContextPath());
         	return;
 		}
+		
 		CaixasDAO cd = new CaixasDAO();
 		
+
 		// Verifica se o usuário que quer acessar esta função é o administrador.
 		Integer administradorID = (Integer) session.getAttribute("administrador");
 		if(administradorID == null) {
@@ -76,10 +79,7 @@ public class CadastrarCaixaServlet extends HttpServlet {
         String telefone1 = request.getParameter("telefone_1");
         String senha1 = request.getParameter("senha1");
         String senha2 = request.getParameter("senha2");
-        
 
-               
-                
         // Verifica se algum campo chegou em branco.
         if(nome.trim().isEmpty() || cpfStr.trim().isEmpty() || dataNascimentoStr.trim().isEmpty() || 
         		telefone1.trim().isEmpty() || senha1.trim().isEmpty() || senha2.trim().isEmpty()) {
@@ -138,7 +138,7 @@ public class CadastrarCaixaServlet extends HttpServlet {
        
         // Insere-o no BD.
         cd.inserirCaixa(caixa, administradorID);
-
+        
         session.setAttribute("mensagem", "Caixa cadastrado(a) com sucesso!");
         response.sendRedirect(request.getContextPath());
     }

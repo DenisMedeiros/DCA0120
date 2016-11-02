@@ -55,7 +55,12 @@ public class CaixasDAO extends FuncionariosDAO {
 	 */
 	public void inserirCaixa(Caixa c, int admID) {
 		try {
+			TelefonesDAO td = new TelefonesDAO();
 			this.inserirFuncionario(c.getNome(), c.getCpf(), c.getSenha(), c.getDataNascimento(), admID);
+			int idFuncionario = this.getID(c.getCpf());
+			for(String telefone: c.getTelefones()) {
+				td.inserirTelefone(idFuncionario, telefone);
+			}
 			
 			PreparedStatement pst = conexao
 					.prepareStatement("INSERT INTO Caixas(FuncionarioID, EAdministrador) VALUES (?, ?)");
