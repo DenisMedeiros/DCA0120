@@ -13,7 +13,7 @@
   
   <servlet>
     <servlet-name>PaginaInicialServlet</servlet-name>
-    <servlet-class>dca0120.servlets.PaginaInicialServlet</servlet-class>
+    <servlet-class>dca0120.views.PaginaInicialServlet</servlet-class>
   </servlet> 
   <servlet-mapping>
     <servlet-name>PaginaInicialServlet</servlet-name>
@@ -22,7 +22,7 @@
  	  
   <servlet>
     <servlet-name>EntrarServlet</servlet-name>
-    <servlet-class>dca0120.servlets.EntrarServlet</servlet-class>
+    <servlet-class>dca0120.views.EntrarServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>EntrarServlet</servlet-name>
@@ -31,7 +31,7 @@
   
   <servlet>
     <servlet-name>SairServlet</servlet-name>
-    <servlet-class>dca0120.servlets.SairServlet</servlet-class>
+    <servlet-class>dca0120.views.SairServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>SairServlet</servlet-name>
@@ -40,7 +40,7 @@
   
   <servlet>
     <servlet-name>PedidoServlet</servlet-name>
-    <servlet-class>dca0120.servlets.PedidoServlet</servlet-class>
+    <servlet-class>dca0120.views.PedidoServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>PedidoServlet</servlet-name>
@@ -49,7 +49,7 @@
   
   <servlet>
     <servlet-name>CadastrarCaixaServlet</servlet-name>
-    <servlet-class>dca0120.servlets.CadastrarCaixaServlet</servlet-class>
+    <servlet-class>dca0120.views.CadastrarCaixaServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CadastrarCaixaServlet</servlet-name>
@@ -58,7 +58,7 @@
   
    <servlet>
     <servlet-name>CadastrarEntregadorServlet</servlet-name>
-    <servlet-class>dca0120.servlets.CadastrarEntregadorServlet</servlet-class>
+    <servlet-class>dca0120.views.CadastrarEntregadorServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>CadastrarEntregadorServlet</servlet-name>
@@ -67,7 +67,7 @@
   
   <servlet>
     <servlet-name>PrepararBDServlet</servlet-name>
-    <servlet-class>dca0120.servlets.PrepararBDServlet</servlet-class>
+    <servlet-class>dca0120.views.PrepararBDServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>PrepararBDServlet</servlet-name>

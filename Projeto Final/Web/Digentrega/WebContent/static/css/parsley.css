@@ -30,5 +30,8 @@ textarea.parsley-error {
 
 .parsley-errors-list.filled {
 	color: red;
-  
+}
+
+.pasley-errors-message {
+	color: red;
 }

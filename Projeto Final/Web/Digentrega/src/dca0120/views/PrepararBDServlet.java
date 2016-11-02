@@ -1,4 +1,4 @@
-package dca0120.servlets;
+package dca0120.views;
 
 import java.io.IOException;
 import java.io.PrintWriter;

@@ -1,4 +1,4 @@
-package dca0120.servlets;
+package dca0120.views;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -28,7 +28,13 @@ public class CadastrarCaixaServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
 		
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(false);	
+		if(session == null) {
+			session = request.getSession(true);	
+			session.setAttribute("mensagem", "Você precisa entrar no sistema para acessar esta função.");
+        	response.sendRedirect(request.getContextPath());
+        	return;
+		}
 		
 		// Verifica se o usuário que quer acessar esta função é o administrador.
 		Integer administrador = (Integer) session.getAttribute("administrador");
@@ -46,6 +52,7 @@ public class CadastrarCaixaServlet extends HttpServlet {
     		throws ServletException, IOException {
 		
 		HttpSession session = request.getSession(false);
+		CaixasDAO cd = new CaixasDAO();
 		
 		// Verifica se o usuário que quer acessar esta função é o administrador.
 		Integer administradorID = (Integer) session.getAttribute("administrador");
@@ -57,31 +64,34 @@ public class CadastrarCaixaServlet extends HttpServlet {
 		
 		
         String nome = request.getParameter("nome");
-        String cpf = request.getParameter("cpf");
+        String cpfStr = request.getParameter("cpf");
         String dataNascimentoStr = request.getParameter("dataNascimento");
         String telefonesStr = request.getParameter("telefones");
         String senha1 = request.getParameter("senha1");
         String senha2 = request.getParameter("senha2");
-        
-        CaixasDAO cd = new CaixasDAO();
+               
                 
-        if(nome.isEmpty() || cpf.isEmpty() || dataNascimentoStr.isEmpty() || telefonesStr.isEmpty() || senha1.isEmpty()
-        		|| senha2.isEmpty() ) {
-            session.setAttribute("mensagem", "Algum dos campos está em branco!");
+        // Verifica se algum campo chegou em branco.
+        if(nome.trim().isEmpty() || cpfStr.trim().isEmpty() || dataNascimentoStr.trim().isEmpty() || 
+        		telefonesStr.trim().isEmpty() || senha1.trim().isEmpty() || senha2.trim().isEmpty()) {
+            session.setAttribute("mensagem", "Algum dos campos foi enviado em branco. Tente novamente!");
             response.sendRedirect(request.getHeader("referer"));
             return;
         }
         
+        // Transforma o CPF em números apenas.
+        String cpf = cpfStr.replace(".", "").replace("-", "");
+        
         // Valida o CPF.
         if(!ValidadorCPF.isValidCPF(cpf)) {
-        	session.setAttribute("mensagem", "CPF inválido!");
+        	session.setAttribute("mensagem", "CPF inválido! Tente novamente.");
             response.sendRedirect(request.getHeader("referer"));
             return;
         }
         
         // Verifica de o CPF já existe para algum funcionário.
         if(cd.getID(cpf) != -1) {
-        	session.setAttribute("mensagem", "Já existe um funcionário com este CPF.");
+        	session.setAttribute("mensagem", "Já existe um funcionário com este CPF! Tente novamente.");
             response.sendRedirect(request.getHeader("referer"));
             return;
         }
@@ -107,7 +117,6 @@ public class CadastrarCaixaServlet extends HttpServlet {
         // Organiza o vetor de telefones.
         String[] telefonesArray = telefonesStr.trim().split(","); // Obtém um array de telefones.
         List<String> telefones = Arrays.asList(telefonesArray);
-         
         
         String senhaCriptografada = Hashing.plainToSHA256(senha1, cpf.getBytes());
         
@@ -117,7 +126,7 @@ public class CadastrarCaixaServlet extends HttpServlet {
         // Insere-o no BD.
         cd.inserirCaixa(caixa, administradorID);
 
-        session.setAttribute("mensagem", "Cadastrado com sucesso!");
+        session.setAttribute("mensagem", "Caixa cadastrado(a) com sucesso!");
         response.sendRedirect(request.getContextPath());
     }
 

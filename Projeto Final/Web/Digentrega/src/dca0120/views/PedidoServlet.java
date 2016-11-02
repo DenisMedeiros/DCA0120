@@ -1,4 +1,4 @@
-package dca0120.servlets;
+package dca0120.views;
 
 import java.io.IOException;
 
@@ -7,16 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class CadastrarEntregadorServlet extends HttpServlet {
+public class PedidoServlet extends HttpServlet {
 
 
 	private static final long serialVersionUID = -7552123270167571493L;
+	
 	
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
 
-        request.getRequestDispatcher("/cadastrarEntregador.jsp").forward(request, response);
+        request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 
 	@Override
