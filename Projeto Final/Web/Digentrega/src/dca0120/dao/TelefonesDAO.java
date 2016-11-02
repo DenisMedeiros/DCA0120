@@ -43,7 +43,7 @@ public class TelefonesDAO {
 					"DDDeNumero VARCHAR(11) NOT NULL, " +
 					"FuncionarioID INTEGER NOT NULL, " +
 					"PRIMARY KEY (DDDeNumero, FuncionarioID), " +
-					"FOREIGN KEY (FuncionarioID ) REFERENCES Funcionarios (ID), " +
+					"FOREIGN KEY (FuncionarioID ) REFERENCES Funcionarios (ID) ON UPDATE CASCADE" +
 					")";
 	        st.executeUpdate(sql);
 		} catch (SQLException e) {

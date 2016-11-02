@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 import dca0120.model.Entregador;
 
 /**
@@ -37,7 +38,7 @@ public class EntregadoresDAO extends FuncionariosDAO {
 		try {
 			Statement st = conexao.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS Entregadores (FuncionarioID INTEGER NOT NULL, "
-					+ "CNH VARCHAR(20) NOT NULL, Placa VARCHAR(7) NOT NULL, PRIMARY KEY (FuncionarioID), "
+					+ "CNH VARCHAR(11) NOT NULL, Placa VARCHAR(7) NOT NULL, PRIMARY KEY (FuncionarioID), "
 					+ "FOREIGN KEY (FuncionarioID ) REFERENCES Funcionarios(ID))";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -190,11 +191,45 @@ public class EntregadoresDAO extends FuncionariosDAO {
 		try {
 			PreparedStatement pst = conexao.prepareStatement(sql);
 			ResultSet res = pst.executeQuery();
-			
+
 			return res.wasNull();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return true;
+	}
+
+	public void removerEntregador(int id) {
+		try {
+
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Entregador WHERE FuncionarioID=?");
+
+			pst.setInt(1, id);
+
+			pst.executeUpdate();
+
+			this.removerFuncionario(id);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void alterarEntregador(Entregador e, int admID) {
+		try {
+			PreparedStatement pst = conexao
+					.prepareStatement("UPDATE Entregadores SET CNH=?, Placa=? WHERE FuncionarioID=?");
+
+			pst.setString(1, e.getCnh());
+			pst.setString(2, e.getPlacaVeiculo());
+			pst.setInt(3, e.getId());
+
+			pst.executeUpdate();
+
+			this.alterarFuncionario(e.getId(), e.getNome(), e.getCpf(), e.getSenha(), e.getDataNascimento(), admID);
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 	}
 }

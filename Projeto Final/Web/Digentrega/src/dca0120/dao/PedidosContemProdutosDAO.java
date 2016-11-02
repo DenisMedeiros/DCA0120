@@ -45,8 +45,9 @@ public final class PedidosContemProdutosDAO {
 			Statement st = conexao.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS PedidosContemProdutos (ProdutoID INTEGER NOT NULL, "
 					+ "PedidoID INTEGER NOT NULL, Quantidade INTEGER NOT NULL, "
-					+ "PRIMARY KEY (ProdutoID,PedidoID), FOREIGN KEY (PedidoID) REFERENCES Pedidos(ID), "
-					+ "FOREIGN KEY (ProdutoID) REFERENCES Produtos(ID));";
+					+ "PRIMARY KEY (ProdutoID,PedidoID), "
+					+ "FOREIGN KEY (PedidoID) REFERENCES Pedidos(ID) ON UPDATE CASCADE, "
+					+ "FOREIGN KEY (ProdutoID) REFERENCES Produtos(ID) ON UPDATE CASCADE);";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();

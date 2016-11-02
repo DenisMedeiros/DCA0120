@@ -43,8 +43,9 @@ public final class CaixasGerenciamPedidosDAO {
 			Statement st = conexao.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS CaixasGerenciamPedidos (CaixaID INTEGER NOT NULL, "
 					+ "PedidoID  INTEGER NOT NULL, DataHoraAbertura TIMESTAMP NOT NULL, "
-					+ "PRIMARY KEY (CaixaID, PedidoID), FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID), "
-					+ "FOREIGN KEY (PedidoID) REFERENCES Pedidos(ID))";
+					+ "PRIMARY KEY (CaixaID, PedidoID), "
+					+ "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID) ON UPDATE CASCADE, "
+					+ "FOREIGN KEY (PedidoID) REFERENCES Pedidos(ID)) ON UPDATE CASCADE";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -112,14 +113,14 @@ public final class CaixasGerenciamPedidosDAO {
 		}
 		return dataHoraAbertura;
 	}
-	
+
 	public boolean isEmpty() {
 		String sql = "SELECT * FROM CaixasGerenciamPedidos;";
 
 		try {
 			PreparedStatement pst = conexao.prepareStatement(sql);
 			ResultSet res = pst.executeQuery();
-			
+
 			return res.wasNull();
 		} catch (SQLException e) {
 			e.printStackTrace();

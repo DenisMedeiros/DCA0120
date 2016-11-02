@@ -43,7 +43,8 @@ public class EnderecosEntregaDAO {
 			Statement st = conexao.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS EnderecosEntrega (PedidoID INTEGER NOT NULL, "
 					+ "Latitude FLOAT NOT NULL, Longitude FLOAT NOT NULL, Descricao VARCHAR(800), "
-					+ "PRIMARY KEY (PedidoID), FOREIGN KEY (PedidoID) REFERENCES Pedidos (ID));";
+					+ "PRIMARY KEY (PedidoID), "
+					+ "FOREIGN KEY (PedidoID) REFERENCES Pedidos (ID) ON UPDATE CASCADE);";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -120,5 +121,34 @@ public class EnderecosEntregaDAO {
 			e.printStackTrace();
 		}
 		return true;
+	}
+	
+	public void alterarEndereco(Pedido p) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement(
+					"UPDATE EnderecosEntrega Latitude=?, Longitude=?, Descricao=? WHERE PedidoID=?");
+
+			pst.setFloat(1, p.getEnderecoEntrega().getLatitude());
+			pst.setFloat(2, p.getEnderecoEntrega().getLongitude());
+			pst.setString(3, p.getEnderecoEntrega().getDescricao());
+			pst.setInt(4, p.getId());
+
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removerEndereco(int id) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM EnderecosEntrega WHERE PedidoID=?");
+
+			pst.setInt(1, id);
+			
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -47,7 +47,7 @@ public class ProdutosDAO {
 					+ "Volume FLOAT, Descricao VARCHAR(800), CaixaID INTEGER NOT NULL, "
 					+ "QuantidadeEmEstoque INTEGER NOT NULL, "
 					+ "CONSTRAINT chk_Estoque CHECK (QuantidadeEmEstoque>=0), PRIMARY KEY (ID), "
-					+ "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID));";
+					+ "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID) ON UPDATE CASCADE);";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -63,7 +63,7 @@ public class ProdutosDAO {
 	public void inserirProduto(Produto p) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Produtos(Nome, Preco, Foto, Peso, Volume,"
-					+ "CaixaID, QuantidadeEmEstoque) VALUES (?, ?, ?, ?, ?, ?, ?)");
+					+ "CaixaID, QuantidadeEmEstoque, Descricao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
 			pst.setString(1, p.getNome());
 			pst.setFloat(2, p.getPreco());
@@ -72,6 +72,7 @@ public class ProdutosDAO {
 			pst.setFloat(5, p.getVolume());
 			pst.setInt(6, p.getResponsavelCadastro().getId());
 			pst.setInt(7, p.getQuantidadeEstoque());
+			pst.setString(8, p.getDescricao());
 
 			pst.executeUpdate();
 		} catch (SQLException e) {
