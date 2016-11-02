@@ -1,5 +1,6 @@
 package dca0120.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
@@ -64,6 +65,17 @@ public abstract class Funcionario {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public String getDataNascimentoFormatada() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String saida = sdf.format(this.dataNascimento.getTime());
+		return saida;
+	}
+	
+	public String getTelefonesFormatados() {
+		String saida = String.join(", ", this.telefones);
+		return saida;	
 	}
 
 }
