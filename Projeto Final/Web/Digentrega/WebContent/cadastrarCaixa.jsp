@@ -42,7 +42,8 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="cpf" id="cpf"  placeholder="Apenas números" data-parsley-required data-parsley-cpf />
+							<input type="text" class="form-control" name="cpf" id="cpf"  placeholder="Apenas números" data-parsley-required data-parsley-cpf data-parsley-duplicado />
+							<input type="hidden" id="cpfJaExiste" name="jaExiste" value="0">
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>
@@ -175,10 +176,39 @@
 			        return false;       
 			    return true;   
 			  },
-			}).addMessage('pt-br', 'cpf', 'CPF inválido.');;
+			}).addMessage('pt-br', 'cpf', 'CPF inválido.');	
 			
 			
+			window.Parsley.addValidator('duplicado', {
+				  validateString: function(value) {	
+					cpf = value.replace(/[^\d]+/g,''); 
+					
+					
+				    $.ajax({
+				        url: "${pageContext.request.contextPath}/verificarCPF?cpf=" + cpf,
+				        type: 'GET',
+				        async: false,
+				        cache: false,
+				        timeout: 30000,
+				        error: function(){
+				            return true;
+				        },
+				        success: function(data){ 
+							if(data == "1") {
+								$("#cpfJaExiste").val("1");
+							}
+				        }
+				    });
+												
+					if($("#cpfJaExiste").val() == "1") {
+						return false;
+					}
+					
+				    return true;   
+				  },
+				}).addMessage('pt-br', 'duplicado', 'Já existe um funcionário com este CPF.');	
 		});
+		
 		</script>
 		<script>
 			$(document).ready(function(){	

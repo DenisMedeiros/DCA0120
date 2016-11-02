@@ -74,5 +74,14 @@
     <url-pattern>/prepararBD/*</url-pattern>
   </servlet-mapping>
   
+    <servlet>
+    <servlet-name>VerificarCPFServlet</servlet-name>
+    <servlet-class>dca0120.views.VerificarCPFServlet</servlet-class>
+  </servlet> 
+  <servlet-mapping>
+    <servlet-name>VerificarCPFServlet</servlet-name>
+    <url-pattern>/verificarCPF/*</url-pattern>
+	</servlet-mapping>
+  
   
 </web-app>
