@@ -4,14 +4,14 @@
 <template:base>
 
 	<jsp:attribute name="titulo">   
-		Autenticação
+		Cadastrar Caixa
 	</jsp:attribute>
 		
 	<jsp:attribute name="cabecalhoExtra">   
 		<%-- Mais arquivos CSS e Javascript aqui. --%>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/formulario.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap-datepicker3.css"/>
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap-tokenfield.min.css"/>
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/parsley.css"/>
 	</jsp:attribute>
 
 
@@ -24,13 +24,13 @@
               		<hr />
               	</div>
            </div>
-			<form class="form-signup" method="post">
+			<form id="form" class="form-signup" method="post" data-parsley-validate>
 				<div class="form-group">
 					<label for="name" class="cols-sm-2 control-label">Nome completo</label>
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="nome" id="nome"  placeholder="Digite seu nome"/>
+							<input type="text" class="form-control" name="nome" id="nome"  placeholder="Digite seu nome" data-parsley-required data-parsley-pattern="^[A-Z]'?[- a-zA-Z]( [a-zA-Z])*$" />
 						</div>
 					</div>
 				</div>
@@ -61,7 +61,7 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="telefones" id="telefones"  placeholder="Apenas números"/>
+							<input type="text" class="form-control" name="telefones" id="telefones"  placeholder="Apenas números (mais de um telefone separado por virgula)"/>
 						</div>
 					</div>
 				</div>
@@ -99,8 +99,8 @@
 	<jsp:attribute name="rodapeExtra">  
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap-datepicker.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap-datepicker.pt-BR.min.js"></script>
-		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap-tokenfield.min.js"></script>
-		
+		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/parsley.min.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/i18n/pt-br.js"></script>
 		<script>
 		    $(document).ready(function(){
 		      var date_input=$('#dataNascimento');
@@ -114,14 +114,6 @@
 		    })
 		</script>
 		
-		<script>
-		
-			$('#telefones').tokenfield({
-				minLength: 8,
-				delimiter: ",",
-			})
-		
-		</script>
 	</jsp:attribute>
 	
 </template:base>

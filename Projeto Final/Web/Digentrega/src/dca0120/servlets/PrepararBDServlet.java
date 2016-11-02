@@ -1,6 +1,7 @@
 package dca0120.servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -66,24 +67,16 @@ public class PrepararBDServlet extends HttpServlet {
 			cd.inserirCaixa(caixa, -1);
 		}
 
-        request.getRequestDispatcher(request.getContextPath()).forward(request, response);
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		out.append("Tabelas e administrador criados com sucesso!\n");
+		out.close();
+     
     }
 
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String message = null;
-
-        if ((username.equals("kiran")) && (password.equals("kiran"))) {
-            message = "Welcome "+username+" thanks for login...";
-        } else {
-            message = "You are not the valid user...";
-        }
-
-        request.setAttribute("message", message);
-        request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 
 } 
