@@ -12,6 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/formulario.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap-datepicker3.css"/>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/parsley.css"/>
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/telefones.css"/>
 	</jsp:attribute>
 
 
@@ -30,7 +31,7 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="nome" id="nome"  placeholder="Digite seu nome" data-parsley-required />
+							<input type="text" class="form-control" name="nome" id="nome" maxlength="255"  placeholder="Digite seu nome" data-parsley-required />
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>
@@ -54,22 +55,24 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="dataNascimento" id="dataNascimento"  placeholder="dd/mm/aaaa"/ data-parsley-required>
+							<input type="text" class="form-control" name="dataNascimento" id="dataNascimento"  placeholder="dd/mm/aaaa" data-parsley-required />
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>
 				</div>
 				
-				
-			<div class="form-group">
-					<label for="email" class="cols-sm-2 control-label">Telefones</label>
-					<div class="cols-sm-10">
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="telefones" id="telefones"  placeholder="Apenas números (mais de um telefone separado por virgula)" data-parsley-required/>
+				<div class="form-group">
+					<label for="telefones" class="cols-sm-2 control-label">Telefones</label>
+					<div class="phone-list">
+						<div>
+							<div class="input-group phone-input">
+								<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+								<input type="text" id="telefone_1"  name="telefone_1" class="form-control" placeholder="Somente números" maxlength="11" data-parsley-required data-parsley-type="number" />
+							</div>
+							<span class="mensagem-ajuda"></span>
 						</div>
-						<span class="mensagem-ajuda"></span>
 					</div>
+					<button type="button" class="btn btn-success btn-sm btn-add-phone"><span class="glyphicon glyphicon-plus"></span> Adicionar outro</button>
 				</div>
 
 
@@ -78,7 +81,7 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-							<input type="password" class="form-control" name="senha1" id="senha1"  placeholder="Senha" data-parsley-required/>
+							<input type="password" class="form-control" name="senha1" id="senha1" maxlength="64" placeholder="Senha" data-parsley-required/>
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>
@@ -89,7 +92,7 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-							<input type="password" class="form-control" name="senha2" id="senha2"  placeholder="Confirm your Password" data-parsley-required/>
+							<input type="password" class="form-control" name="senha2" id="senha2" maxlength="64"  placeholder="Confirm your Password" data-parsley-required/>
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>
@@ -110,7 +113,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/parsley.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/i18n/pt-br.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery.maskedinput.min.js"></script>
-		
+
 		<script>
 		    $(document).ready(function(){
 		      var date_input=$('#dataNascimento');
@@ -183,6 +186,39 @@
 			$(document).ready(function(){	
 				$("#cpf").mask("999.999.999-99");
 			});
+		</script>
+		
+		<script>
+		
+		$(function(){
+			$(document.body).on('click', '.changeType' ,function(){
+				$(this).closest('.phone-input').find('.type-text').text($(this).text());
+				$(this).closest('.phone-input').find('.type-input').val($(this).data('type-value'));
+			});
+			
+			$(document.body).on('click', '.btn-remove-phone' ,function(){
+				$(this).closest('.phone-input').remove();
+			});
+			
+			
+			$('.btn-add-phone').click(function(){
+				var index = $('.phone-input').length + 1;
+				$('.phone-list').append(''+
+					'<div>'+
+					'<div class="input-group phone-input">'+
+						'<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>'+
+						'<input type="text" id="telefone_'+ index +'"  name="telefone_'+index+'" class="form-control" maxlength="11" placeholder="Somente números" data-parsley-required data-parsley-type="number" />'+
+						'<span class="input-group-btn">'+
+						'<button class="btn btn-danger btn-remove-phone" type="button"><span class="glyphicon glyphicon-remove"></span></button>'+
+						'</span>'+
+					'</div>'+
+					'<span class="mensagem-ajuda"></span>'	+
+					'</div>'
+				);
+			});
+			
+		});
+		
 		</script>
 		
 	</jsp:attribute>

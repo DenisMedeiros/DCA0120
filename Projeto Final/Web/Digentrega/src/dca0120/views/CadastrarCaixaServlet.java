@@ -3,8 +3,10 @@ package dca0120.views;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -51,7 +53,13 @@ public class CadastrarCaixaServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
 		
-		HttpSession session = request.getSession(false);
+		HttpSession session = request.getSession(false);	
+		if(session == null) {
+			session = request.getSession(true);	
+			session.setAttribute("mensagem", "Você precisa entrar no sistema para acessar esta função.");
+        	response.sendRedirect(request.getContextPath());
+        	return;
+		}
 		CaixasDAO cd = new CaixasDAO();
 		
 		// Verifica se o usuário que quer acessar esta função é o administrador.
@@ -62,18 +70,19 @@ public class CadastrarCaixaServlet extends HttpServlet {
         	return;
 		}
 		
-		
         String nome = request.getParameter("nome");
         String cpfStr = request.getParameter("cpf");
         String dataNascimentoStr = request.getParameter("dataNascimento");
-        String telefonesStr = request.getParameter("telefones");
+        String telefone1 = request.getParameter("telefone_1");
         String senha1 = request.getParameter("senha1");
         String senha2 = request.getParameter("senha2");
+        
+
                
                 
         // Verifica se algum campo chegou em branco.
         if(nome.trim().isEmpty() || cpfStr.trim().isEmpty() || dataNascimentoStr.trim().isEmpty() || 
-        		telefonesStr.trim().isEmpty() || senha1.trim().isEmpty() || senha2.trim().isEmpty()) {
+        		telefone1.trim().isEmpty() || senha1.trim().isEmpty() || senha2.trim().isEmpty()) {
             session.setAttribute("mensagem", "Algum dos campos foi enviado em branco. Tente novamente!");
             response.sendRedirect(request.getHeader("referer"));
             return;
@@ -115,8 +124,12 @@ public class CadastrarCaixaServlet extends HttpServlet {
 		}
         
         // Organiza o vetor de telefones.
-        String[] telefonesArray = telefonesStr.trim().split(","); // Obtém um array de telefones.
-        List<String> telefones = Arrays.asList(telefonesArray);
+        List<String> telefones = new ArrayList<String>();
+        int i = 1;
+        while(request.getParameter("telefone_" + i) != null) {
+        	telefones.add(request.getParameter("telefone_" + i));
+        	i++;
+        }
         
         String senhaCriptografada = Hashing.plainToSHA256(senha1, cpf.getBytes());
         
