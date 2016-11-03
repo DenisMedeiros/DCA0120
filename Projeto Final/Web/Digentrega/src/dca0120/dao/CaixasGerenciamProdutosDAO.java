@@ -63,8 +63,6 @@ public final class CaixasGerenciamProdutosDAO {
 		
 			pst.setInt(1, p.getId());
 			pst.setInt(2, p.getResponsavelCadastro().getId());
-
-
 			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -106,6 +104,7 @@ public final class CaixasGerenciamProdutosDAO {
 			String sql = "SELECT CaixaID FROM CaixasGerenciamProdutos WHERE ProdutoID=?";
 
 			PreparedStatement pst = conexao.prepareStatement(sql);
+			pst.setInt(1, produtoID);
 			ResultSet res = pst.executeQuery();
 
 			if (res.wasNull()) {

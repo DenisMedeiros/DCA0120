@@ -46,8 +46,7 @@ public class ProdutosDAO {
 					+ "Nome VARCHAR(80) NOT NULL, Preco FLOAT NOT NULL, Foto VARCHAR(200), Peso FLOAT, "
 					+ "Volume FLOAT, Descricao VARCHAR(800), "
 					+ "QuantidadeEmEstoque INTEGER NOT NULL, "
-					+ "CONSTRAINT chk_Estoque CHECK (QuantidadeEmEstoque>=0), PRIMARY KEY (ID), "
-					+ "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID) ON UPDATE CASCADE);";
+					+ "CONSTRAINT chk_Estoque CHECK (QuantidadeEmEstoque>=0), PRIMARY KEY (ID));";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -63,7 +62,7 @@ public class ProdutosDAO {
 	public void inserirProduto(Produto p) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Produtos(Nome, Preco, Foto, Peso, Volume,"
-					+ "QuantidadeEmEstoque, Descricao) VALUES (?, ?, ?, ?, ?, ?, ?)");
+					+ "QuantidadeEmEstoque, Descricao) VALUES (?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			pst.setString(1, p.getNome());
 			pst.setFloat(2, p.getPreco());
@@ -74,6 +73,14 @@ public class ProdutosDAO {
 			pst.setString(7, p.getDescricao());
 
 			pst.executeUpdate();
+			ResultSet rs = pst.getGeneratedKeys();
+            int id = 0;
+            if(rs.next())
+            {
+                id = rs.getInt(1);
+            }
+            
+            p.setId(id);
 			
 			CaixasGerenciamProdutosDAO cgpr = new CaixasGerenciamProdutosDAO();
 			cgpr.inserirCaixasGerenciamProdutos(p);

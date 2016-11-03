@@ -76,7 +76,7 @@ public class PedidosDAO {
 	public void inserirPedido(Pedido p, int caixaID) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Pedidos(VolumeTotal, PesoTotal, ValorTotal,"
-					+ "Status, Descricao, EntregadorID, DataHoraEntrega) VALUES (?,?,?,?,?,?,?)");
+					+ "Status, Descricao, EntregadorID, DataHoraEntrega) VALUES (?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
 			pst.setFloat(1, p.getVolumeTotal());
 			pst.setFloat(2, p.getPesoTotal());
@@ -92,6 +92,14 @@ public class PedidosDAO {
 			pst.setTimestamp(7, javaSqlTimestamp);
 
 			pst.executeUpdate();
+            ResultSet rs = pst.getGeneratedKeys();
+            int id = 0;
+            if(rs.next())
+            {
+                id = rs.getInt(1);
+            }
+			
+			p.setId(id);
 			
 			EnderecosEntregaDAO eed = new EnderecosEntregaDAO();
 			eed.inserirEnderecosEntrega(p);

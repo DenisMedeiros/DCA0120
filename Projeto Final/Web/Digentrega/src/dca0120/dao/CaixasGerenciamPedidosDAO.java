@@ -45,7 +45,7 @@ public final class CaixasGerenciamPedidosDAO {
 					+ "PedidoID INTEGER NOT NULL, DataHoraAbertura TIMESTAMP NOT NULL, "
 					+ "PRIMARY KEY (CaixaID, PedidoID), "
 					+ "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID) ON UPDATE CASCADE, "
-					+ "FOREIGN KEY (PedidoID) REFERENCES Pedidos(ID)) ON UPDATE CASCADE";
+					+ "FOREIGN KEY (PedidoID) REFERENCES Pedidos(ID) ON DELETE SET NULL ON UPDATE CASCADE);";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -73,8 +73,6 @@ public class CadastrarProdutoServlet extends HttpServlet {
         String quantidadeStr = request.getParameter("quantidade");
         String descricao = request.getParameter("descricao");
         
-        System.out.println(descricao);
-        
         Part filePart = request.getPart("foto"); 
                
         String fileName = null;
