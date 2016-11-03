@@ -126,7 +126,7 @@ public class EnderecosEntregaDAO {
 	public void alterarEndereco(Pedido p) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement(
-					"UPDATE EnderecosEntrega Latitude=?, Longitude=?, Descricao=? WHERE PedidoID=?");
+					"UPDATE EnderecosEntrega SET Latitude=?, Longitude=?, Descricao=? WHERE PedidoID=?");
 
 			pst.setFloat(1, p.getEnderecoEntrega().getLatitude());
 			pst.setFloat(2, p.getEnderecoEntrega().getLongitude());
@@ -139,11 +139,11 @@ public class EnderecosEntregaDAO {
 		}
 	}
 	
-	public void removerEndereco(int id) {
+	public void removerEndereco(int pedidoID) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("DELETE FROM EnderecosEntrega WHERE PedidoID=?");
 
-			pst.setInt(1, id);
+			pst.setInt(1, pedidoID);
 			
 			pst.executeUpdate();
 

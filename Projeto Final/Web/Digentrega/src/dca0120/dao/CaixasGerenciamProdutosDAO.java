@@ -113,4 +113,50 @@ public final class CaixasGerenciamProdutosDAO {
 		}
 		return true;
 	}
+	
+	public void removerProdutos(int produtoID) {
+		try {
+			String sql = "DELETE FROM CaixasGerenciamProdutos WHERE ProdutoID=?";
+
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			
+			pst.setInt(1, produtoID);
+			
+			pst.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removerCaixas(int caixaID) {
+		try {
+			String sql = "DELETE FROM CaixasGerenciamProdutos WHERE CaixaID=?";
+
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			
+			pst.setInt(1, caixaID);
+			
+			pst.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removerCaixasGerenciamProdutos(int caixaID, int produtoID) {
+		try {
+			String sql = "DELETE FROM CaixasGerenciamProdutos WHERE ProdutoID=? AND CaixaID=?";
+
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			
+			pst.setInt(1, produtoID);
+			pst.setInt(2, caixaID);
+			
+			pst.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -44,7 +44,7 @@ public class ProdutosDAO {
 			Statement st = conexao.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS Produtos (ID INTEGER AUTO_INCREMENT, "
 					+ "Nome VARCHAR(80) NOT NULL, Preco FLOAT NOT NULL, Foto VARCHAR(200), Peso FLOAT, "
-					+ "Volume FLOAT, Descricao VARCHAR(800), CaixaID INTEGER NOT NULL, "
+					+ "Volume FLOAT, Descricao VARCHAR(800), "
 					+ "QuantidadeEmEstoque INTEGER NOT NULL, "
 					+ "CONSTRAINT chk_Estoque CHECK (QuantidadeEmEstoque>=0), PRIMARY KEY (ID), "
 					+ "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID) ON UPDATE CASCADE);";
@@ -63,18 +63,20 @@ public class ProdutosDAO {
 	public void inserirProduto(Produto p) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Produtos(Nome, Preco, Foto, Peso, Volume,"
-					+ "CaixaID, QuantidadeEmEstoque, Descricao) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+					+ "QuantidadeEmEstoque, Descricao) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
 			pst.setString(1, p.getNome());
 			pst.setFloat(2, p.getPreco());
 			pst.setString(3, p.getFoto());
 			pst.setFloat(4, p.getPeso());
 			pst.setFloat(5, p.getVolume());
-			pst.setInt(6, p.getResponsavelCadastro().getId());
-			pst.setInt(7, p.getQuantidadeEstoque());
-			pst.setString(8, p.getDescricao());
+			pst.setInt(6, p.getQuantidadeEstoque());
+			pst.setString(7, p.getDescricao());
 
 			pst.executeUpdate();
+			
+			p.getResponsavelCadastro().getId();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -199,6 +201,11 @@ public class ProdutosDAO {
 	 *            referencia do Produto a ser procurado no banco de dados
 	 */
 	public void removerProduto(int id) {
+		PedidosContemProdutosDAO pcp = new PedidosContemProdutosDAO();
+		pcp.removerProduto(id);
+		
+		CaixasGerenciamProdutosDAO gcpr = new CaixasGerenciamProdutosDAO();
+		gcpr.removerProdutos(id);
 		try {
 			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Produtos WHERE ID=?");
 
@@ -223,5 +230,26 @@ public class ProdutosDAO {
 			e.printStackTrace();
 		}
 		return true;
+	}
+	
+	public void alterarProduto(Produto p) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement("UPDATE Produtos SET Nome=?, Preco=?, Foto=?, Peso=?, Volume=?,"
+					+ "CaixaID=?, QuantidadeEmEstoque=?, Descricao=? WHERE ID=?)");
+
+			pst.setString(1, p.getNome());
+			pst.setFloat(2, p.getPreco());
+			pst.setString(3, p.getFoto());
+			pst.setFloat(4, p.getPeso());
+			pst.setFloat(5, p.getVolume());
+			pst.setInt(6, p.getResponsavelCadastro().getId());
+			pst.setInt(7, p.getQuantidadeEstoque());
+			pst.setString(8, p.getDescricao());
+			pst.setInt(9, p.getId());
+
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

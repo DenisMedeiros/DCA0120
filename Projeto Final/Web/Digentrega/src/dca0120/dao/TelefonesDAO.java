@@ -141,4 +141,29 @@ public class TelefonesDAO {
 		}
 		return true;
 	}
+	
+	public void alterarTelefone(int funcionarioID, String telefone) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement("UPDATE Telefones SET DDDeNumero=? WHERE FuncionarioID=?)");
+			
+			pst.setString(1, telefone);
+			pst.setInt(2, funcionarioID);
+			
+	        pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removerTelefone(int funcionarioID, String telefone) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Telefones WHERE FuncionarioID=?)");
+			
+			pst.setInt(1, funcionarioID);
+			
+	        pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

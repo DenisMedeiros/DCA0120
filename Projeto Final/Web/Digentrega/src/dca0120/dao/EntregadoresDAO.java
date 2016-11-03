@@ -35,12 +35,14 @@ public class EntregadoresDAO extends FuncionariosDAO {
 	 * Cria a tabela Entregadores no banco de dados.
 	 */
 	public void criarTabelaEntregadores() {
+		TelefonesDAO td = new TelefonesDAO();
 		try {
 			Statement st = conexao.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS Entregadores (FuncionarioID INTEGER NOT NULL, "
 					+ "CNH VARCHAR(11) NOT NULL, Placa VARCHAR(7) NOT NULL, PRIMARY KEY (FuncionarioID), "
 					+ "FOREIGN KEY (FuncionarioID ) REFERENCES Funcionarios(ID))";
 			st.executeUpdate(sql);
+			td.criarTabelaTelefones();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -66,6 +68,13 @@ public class EntregadoresDAO extends FuncionariosDAO {
 			pst.setNString(3, e.getPlacaVeiculo());
 
 			pst.executeUpdate();
+			
+			TelefonesDAO td = new TelefonesDAO();
+			int idFuncionario = this.getID(e.getCpf());
+			
+			for(String telefone: e.getTelefones()) {
+				td.inserirTelefone(idFuncionario, telefone);
+			}			
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -200,6 +209,10 @@ public class EntregadoresDAO extends FuncionariosDAO {
 	}
 
 	public void removerEntregador(int id) {
+		TelefonesDAO td = new TelefonesDAO();
+		for(String telefone: this.getEntregadorWithID(id).getTelefones()) {
+			td.removerTelefone(id, telefone);
+		}
 		try {
 
 			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Entregador WHERE FuncionarioID=?");
@@ -216,6 +229,10 @@ public class EntregadoresDAO extends FuncionariosDAO {
 	}
 
 	public void alterarEntregador(Entregador e, int admID) {
+		TelefonesDAO td = new TelefonesDAO();
+		for(String telefone: e.getTelefones()) {
+			td.alterarTelefone(e.getId(), telefone);
+		}
 		try {
 			PreparedStatement pst = conexao
 					.prepareStatement("UPDATE Entregadores SET CNH=?, Placa=? WHERE FuncionarioID=?");

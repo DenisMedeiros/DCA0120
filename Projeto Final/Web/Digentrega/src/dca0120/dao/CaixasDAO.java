@@ -38,6 +38,8 @@ public class CaixasDAO extends FuncionariosDAO {
 					+ "EAdministrador BOOLEAN DEFAULT false, PRIMARY KEY (FuncionarioID), "
 					+ "FOREIGN KEY (FuncionarioID ) REFERENCES Funcionarios(ID) ON UPDATE CASCADE);";
 			st.executeUpdate(sql);
+			TelefonesDAO td = new TelefonesDAO();
+			td.criarTabelaTelefones();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -56,10 +58,6 @@ public class CaixasDAO extends FuncionariosDAO {
 		try {
 			TelefonesDAO td = new TelefonesDAO();
 			this.inserirFuncionario(c.getNome(), c.getCpf(), c.getSenha(), c.getDataNascimento(), admID);
-			int idFuncionario = this.getID(c.getCpf());
-			for (String telefone : c.getTelefones()) {
-				td.inserirTelefone(idFuncionario, telefone);
-			}
 
 			PreparedStatement pst = conexao
 					.prepareStatement("INSERT INTO Caixas(FuncionarioID, EAdministrador) VALUES (?, ?)");
@@ -68,6 +66,12 @@ public class CaixasDAO extends FuncionariosDAO {
 			pst.setBoolean(2, c.isAdministrador());
 
 			pst.executeUpdate();
+			
+			int idFuncionario = this.getID(c.getCpf());
+			
+			for(String telefone: c.getTelefones()) {
+				td.inserirTelefone(idFuncionario, telefone);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -201,6 +205,16 @@ public class CaixasDAO extends FuncionariosDAO {
 	}
 
 	public void removerCaixa(int id) {
+		TelefonesDAO td = new TelefonesDAO();
+		for(String telefone: this.getCaixaWithID(id).getTelefones()) {
+			td.removerTelefone(id, telefone);
+		}
+		
+		CaixasGerenciamProdutosDAO gcpr = new CaixasGerenciamProdutosDAO();
+		gcpr.removerCaixas(id);
+		
+		CaixasGerenciamPedidosDAO gcpe = new CaixasGerenciamPedidosDAO();
+		gcpe.removerCaixas(id);
 		try {
 
 			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Caixas WHERE FuncionarioID=?");
@@ -217,6 +231,10 @@ public class CaixasDAO extends FuncionariosDAO {
 	}
 
 	public void alterarCaixa(Caixa c, int admID) {
+		TelefonesDAO td = new TelefonesDAO();
+		for(String telefone: c.getTelefones()) {
+			td.alterarTelefone(c.getId(), telefone);
+		}
 		try {
 			PreparedStatement pst = conexao
 					.prepareStatement("UPDATE Caixas SET EAdministrador=? WHERE FuncionarioID=?");

@@ -58,6 +58,10 @@ public class PedidosDAO {
 					+ "PRIMARY KEY (ID), "
 					+ "FOREIGN KEY (EntregadorID) REFERENCES Entregadores (FuncionarioID) ON UPDATE CASCADE)";
 			st.executeUpdate(sql);
+			EnderecosEntregaDAO eed = new EnderecosEntregaDAO();
+			eed.criarTabelaEnderecosEntrega();
+			CaixasGerenciamPedidosDAO cgpe = new CaixasGerenciamPedidosDAO();
+			cgpe.criarTabelaCaixasGerenciamPedidos();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -69,7 +73,7 @@ public class PedidosDAO {
 	 * @param p
 	 *            objeto a ser inserido no banco de dados
 	 */
-	public void inserirPedido(Pedido p) {
+	public void inserirPedido(Pedido p, int caixaID) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Pedidos(VolumeTotal, PesoTotal, ValorTotal,"
 					+ "Status, Descricao, EntregadorID, DataHoraEntrega) VALUES (?,?,?,?,?,?,?)");
@@ -91,6 +95,21 @@ public class PedidosDAO {
 			
 			EnderecosEntregaDAO eed = new EnderecosEntregaDAO();
 			eed.inserirEnderecosEntrega(p);
+			
+			CaixasGerenciamPedidosDAO cgpe = new CaixasGerenciamPedidosDAO();
+			cgpe.inserirCaixasGerenciamPedidos(p, caixaID);
+			
+			PedidosContemProdutosDAO pcp = new PedidosContemProdutosDAO();
+			
+			List<Produto> lista = p.getProdutos();
+			for(Produto pr: lista) {
+				try {
+					pcp.inserirPedidosContemProdutos(pr,p);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -130,8 +149,15 @@ public class PedidosDAO {
 	 * @param id referencia de tipo Int a ser usado para deletar o tal pedido
 	 */
 	public void removerPedido(int id) {
+		
 		EnderecosEntregaDAO eed = new EnderecosEntregaDAO();
 		eed.removerEndereco(id);
+		
+		CaixasGerenciamPedidosDAO cgpe = new CaixasGerenciamPedidosDAO();
+		cgpe.removerPedidos(id);
+		
+		PedidosContemProdutosDAO pcp = new PedidosContemProdutosDAO();
+		pcp.removerPedido(id);
 		try {
 			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Pedidos WHERE ID=?");
 
@@ -343,6 +369,9 @@ public class PedidosDAO {
 			
 			EnderecosEntregaDAO eed = new EnderecosEntregaDAO();
 			eed.alterarEndereco(p);
+			
+			CaixasGerenciamPedidosDAO cgpe = new CaixasGerenciamPedidosDAO();
+			cgpe.alterarDataHoraAbertura(p);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

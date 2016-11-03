@@ -125,17 +125,14 @@ public final class PedidosContemProdutosDAO {
 	 * @param prod
 	 *            objeto de Produto a ter quantidade alterada
 	 * @param ped
-	 *            objeto de Pedido a ter quantidade de produto alterada
-	 * @param quantidade
-	 *            valor a ser usado para alterar a quantidade de produto em um
-	 *            pedido
+	 *            objeto de Pedido a ter quantidade de produto alterada com o produto e sua quantidade já inserido
 	 */
-	public void alterarQuantidade(Produto prod, Pedido ped, int quantidade) {
+	public void alterarQuantidade(Produto prod, Pedido ped) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement(
 					"UPDATE PedidosContemProdutos SET Quantidade=? WHERE PedidoID=? AND ProdutoID=?;");
 
-			pst.setInt(1, quantidade);
+			pst.setInt(1, ped.getQuantidadeProduto(prod));
 			pst.setInt(2, ped.getId());
 			pst.setInt(3, prod.getId());
 			
@@ -194,5 +191,42 @@ public final class PedidosContemProdutosDAO {
 			e.printStackTrace();
 		}
 		return true;
+	}
+	
+	public void removerProdutoDoPedido(int produtoID, int pedidoID) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM PedidosContemProdutos WHERE ProdutoID=? AND PedidoID=?");
+
+			pst.setInt(1, produtoID);
+			pst.setInt(2, pedidoID);
+			
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removerPedido(int pedidoID) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM PedidosContemProdutos WHERE PedidoID=?");
+
+			pst.setInt(1, pedidoID);
+			
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removerProduto(int produtoID) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM PedidosContemProdutos WHERE ProdutoID=?");
+
+			pst.setInt(1, produtoID);
+			
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
