@@ -1,10 +1,8 @@
 package dca0120.views;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -13,12 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dca0120.dao.CaixasDAO;
+import dca0120.dao.EntregadoresDAO;
+import dca0120.dao.PedidosDAO;
 import dca0120.dao.ProdutosDAO;
 import dca0120.model.Caixa;
+import dca0120.model.Endereco;
+import dca0120.model.Entregador;
+import dca0120.model.Pedido;
 import dca0120.model.Produto;
-import dca0120.utils.Hashing;
-import dca0120.utils.ValidadorCPF;
 
 public class CadastrarPedidoServlet extends HttpServlet {
 
@@ -47,7 +47,15 @@ public class CadastrarPedidoServlet extends HttpServlet {
 		}
 		
 		ProdutosDAO pd = new ProdutosDAO();
+		EntregadoresDAO ed = new EntregadoresDAO();
+		List<Entregador> entregadores = ed.getTodosEntregadores();
 		
+		if(entregadores.size() > 0) {
+			request.setAttribute("entregadores", entregadores);
+		} else {
+			request.setAttribute("entregadores", null);
+		}
+			
 		List<Produto> produtos = pd.getTodosProdutos();
 		
 		if(produtos.size() > 0) {
@@ -71,85 +79,58 @@ public class CadastrarPedidoServlet extends HttpServlet {
         	return;
 		}
 		
-		CaixasDAO cd = new CaixasDAO();
+		ProdutosDAO prodDAO = new ProdutosDAO();
+		PedidosDAO pedDAO = new PedidosDAO();
+		EntregadoresDAO ed = new EntregadoresDAO();
 		
-
-		// Verifica se o usuário que quer acessar esta função é o administrador.
-		Integer administradorID = (Integer) session.getAttribute("administrador");
-		if(administradorID == null) {
+		// Verifica se o usuário que quer acessar esta função é o caixa.
+		Integer caixaID = (Integer) session.getAttribute("caixa");
+		if(caixaID == null) {
 	     	session.setAttribute("mensagem", "Apenas o administrador pode cadastrar funcionários.");
         	response.sendRedirect(request.getContextPath());
         	return;
 		}
 		
-        String nome = request.getParameter("nome");
-        String cpfStr = request.getParameter("cpf");
-        String dataNascimentoStr = request.getParameter("dataNascimento");
-        String telefone1 = request.getParameter("telefone_1");
-        String senha1 = request.getParameter("senha1");
-        String senha2 = request.getParameter("senha2");
+        String descricaoPedido = request.getParameter("descricaoPedido");
+        String latitudeStr = request.getParameter("latitude");
+        String longitudeStr = request.getParameter("latitude");
+        String descricaoEndereco = request.getParameter("descricaoEndereco");
+        String entregadorIdStr = request.getParameter("entregador");
+        int entregadorId = Integer.parseInt(entregadorIdStr);
+        Entregador entregador = ed.getEntregadorWithID(entregadorId);
+   
+        float latitude = Float.parseFloat(latitudeStr);
+        float longitude = Float.parseFloat(longitudeStr);
 
-        // Verifica se algum campo chegou em branco.
-        if(nome.trim().isEmpty() || cpfStr.trim().isEmpty() || dataNascimentoStr.trim().isEmpty() || 
-        		telefone1.trim().isEmpty() || senha1.trim().isEmpty() || senha2.trim().isEmpty()) {
-            session.setAttribute("mensagem", "Algum dos campos foi enviado em branco. Tente novamente!");
-            response.sendRedirect(request.getHeader("referer"));
-            return;
+        Endereco endereco = new Endereco(latitude, longitude, descricaoEndereco);
+
+        
+        // Prepara a lista de produtos.
+        Calendar momentoAbertura = Calendar.getInstance();
+        Calendar momentoEntrega =  Calendar.getInstance();
+        momentoEntrega.add(Calendar.MINUTE, 30);
+        
+        Pedido pedido = new Pedido(0, Pedido.Status.ABERTO, descricaoPedido, entregador, momentoEntrega, momentoAbertura, endereco);
+       
+        Enumeration<String> parametros = request.getParameterNames();
+        while(parametros.hasMoreElements()) {
+        	String nomeParametro = parametros.nextElement();
+        	if(nomeParametro.contains("produto_")) {
+        		String idStr = nomeParametro.replace("produto_", "");
+        		String quantidadeStr = request.getParameter(nomeParametro);
+        		int quantidade = Integer.parseInt(quantidadeStr);
+        		int idProduto = Integer.parseInt(idStr);
+        		Produto prod = prodDAO.getProduto(idProduto);
+        		pedido.addProduto(prod, quantidade);
+        	}
         }
-        
-        // Transforma o CPF em números apenas.
-        String cpf = cpfStr.replace(".", "").replace("-", "");
-        
-        // Valida o CPF.
-        if(!ValidadorCPF.isValidCPF(cpf)) {
-        	session.setAttribute("mensagem", "CPF inválido! Tente novamente.");
-            response.sendRedirect(request.getHeader("referer"));
-            return;
-        }
-        
-        // Verifica de o CPF já existe para algum funcionário.
-        if(cd.getID(cpf) != -1) {
-        	session.setAttribute("mensagem", "Já existe um funcionário com este CPF! Tente novamente.");
-            response.sendRedirect(request.getHeader("referer"));
-            return;
-        }
-        
-        // Verifica se as senhas são iguais.
-        if(!senha1.equals(senha2)) {
-        	session.setAttribute("mensagem", "As senhas não conferem.");
-            response.sendRedirect(request.getHeader("referer"));
-            return;
-        }
-        
-        // Valida a data de nascimento.
-        Calendar dataNascimento = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        try {
-			dataNascimento.setTime(sdf.parse(dataNascimentoStr));
-		} catch (ParseException e) {
-			request.setAttribute("mensagem", "Data de nascimento inválida!");
-            response.sendRedirect(request.getHeader("referer"));
-            return;
-		}
-        
-        // Organiza o vetor de telefones.
-        List<String> telefones = new ArrayList<String>();
-        int i = 1;
-        while(request.getParameter("telefone_" + i) != null) {
-        	telefones.add(request.getParameter("telefone_" + i));
-        	i++;
-        }
-        
-        String senhaCriptografada = Hashing.plainToSHA256(senha1, cpf.getBytes());
-        
-        // Cria o objeto Caixa.
-        Caixa caixa = new Caixa(0, cpf, senhaCriptografada, nome, dataNascimento, telefones, false);
        
         // Insere-o no BD.
-        cd.inserirCaixa(caixa, administradorID);
+        pedDAO.inserirPedido(pedido, caixaID);
         
-        session.setAttribute("mensagem", "Caixa cadastrado(a) com sucesso!");
+        session.setAttribute("mensagem", "Pedido cadastrado com sucesso!");
         response.sendRedirect(request.getContextPath());
+ 
     }
 
 } 

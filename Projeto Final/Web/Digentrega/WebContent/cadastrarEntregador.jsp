@@ -25,7 +25,7 @@
 	      <div class="container theme-showcase" role="main">
 		   	<div class="panel-heading">
               <div class="panel-title text-center">
-              		<h1 class="title">Cadastrar Caixa</h1>
+              		<h1 class="title">Cadastrar Entregador</h1>
               		<hr />
               	</div>
            </div>

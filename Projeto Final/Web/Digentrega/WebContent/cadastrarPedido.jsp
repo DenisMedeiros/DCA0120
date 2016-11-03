@@ -33,6 +33,19 @@
            <c:if test="${requestScope.produtos ne null}">
 			<form id="formulario" class="form-signup" method="post">
 			
+			<div class="form-group">
+					<label for="descricao" class="cols-sm-2 control-label">Descrição do Pedido</label>
+					<div class="cols-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+							<textarea class="form-control" rows="3" id="descricaoPedido" name="descricaoPedido" placeholder="Descrição do pedido"></textarea>
+						</div>
+						<span class="mensagem-ajuda"></span>
+					</div>
+				</div>
+			
+			
+			
 			    <label class="cols-sm-2 control-label">Lista de produos</label>
 				<div class="input-group">	
 					<span class="input-group-addon" title="* Produto" id="priceLabel">Produto</span>
@@ -89,13 +102,29 @@
 			              </div>
 			          </div>
 			      </div>
+			      
+			   <label class="cols-sm-2 control-label">Designar Entregador</label>
+				<div class="input-group">	
+					<span class="input-group-addon" title="" id="priceLabel"></span>
+				    <select id="entregador" name="entregador" class="form-control">
+						<c:forEach items="${requestScope.entregadores}" var="current">
+							<option value="${current.id}">${current.nome} </option>
+						</c:forEach>
+				    </select>
+				    <!-- insert this line -->
+				    <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+				</div>
+			
+							
+				<br />
+				
 			
 				<div class="form-group">
-					<label for="descricao" class="cols-sm-2 control-label">Descrição</label>
+					<label for="descricao" class="cols-sm-2 control-label">Descrição do Endereço</label>
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-							<textarea class="form-control" rows="5" id="descricao" name="descricao" placeholder="Descrição aqui"></textarea>
+							<textarea class="form-control" rows="3" id="descricaoEndereco" name="descricaoEndereco" placeholder="Descrição do endereço"></textarea>
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>
@@ -113,13 +142,13 @@
 			                <div class="col-sm-6">
 			                	<div class="input-group">
 				                	<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"> Latitude </i></span>
-				                    <input type="text" class="form-control" id="latitude" name="latitude" placeholder="0">
+				                    <input type="text" class="form-control" id="latitude" name="latitude" value="0">
 				                </div>
 				            </div>
 			                <div class="col-sm-6">
 			                	<div class="input-group">
 				                	<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"> Longitude</i></span>
-				                    <input type="text" class="form-control" id="longitude" name="latitude" placeholder="0">
+				                    <input type="text" class="form-control" id="longitude" name="latitude" value="0">
 			                    </div>
 			                </div>
 			            </div>
@@ -128,9 +157,7 @@
 						<input type="hidden" id="longitude" name="longitude" value="0" />
 					</div>
 				</div>
-				
-	
-	
+
 				<div class="form-group ">
 					<button type="submit" class="btn btn-primary btn-lg btn-block login-button">Cadastrar</button>
 				</div>
@@ -263,55 +290,19 @@
 		<script>
 	
 		$(function() {
-		    //hang on event of form with id=myform
 		    $("#formulario").submit(function(e) {
-				
-		    	form =  $("#formulario");
-		        //prevent Default functionality
-		        e.preventDefault();
-
-		        //get the action-url of the form
-		        var actionurl = e.currentTarget.action;
-
-				var data = form.serializeArray();
-				console.log(data);
-		
-				// Pegue todos os dados da tabela.
+				// Pega todos os dados da tabela e inclui no formulário.
 				$("#tabelaProdutos .linha").each(function(i, row) {
 					 var $row = $(row);
 					 var colId = $row.find('.idProduto');
 					 var id = parseInt(colId.text());
-			    	 data = data.concat([
-						    {"": "customer_id", value: window.username},
-						    {name: "post_action", value: "Update Information"}    
-						]);
-			    	  
+					 var quantidade = parseInt($("#quantidade_" + id).text());
+					 console.log(quantidade);
+					 $('<input>').attr('type', 'hidden').attr('name', 'produto_' + id).attr('value', quantidade).appendTo('#formulario');				 
 			    });
-				data = data.concat([
-				    {"": "customer_id", value: window.username},
-				    {name: "post_action", value: "Update Information"}    
-				]);
-				   
-				
-				console.log(data);
-				
-		        //do your own request an handle the results
-		        $.ajax({
-		                url: actionurl,
-		                type: 'post',
-		                dataType: 'json',
-		                data: $data,
-		                success: function(data) {
-		                   //
-		                }
-		        });
-
+				return true;
 		    });
-
 		});
-			
-		
-		
 		</script>
 		
 	</jsp:attribute>
