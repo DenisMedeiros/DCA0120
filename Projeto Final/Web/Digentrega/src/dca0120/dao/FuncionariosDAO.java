@@ -45,7 +45,7 @@ public abstract class FuncionariosDAO {
 					+ "Nome VARCHAR(255) NOT NULL, CPF VARCHAR(11) NOT NULL UNIQUE, "
 					+ "Senha VARCHAR(64) NOT NULL, DataNascimento DATE NOT NULL, "
 					+ "AdministradorID INTEGER, PRIMARY KEY (ID), "
-					+ "FOREIGN KEY (AdministradorID ) REFERENCES Funcionarios(ID) ON UPDATE CASCADE)";
+					+ "FOREIGN KEY (AdministradorID ) REFERENCES Funcionarios(ID) ON DELETE CASCADE ON UPDATE CASCADE)";
 			// testar o primeiro dado inserido na tabela (foreign key)
 			st.executeUpdate(sql);
 		} catch (SQLException e) {

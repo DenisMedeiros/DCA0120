@@ -217,7 +217,7 @@ public class CaixasDAO extends FuncionariosDAO {
 		try {
 
 			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Caixas WHERE FuncionarioID=?");
-
+			
 			pst.setInt(1, id);
 
 			pst.executeUpdate();

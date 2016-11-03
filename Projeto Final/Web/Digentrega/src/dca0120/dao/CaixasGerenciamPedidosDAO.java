@@ -44,8 +44,8 @@ public final class CaixasGerenciamPedidosDAO {
 			String sql = "CREATE TABLE IF NOT EXISTS CaixasGerenciamPedidos (CaixaID INTEGER NOT NULL, "
 					+ "PedidoID INTEGER NOT NULL, DataHoraAbertura TIMESTAMP NOT NULL, "
 					+ "PRIMARY KEY (CaixaID, PedidoID), "
-					+ "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID) ON UPDATE CASCADE, "
-					+ "FOREIGN KEY (PedidoID) REFERENCES Pedidos(ID) ON DELETE SET NULL ON UPDATE CASCADE);";
+					+ "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID) ON DELETE CASCADE ON UPDATE CASCADE, "
+					+ "FOREIGN KEY (PedidoID) REFERENCES Pedidos(ID) ON DELETE CASCADE ON UPDATE CASCADE);";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();

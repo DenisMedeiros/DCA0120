@@ -43,7 +43,7 @@ public class ProdutosDAO {
 		try {
 			Statement st = conexao.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS Produtos (ID INTEGER AUTO_INCREMENT, "
-					+ "Nome VARCHAR(80) NOT NULL, Preco FLOAT NOT NULL, Foto VARCHAR(200), Peso FLOAT, "
+					+ "Nome VARCHAR(80) NOT NULL, Preco FLOAT NOT NULL, Foto VARCHAR(400), Peso FLOAT, "
 					+ "Volume FLOAT, Descricao VARCHAR(800), "
 					+ "QuantidadeEmEstoque INTEGER NOT NULL, "
 					+ "CONSTRAINT chk_Estoque CHECK (QuantidadeEmEstoque>=0), PRIMARY KEY (ID));";
@@ -223,8 +223,9 @@ public class ProdutosDAO {
 		gcpr.removerProdutos(id);
 		try {
 			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Produtos WHERE ID=?");
-
 			pst.setInt(1, id);
+			
+			
 			
 			pst.executeUpdate();
 

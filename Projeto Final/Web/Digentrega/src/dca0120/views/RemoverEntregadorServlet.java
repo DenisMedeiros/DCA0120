@@ -38,7 +38,13 @@ private static final long serialVersionUID = -7552121270167541493L;
 		
 		try {
 			int id = Integer.parseInt(request.getParameter("id"));
-			ed.removerEntregador(id);
+			
+			if(ed.getEntregadorWithID(id) != null) {
+				ed.removerEntregador(id);
+			}  else {
+				response.sendRedirect(request.getContextPath());
+				return;
+			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}

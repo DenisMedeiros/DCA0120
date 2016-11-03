@@ -38,8 +38,13 @@ private static final long serialVersionUID = -7552121270167541493L;
 		
 		try {
 			int id = Integer.parseInt(request.getParameter("id"));
-			System.out.println(id);
-			cd.removerCaixa(id);
+			if(cd.getCaixaWithID(id) != null) {
+				cd.removerCaixa(id);
+			}  else {
+				response.sendRedirect(request.getContextPath());
+				return;
+			}
+			
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}

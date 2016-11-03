@@ -44,7 +44,7 @@ public class EnderecosEntregaDAO {
 			String sql = "CREATE TABLE IF NOT EXISTS EnderecosEntrega (PedidoID INTEGER NOT NULL, "
 					+ "Latitude FLOAT NOT NULL, Longitude FLOAT NOT NULL, Descricao VARCHAR(800), "
 					+ "PRIMARY KEY (PedidoID), "
-					+ "FOREIGN KEY (PedidoID) REFERENCES Pedidos (ID) ON UPDATE CASCADE);";
+					+ "FOREIGN KEY (PedidoID) REFERENCES Pedidos (ID) ON DELETE CASCADE ON UPDATE CASCADE);";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();

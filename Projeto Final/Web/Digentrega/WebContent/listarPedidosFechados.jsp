@@ -4,7 +4,7 @@
 <template:base>
 
 	<jsp:attribute name="titulo">   
-		Listar Pedidos Abertos
+		Listar Pedidos Fechados
 	</jsp:attribute>
 		
 	<jsp:attribute name="cabecalhoExtra">   
@@ -18,7 +18,7 @@
 		<div class="container theme-showcase" role="main">
 		   	<div class="panel-heading">
               <div class="panel-title text-center">
-              		<h1 class="title">Pedidos Abertos</h1>
+              		<h1 class="title">Pedidos Fechados</h1>
               		<hr />
               	</div>
            </div>
@@ -37,8 +37,6 @@
 					<th>Preço Total </th>
 			        <th>Status Atual</th>
 			        <th>Listar Produtos</th>
-			        <th>Avançar Etapa</th>
-			        <th>Cancelar</th>
 			      </tr>
 			    </thead>
 			    <tbody> 
@@ -53,27 +51,6 @@
 					          <td align="center">
 					       			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal_${current.id}">Abrir Lista</button>
 					          </td>
-				        	  <td align="center">
-				        	  <c:choose>
-				        	  	<c:when test="${current.status.codigo eq 1}">
-					        	  		<button id="botaoAvancar_${current.id}" type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});"> Preparar </button>
-				        	  	</c:when>
-				        	     <c:when test="${current.status.codigo eq 2}">
-					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});"> Designar Entregador </button>
-				        	  	</c:when>
-				        	  	<c:when test="${current.status.codigo eq 3}">
-					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});"> Entregar </button>
-				        	  	</c:when>
-				        	  	<c:when test="${current.status.codigo eq 4}">
-					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});"> Entregar </button>
-				        	  	</c:when>
-				        	  </c:choose>
-				        	  </td>
-				        	  <td align="center">
-				        	  	<a href="${pageContext.request.contextPath}/remover/produto/?id=${current.id}">
-				        	  		<button type="button" class="btn btn-danger"> Cancelar </button>
-				        	  	</a>
-				        	  </td>
 					        </tr>
 				        
 				      </c:forEach>

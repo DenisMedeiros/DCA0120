@@ -66,7 +66,7 @@
                 <ul class="dropdown-menu">
                   <li><a href="${pageContext.request.contextPath}/cadastrar/pedido/">Novo Pedido</a></li>
                   <li><a href="${pageContext.request.contextPath}/listar/pedidos/abertos/">Listar Pedidos Abertos</a></li>
-                  <li><a href="${pageContext.request.contextPath}/listar/pedidos/abertos/">Listar Pedidos Finalizados</a></li>
+                  <li><a href="${pageContext.request.contextPath}/listar/pedidos/fechados/">Listar Pedidos Fechados</a></li>
                 </ul>
               </li>
               
