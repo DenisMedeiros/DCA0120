@@ -130,11 +130,11 @@
 	</servlet-mapping>
 	
 		<servlet>
-    <servlet-name>ListarProdutoServlet</servlet-name>
-    <servlet-class>dca0120.views.ListarProdutoServlet</servlet-class>
+    <servlet-name>ListarProdutosServlet</servlet-name>
+    <servlet-class>dca0120.views.ListarProdutosServlet</servlet-class>
   </servlet> 
   <servlet-mapping>
-    <servlet-name>ListarProdutoServlet</servlet-name>
+    <servlet-name>ListarProdutosServlet</servlet-name>
     <url-pattern>/listar/produtos/*</url-pattern>
 	</servlet-mapping>
 	

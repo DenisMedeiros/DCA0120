@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dca0120.dao.CaixasDAO;
+import dca0120.dao.ProdutosDAO;
 import dca0120.model.Caixa;
+import dca0120.model.Produto;
 import dca0120.utils.Hashing;
 import dca0120.utils.ValidadorCPF;
 
@@ -44,7 +46,17 @@ public class CadastrarPedidoServlet extends HttpServlet {
         	return;
 		}
 		
-        request.getRequestDispatcher("/cadastrarCaixa.jsp").forward(request, response);
+		ProdutosDAO pd = new ProdutosDAO();
+		
+		List<Produto> produtos = pd.getTodosProdutos();
+		
+		if(produtos.size() > 0) {
+			request.setAttribute("produtos", produtos);
+		} else {
+			request.setAttribute("produtos", null);
+		}
+		
+        request.getRequestDispatcher("/cadastrarPedido.jsp").forward(request, response);
     }
 
 	@Override

@@ -79,5 +79,11 @@ public class Produto {
 	public void setQuantidadeEstoque(int quantidadeEstoque) {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
-
+	
+	public String getDescricaoFormatada() {
+		if(descricao == null) {
+			return "Sem descrição.";
+		}
+		return descricao;
+	}
 }

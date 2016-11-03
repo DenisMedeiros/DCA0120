@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+
 import dca0120.dao.CaixasDAO;
 import dca0120.dao.ProdutosDAO;
 import dca0120.model.Caixa;
@@ -72,6 +73,8 @@ public class CadastrarProdutoServlet extends HttpServlet {
         String quantidadeStr = request.getParameter("quantidade");
         String descricao = request.getParameter("descricao");
         
+        System.out.println(descricao);
+        
         Part filePart = request.getPart("foto"); 
                
         String fileName = null;
@@ -109,11 +112,11 @@ public class CadastrarProdutoServlet extends HttpServlet {
 				e.printStackTrace();
 			}			
 			
-			String aleatorio = String.valueOf(ThreadLocalRandom.current().nextInt(1000000, 9999999 + 1));
+			String aleatorio = String.valueOf(ThreadLocalRandom.current().nextInt(10000, 99999 + 1));
 			String extension = fileName.substring(fileName.indexOf("."));
 
-            caminhoFoto = savePath + File.separator + md5 + aleatorio + extension;
-            filePart.write(caminhoFoto);
+            caminhoFoto = "/media" + "/" + "produtos" + "/" + md5 + aleatorio + extension;
+            filePart.write(savePath + File.separator +  md5 + aleatorio + extension);
         }
         	
         

@@ -45,12 +45,12 @@
 					          <td><c:out value="${current.cpf}" /></td>
 					          <td><c:out value="${current.dataNascimentoFormatada}" /></td>
 					          <td><c:out value="${current.telefonesFormatados}" /></td>
-					          <td>
+					          <td align="center">
 					          	<a href="${pageContext.request.contextPath}/editar/caixa/?id=${current.id}">
 					       			<button type="button" class="btn btn-default" <c:if test="${current.administrador}"> disabled </c:if>>Editar</button>
 					          	</a>
 					          </td>
-				        	  <td>
+				        	  <td align="center">
 				        	  	<a href="${pageContext.request.contextPath}/remover/caixa/?id=${current.id}">
 				        	  		<button type="button" class="btn btn-danger" <c:if test="${current.administrador}"> disabled </c:if>>Remover</button>
 				        	  	</a>
@@ -85,12 +85,12 @@
 					          <td><c:out value="${current.cpf}" /></td>
 					          <td><c:out value="${current.dataNascimentoFormatada}" /></td>
 					          <td><c:out value="${current.telefonesFormatados}" /></td>
-					          <td>
+					          <td align="center">
 					          	<a href="${pageContext.request.contextPath}/editar/caixa/?id=${current.id}">
 					          		<button type="button" class="btn btn-default">Editar</button>
 					          	</a>
 					          </td>
-				        	  <td>
+				        	  <td align="center">
 				        	  	<a href="${pageContext.request.contextPath}/remover/caixa/?id=${current.id}">
 				        	  		<button type="button" class="btn btn-danger">Remover</button>
 				        	  	</a>
