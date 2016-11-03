@@ -34,7 +34,7 @@
 			        <th>Preço</th>
 			        <th>Peso</th>
 			        <th>Volume</th>
-			        <th>Quantidade</th>
+			        <th>Quantidade em Estoque</th>
 			        <th>Foto</th>
 			        <th>Descricao</th>
 			        <th>Editar</th>

@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import dca0120.dao.EntregadoresDAO;
 import dca0120.dao.PedidosDAO;
 import dca0120.dao.ProdutosDAO;
-import dca0120.model.Caixa;
 import dca0120.model.Endereco;
 import dca0120.model.Entregador;
 import dca0120.model.Pedido;
@@ -110,7 +109,7 @@ public class CadastrarPedidoServlet extends HttpServlet {
         Calendar momentoEntrega =  Calendar.getInstance();
         momentoEntrega.add(Calendar.MINUTE, 30);
         
-        Pedido pedido = new Pedido(0, Pedido.Status.ABERTO, descricaoPedido, entregador, momentoEntrega, momentoAbertura, endereco);
+        Pedido pedido = new Pedido(0, Pedido.Status.ABERTO, descricaoPedido, entregador, momentoAbertura, momentoEntrega, endereco);
        
         Enumeration<String> parametros = request.getParameterNames();
         while(parametros.hasMoreElements()) {

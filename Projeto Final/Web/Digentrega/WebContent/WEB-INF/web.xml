@@ -165,6 +165,13 @@
     <url-pattern>/cadastrar/pedido/*</url-pattern>
 	</servlet-mapping>
   
-  
+  	<servlet>
+    <servlet-name>ListarPedidosAbertosServlet</servlet-name>
+    <servlet-class>dca0120.views.ListarPedidosAbertosServlet</servlet-class>
+  </servlet> 
+  <servlet-mapping>
+    <servlet-name>ListarPedidosAbertosServlet</servlet-name>
+    <url-pattern>/listar/pedidos/abertos/*</url-pattern>
+	</servlet-mapping>
   
 </web-app>

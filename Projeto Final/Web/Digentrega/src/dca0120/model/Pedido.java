@@ -1,5 +1,6 @@
 package dca0120.model;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -30,13 +31,21 @@ public class Pedido {
 
 	}
 
-	private class ProdutoQuantidade {
+	public class ProdutoQuantidade {
 		Produto produto;
 		int quantidade;
 
 		ProdutoQuantidade(Produto produto, int quantidade) {
 			this.produto = produto;
 			this.quantidade = quantidade;
+		}
+		
+		public Produto getProduto() {
+			return produto;
+		}
+		
+		public int getQuantidade() {
+			return quantidade;
 		}
 	}
 
@@ -187,5 +196,27 @@ public class Pedido {
 		}
 		return lista;
 	}
+	
+	public List<ProdutoQuantidade> getProdutosQuantidades() {
+		return produtosQuantidade;
+	}
+	
+	public int getPrioridade() {
+		return id;
+	}
+	
+	public String getDataHoraEntregaFormatada() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		String saida = sdf.format(dataHoraEntrega.getTime());
+		return saida;
+	}
+	
+	public String getDataHoraAberturaFormatada() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		String saida = sdf.format(dataHoraAbertura.getTime());
+		return saida;
+	}
+	
+
 
 }

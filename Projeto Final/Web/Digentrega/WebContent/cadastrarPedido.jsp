@@ -45,13 +45,12 @@
 				</div>
 			
 			
-			
 			    <label class="cols-sm-2 control-label">Lista de produos</label>
 				<div class="input-group">	
 					<span class="input-group-addon" title="* Produto" id="priceLabel">Produto</span>
 				    <select id="listaProdutos" name="listaProdutos" class="form-control">
 						<c:forEach items="${requestScope.produtos}" var="current">
-							<option value="${current.id}">${current.nome} (R$ ${current.preco})</option>
+							<option value="${current.id}">${current.nome} (${current.quantidadeEstoque} em estoque)</option>
 						</c:forEach>
 				    </select>
 				    <span class="input-group-addon" title="* Price" id="priceLabel">Quantidade</span>
