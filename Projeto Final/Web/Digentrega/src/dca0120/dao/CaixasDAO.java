@@ -14,7 +14,7 @@ import dca0120.model.Caixa;
  * @author denis
  *
  *         <hr>
- * 		Classe responsável por interconectar a classe Caixa com a tabela
+ *         Classe responsável por interconectar a classe Caixa com a tabela
  *         Caixas.
  *         </hr>
  */
@@ -36,12 +36,13 @@ public class CaixasDAO extends FuncionariosDAO {
 			Statement st = conexao.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS Caixas (FuncionarioID INTEGER NOT NULL, "
 					+ "EAdministrador BOOLEAN DEFAULT false, PRIMARY KEY (FuncionarioID), "
-					+ "FOREIGN KEY (FuncionarioID ) REFERENCES Funcionarios(ID)"
-					+ ");";
+					+ "FOREIGN KEY (FuncionarioID ) REFERENCES Funcionarios(ID) ON UPDATE CASCADE);";
 			st.executeUpdate(sql);
+			TelefonesDAO td = new TelefonesDAO();
+			td.criarTabelaTelefones();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	/**
@@ -57,21 +58,23 @@ public class CaixasDAO extends FuncionariosDAO {
 		try {
 			TelefonesDAO td = new TelefonesDAO();
 			this.inserirFuncionario(c.getNome(), c.getCpf(), c.getSenha(), c.getDataNascimento(), admID);
+
+			PreparedStatement pst = conexao
+					.prepareStatement("INSERT INTO Caixas(FuncionarioID, EAdministrador) VALUES (?, ?)");
+
+			pst.setInt(1, this.getID(c.getCpf()));
+			pst.setBoolean(2, c.isAdministrador());
+
+			pst.executeUpdate();
+			
 			int idFuncionario = this.getID(c.getCpf());
+			
 			for(String telefone: c.getTelefones()) {
 				td.inserirTelefone(idFuncionario, telefone);
 			}
-			
-			PreparedStatement pst = conexao
-					.prepareStatement("INSERT INTO Caixas(FuncionarioID, EAdministrador) VALUES (?, ?)");
-	
-			pst.setInt(1, this.getID(c.getCpf()));
-			pst.setBoolean(2, c.isAdministrador());
-			
-			pst.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 
 	/**
@@ -79,8 +82,8 @@ public class CaixasDAO extends FuncionariosDAO {
 	 * 
 	 * @param cpf
 	 *            CPF do Caixa a ser procurado no banco de dados
-	 * @return c Objeto do tipo Caixa com o cpf especificado (ou null, caso
-	 *         não exista).
+	 * @return c Objeto do tipo Caixa com o cpf especificado (ou null, caso não
+	 *         exista).
 	 */
 	public Caixa getCaixaWithCPF(String cpf) {
 		Caixa c = null;
@@ -88,7 +91,7 @@ public class CaixasDAO extends FuncionariosDAO {
 		try {
 			String sql = "SELECT * FROM Caixas INNER JOIN Funcionarios ON Funcionarios.ID=Caixas.FuncionarioID "
 					+ "WHERE CPF=?";
-			
+
 			PreparedStatement pst = conexao.prepareStatement(sql);
 
 			pst.setString(1, cpf);
@@ -110,7 +113,7 @@ public class CaixasDAO extends FuncionariosDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		}
 
 		return c;
 	}
@@ -150,8 +153,8 @@ public class CaixasDAO extends FuncionariosDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
-		
+		}
+
 		return c;
 	}
 
@@ -183,21 +186,68 @@ public class CaixasDAO extends FuncionariosDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return lista;
 	}
-	
+
 	public boolean isEmpty() {
 		String sql = "SELECT * FROM Caixas INNER JOIN Funcionarios ON Caixas.FuncionarioID=Funcionario.ID;";
 
 		try {
 			PreparedStatement pst = conexao.prepareStatement(sql);
 			ResultSet res = pst.executeQuery();
-			
+
 			return res.wasNull();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return true;
+	}
+
+	public void removerCaixa(int id) {
+		TelefonesDAO td = new TelefonesDAO();
+		for(String telefone: this.getCaixaWithID(id).getTelefones()) {
+			td.removerTelefone(id, telefone);
+		}
+		
+		CaixasGerenciamProdutosDAO gcpr = new CaixasGerenciamProdutosDAO();
+		gcpr.removerCaixas(id);
+		
+		CaixasGerenciamPedidosDAO gcpe = new CaixasGerenciamPedidosDAO();
+		gcpe.removerCaixas(id);
+		try {
+
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Caixas WHERE FuncionarioID=?");
+
+			pst.setInt(1, id);
+
+			pst.executeUpdate();
+
+			this.removerFuncionario(id);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void alterarCaixa(Caixa c, int admID) {
+		TelefonesDAO td = new TelefonesDAO();
+		for(String telefone: c.getTelefones()) {
+			td.alterarTelefone(c.getId(), telefone);
+		}
+		try {
+			PreparedStatement pst = conexao
+					.prepareStatement("UPDATE Caixas SET EAdministrador=? WHERE FuncionarioID=?");
+
+			pst.setBoolean(1, c.isAdministrador());
+			pst.setInt(2, c.getId());
+
+			pst.executeUpdate();
+
+			this.alterarFuncionario(c.getId(), c.getNome(), c.getCpf(), c.getSenha(), c.getDataNascimento(), admID);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

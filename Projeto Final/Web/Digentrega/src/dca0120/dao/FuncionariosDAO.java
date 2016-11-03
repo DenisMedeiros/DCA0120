@@ -45,7 +45,7 @@ public abstract class FuncionariosDAO {
 					+ "Nome VARCHAR(255) NOT NULL, CPF VARCHAR(11) NOT NULL UNIQUE, "
 					+ "Senha VARCHAR(64) NOT NULL, DataNascimento DATE NOT NULL, "
 					+ "AdministradorID INTEGER, PRIMARY KEY (ID), "
-					+ "FOREIGN KEY (AdministradorID ) REFERENCES Funcionarios(ID))";
+					+ "FOREIGN KEY (AdministradorID ) REFERENCES Funcionarios(ID) ON UPDATE CASCADE)";
 			// testar o primeiro dado inserido na tabela (foreign key)
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -71,38 +71,39 @@ public abstract class FuncionariosDAO {
 	 * @param AdmID
 	 *            Atributo do tipo int da classe abstrata Funcionario a ser
 	 *            inserido no banco de dados
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
-	public void inserirFuncionario(String nome, String cpf, String senha, Calendar dataNascimento, int AdmID) throws SQLException {
-			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Funcionarios(Nome, CPF, "
-					+ "Senha, DataNascimento, AdministradorID) VALUES (?, ?, ?, ?, ?)");
+	public void inserirFuncionario(String nome, String cpf, String senha, Calendar dataNascimento, int AdmID)
+			throws SQLException {
+		PreparedStatement pst = conexao.prepareStatement("INSERT INTO Funcionarios(Nome, CPF, "
+				+ "Senha, DataNascimento, AdministradorID) VALUES (?, ?, ?, ?, ?)");
 
-			pst.setString(1, nome);
-			pst.setString(2, cpf);
-			pst.setString(3, senha);
+		pst.setString(1, nome);
+		pst.setString(2, cpf);
+		pst.setString(3, senha);
 
-			Calendar calendar = dataNascimento;
-			java.sql.Date javaSqlDate;
+		Calendar calendar = dataNascimento;
+		java.sql.Date javaSqlDate;
 
-			if (calendar != null) {
-				calendar.set(Calendar.HOUR_OF_DAY, 0);
-				calendar.set(Calendar.MINUTE, 0);
-				calendar.set(Calendar.SECOND, 0);
-				calendar.set(Calendar.MILLISECOND, 0);
-				javaSqlDate = new java.sql.Date(calendar.getTime().getTime());
-			} else {
-				javaSqlDate = new java.sql.Date(0);
-			}
+		if (calendar != null) {
+			calendar.set(Calendar.HOUR_OF_DAY, 0);
+			calendar.set(Calendar.MINUTE, 0);
+			calendar.set(Calendar.SECOND, 0);
+			calendar.set(Calendar.MILLISECOND, 0);
+			javaSqlDate = new java.sql.Date(calendar.getTime().getTime());
+		} else {
+			javaSqlDate = new java.sql.Date(0);
+		}
 
-			pst.setDate(4, javaSqlDate);
-			
-			if(AdmID != -1) {
-				pst.setInt(5, AdmID);
-			} else {
-				pst.setNull(5, Types.NULL);
-			}
-			
-			pst.executeUpdate();
+		pst.setDate(4, javaSqlDate);
+
+		if (AdmID != -1) {
+			pst.setInt(5, AdmID);
+		} else {
+			pst.setNull(5, Types.NULL);
+		}
+
+		pst.executeUpdate();
 
 	}
 
@@ -235,19 +236,142 @@ public abstract class FuncionariosDAO {
 
 		return cpf;
 	}
-		
+
 	public boolean isEmpty() {
 		String sql = "SELECT * FROM Funcionarios;";
 
 		try {
 			PreparedStatement pst = conexao.prepareStatement(sql);
 			ResultSet res = pst.executeQuery();
-			
+
 			return res.wasNull();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return true;
 	}
-	
+
+	public void removerFuncionario(int id) {
+		try {
+
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Funcionarios WHERE ID=?");
+
+			pst.setInt(1, id);
+
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setNome(int id, String nome) {
+		try {
+			String sql = "UPDATE Funcionarios SET Nome=? WHERE ID=?";
+			PreparedStatement pst = conexao.prepareStatement(sql);
+
+			pst.setString(1, nome);
+			pst.setInt(2, id);
+
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setDataNascimento(int id, Calendar dataNascimento) {
+		try {
+			String sql = "UPDATE Funcionarios SET DataNascimento=? WHERE ID=?";
+			PreparedStatement pst = conexao.prepareStatement(sql);
+
+			java.sql.Date javaSqlDate;
+			Calendar calendar = dataNascimento;
+
+			if (calendar != null) {
+				calendar.set(Calendar.HOUR_OF_DAY, 0);
+				calendar.set(Calendar.MINUTE, 0);
+				calendar.set(Calendar.SECOND, 0);
+				calendar.set(Calendar.MILLISECOND, 0);
+				javaSqlDate = new java.sql.Date(calendar.getTime().getTime());
+			} else {
+				javaSqlDate = new java.sql.Date(0);
+			}
+
+			pst.setDate(1, javaSqlDate);
+			pst.setInt(2, id);
+
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setSenha(int id, String senha) {
+		try {
+			String sql = "UPDATE Funcionarios SET Senha=? WHERE ID=?";
+			PreparedStatement pst = conexao.prepareStatement(sql);
+
+			pst.setString(1, senha);
+			pst.setInt(2, id);
+
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setCPF(int id, String cpf) {
+		try {
+			String sql = "UPDATE Funcionarios SET CPF=? WHERE ID=?";
+			PreparedStatement pst = conexao.prepareStatement(sql);
+
+			pst.setString(1, cpf);
+			pst.setInt(2, id);
+
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void alterarFuncionario(int id, String nome, String cpf, String senha, Calendar dataNascimento, int admID)
+			throws SQLException {
+		try {
+			String sql = "UPDATE Funcionarios SET Nome=?, CPF=?, Senha=?, DataNascimento=?, AdministradorID=? WHERE ID=?";
+			PreparedStatement pst = conexao.prepareStatement(sql);
+
+			pst.setString(1, nome);
+			pst.setString(2, cpf);
+			pst.setString(3, senha);
+
+			java.sql.Date javaSqlDate;
+			Calendar calendar = dataNascimento;
+
+			if (calendar != null) {
+				calendar.set(Calendar.HOUR_OF_DAY, 0);
+				calendar.set(Calendar.MINUTE, 0);
+				calendar.set(Calendar.SECOND, 0);
+				calendar.set(Calendar.MILLISECOND, 0);
+				javaSqlDate = new java.sql.Date(calendar.getTime().getTime());
+			} else {
+				javaSqlDate = new java.sql.Date(0);
+			}
+
+			pst.setDate(4, javaSqlDate);
+			
+			if (admID != -1) {
+				pst.setInt(5, admID);
+			} else {
+				pst.setNull(5, Types.NULL);
+			}
+			pst.setInt(6, id);
+
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

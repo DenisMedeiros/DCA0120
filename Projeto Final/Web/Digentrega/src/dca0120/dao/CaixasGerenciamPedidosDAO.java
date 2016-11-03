@@ -42,9 +42,10 @@ public final class CaixasGerenciamPedidosDAO {
 		try {
 			Statement st = conexao.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS CaixasGerenciamPedidos (CaixaID INTEGER NOT NULL, "
-					+ "PedidoID  INTEGER NOT NULL, DataHoraAbertura TIMESTAMP NOT NULL, "
-					+ "PRIMARY KEY (CaixaID, PedidoID), FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID), "
-					+ "FOREIGN KEY (PedidoID) REFERENCES Pedidos(ID))";
+					+ "PedidoID INTEGER NOT NULL, DataHoraAbertura TIMESTAMP NOT NULL, "
+					+ "PRIMARY KEY (CaixaID, PedidoID), "
+					+ "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID) ON UPDATE CASCADE, "
+					+ "FOREIGN KEY (PedidoID) REFERENCES Pedidos(ID)) ON UPDATE CASCADE";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -112,18 +113,61 @@ public final class CaixasGerenciamPedidosDAO {
 		}
 		return dataHoraAbertura;
 	}
-	
+
 	public boolean isEmpty() {
 		String sql = "SELECT * FROM CaixasGerenciamPedidos;";
 
 		try {
 			PreparedStatement pst = conexao.prepareStatement(sql);
 			ResultSet res = pst.executeQuery();
-			
+
 			return res.wasNull();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return true;
+	}
+	
+	public void removerPedidos(int pedidoID) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM CaixasGerenciamPedidos WHERE PedidoID=?");
+
+			pst.setInt(1, pedidoID);
+			
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removerCaixas(int caixaID) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM CaixasGerenciamPedidos WHERE CaixaID=?");
+
+			pst.setInt(1, caixaID);
+			
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void alterarDataHoraAbertura(Pedido p) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement(
+					"Update CaixasGerenciamPedidos SET DataHoraAbertura=? WHERE PedidoID=?");
+
+			Calendar calendar = p.getDataHoraAbertura();
+			java.sql.Timestamp javaSqlTimestamp = null;
+			javaSqlTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+
+			pst.setTimestamp(1, javaSqlTimestamp);
+			pst.setInt(2, p.getId());
+			
+
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

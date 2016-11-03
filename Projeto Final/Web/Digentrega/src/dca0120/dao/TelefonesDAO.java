@@ -43,7 +43,7 @@ public class TelefonesDAO {
 					"DDDeNumero VARCHAR(11) NOT NULL, " +
 					"FuncionarioID INTEGER NOT NULL, " +
 					"PRIMARY KEY (DDDeNumero, FuncionarioID), " +
-					"FOREIGN KEY (FuncionarioID ) REFERENCES Funcionarios (ID), " +
+					"FOREIGN KEY (FuncionarioID ) REFERENCES Funcionarios (ID) ON UPDATE CASCADE" +
 					")";
 	        st.executeUpdate(sql);
 		} catch (SQLException e) {
@@ -140,5 +140,30 @@ public class TelefonesDAO {
 			e.printStackTrace();
 		}
 		return true;
+	}
+	
+	public void alterarTelefone(int funcionarioID, String telefone) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement("UPDATE Telefones SET DDDeNumero=? WHERE FuncionarioID=?)");
+			
+			pst.setString(1, telefone);
+			pst.setInt(2, funcionarioID);
+			
+	        pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removerTelefone(int funcionarioID, String telefone) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Telefones WHERE FuncionarioID=?)");
+			
+			pst.setInt(1, funcionarioID);
+			
+	        pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

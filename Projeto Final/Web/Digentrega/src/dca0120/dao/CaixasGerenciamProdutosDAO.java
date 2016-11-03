@@ -41,8 +41,8 @@ public final class CaixasGerenciamProdutosDAO {
 			Statement st = conexao.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS CaixasGerenciamProdutos (ProdutoID INTEGER NOT NULL, "
 					+ "CaixaID INTEGER NOT NULL, PRIMARY KEY (ProdutoID,CaixaID), "
-					+ "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID), "
-					+ "FOREIGN KEY (ProdutoID) REFERENCES Produtos(ID));";
+					+ "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID) ON UPDATE CASCADE, "
+					+ "FOREIGN KEY (ProdutoID) REFERENCES Produtos(ID) ON UPDATE CASCADE);";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -112,5 +112,51 @@ public final class CaixasGerenciamProdutosDAO {
 			e.printStackTrace();
 		}
 		return true;
+	}
+	
+	public void removerProdutos(int produtoID) {
+		try {
+			String sql = "DELETE FROM CaixasGerenciamProdutos WHERE ProdutoID=?";
+
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			
+			pst.setInt(1, produtoID);
+			
+			pst.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removerCaixas(int caixaID) {
+		try {
+			String sql = "DELETE FROM CaixasGerenciamProdutos WHERE CaixaID=?";
+
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			
+			pst.setInt(1, caixaID);
+			
+			pst.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removerCaixasGerenciamProdutos(int caixaID, int produtoID) {
+		try {
+			String sql = "DELETE FROM CaixasGerenciamProdutos WHERE ProdutoID=? AND CaixaID=?";
+
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			
+			pst.setInt(1, produtoID);
+			pst.setInt(2, caixaID);
+			
+			pst.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -46,11 +46,22 @@ public class PedidosDAO {
 	public void criarTabelaPedidos() {
 		try {
 			Statement st = conexao.createStatement();
-			String sql = "CREATE TABLE IF NOT EXISTS Pedidos (ID INTEGER AUTO_INCREMENT, VolumeTotal FLOAT, "
-					+ "PesoTotal FLOAT, ValorTotal FLOAT, Status INTEGER, Descricao VARCHAR(800), "
-					+ "EntregadorID INTEGER NOT NULL, DataHoraEntrega TIMESTAMP, PRIMARY KEY (ID), "
-					+ "FOREIGN KEY (EntregadorID) REFERENCES Entregadores (FuncionarioID))";
+			String sql = "CREATE TABLE IF NOT EXISTS Pedidos ("
+					+ "ID INTEGER AUTO_INCREMENT, "
+					+ "VolumeTotal FLOAT, "
+					+ "PesoTotal FLOAT, "
+					+ "ValorTotal FLOAT, "
+					+ "Status INTEGER, "
+					+ "Descricao VARCHAR(800), "
+					+ "EntregadorID INTEGER NOT NULL, "
+					+ "DataHoraEntrega TIMESTAMP, "
+					+ "PRIMARY KEY (ID), "
+					+ "FOREIGN KEY (EntregadorID) REFERENCES Entregadores (FuncionarioID) ON UPDATE CASCADE)";
 			st.executeUpdate(sql);
+			EnderecosEntregaDAO eed = new EnderecosEntregaDAO();
+			eed.criarTabelaEnderecosEntrega();
+			CaixasGerenciamPedidosDAO cgpe = new CaixasGerenciamPedidosDAO();
+			cgpe.criarTabelaCaixasGerenciamPedidos();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -62,7 +73,7 @@ public class PedidosDAO {
 	 * @param p
 	 *            objeto a ser inserido no banco de dados
 	 */
-	public void inserirPedido(Pedido p) {
+	public void inserirPedido(Pedido p, int caixaID) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("INSERT INTO Pedidos(VolumeTotal, PesoTotal, ValorTotal,"
 					+ "Status, Descricao, EntregadorID, DataHoraEntrega) VALUES (?,?,?,?,?,?,?)");
@@ -81,6 +92,24 @@ public class PedidosDAO {
 			pst.setTimestamp(7, javaSqlTimestamp);
 
 			pst.executeUpdate();
+			
+			EnderecosEntregaDAO eed = new EnderecosEntregaDAO();
+			eed.inserirEnderecosEntrega(p);
+			
+			CaixasGerenciamPedidosDAO cgpe = new CaixasGerenciamPedidosDAO();
+			cgpe.inserirCaixasGerenciamPedidos(p, caixaID);
+			
+			PedidosContemProdutosDAO pcp = new PedidosContemProdutosDAO();
+			
+			List<Produto> lista = p.getProdutos();
+			for(Produto pr: lista) {
+				try {
+					pcp.inserirPedidosContemProdutos(pr,p);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -120,13 +149,21 @@ public class PedidosDAO {
 	 * @param id referencia de tipo Int a ser usado para deletar o tal pedido
 	 */
 	public void removerPedido(int id) {
+		
+		EnderecosEntregaDAO eed = new EnderecosEntregaDAO();
+		eed.removerEndereco(id);
+		
+		CaixasGerenciamPedidosDAO cgpe = new CaixasGerenciamPedidosDAO();
+		cgpe.removerPedidos(id);
+		
+		PedidosContemProdutosDAO pcp = new PedidosContemProdutosDAO();
+		pcp.removerPedido(id);
 		try {
 			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Pedidos WHERE ID=?");
 
 			pst.setInt(1, id);
 			
 			pst.executeUpdate();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -299,6 +336,45 @@ public class PedidosDAO {
 			e.printStackTrace();
 		}
 		return true;
+	}
+	
+	public void alterarPedido(Pedido p) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement("UPDATE Pedidos SET VolumeTotal=?, PesoTotal=?, ValorTotal=?,"
+					+ "Status=?, Descricao=?, EntregadorID=?, DataHoraEntrega=? WHERE ID=?");
+
+			pst.setFloat(1, p.getVolumeTotal());
+			pst.setFloat(2, p.getPesoTotal());
+			pst.setFloat(3, p.getValorTotal());
+			pst.setInt(4, p.getStatus().getCodigo());
+			pst.setString(5, p.getDescricao());
+			pst.setInt(6, p.getEntregador().getId());
+
+			Calendar calendar = p.getDataHoraEntrega();
+			java.sql.Timestamp javaSqlTimestamp = null;
+
+			if (calendar != null) {
+				calendar.set(Calendar.HOUR_OF_DAY, 0);
+				calendar.set(Calendar.MINUTE, 0);
+				calendar.set(Calendar.SECOND, 0);
+				calendar.set(Calendar.MILLISECOND, 0);
+				javaSqlTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
+			} else {
+				javaSqlTimestamp = new java.sql.Timestamp(0);
+			}
+			pst.setTimestamp(7, javaSqlTimestamp);
+			pst.setInt(8, p.getId());
+
+			pst.executeUpdate();
+			
+			EnderecosEntregaDAO eed = new EnderecosEntregaDAO();
+			eed.alterarEndereco(p);
+			
+			CaixasGerenciamPedidosDAO cgpe = new CaixasGerenciamPedidosDAO();
+			cgpe.alterarDataHoraAbertura(p);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

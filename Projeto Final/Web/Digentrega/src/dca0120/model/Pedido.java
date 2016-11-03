@@ -5,44 +5,41 @@ import java.util.Calendar;
 import java.util.List;
 
 public class Pedido {
-	
+
 	public enum Status {
 
-	    ABERTO(1, "Aberto"),
-	    EM_PREPARO(2, "Em preparo"),
-	    AGUARDANDO_ENTREGADOR(3, "Aguardando um entregador"),
-	    EM_TRANSITO(4, "Saiu para entrega"),
-	    ENTREGUE(5, "Entregue"),
-	    CANCELADO(6, "Cancelado");
+		ABERTO(1, "Aberto"), EM_PREPARO(2, "Em preparo"), AGUARDANDO_ENTREGADOR(3,
+				"Aguardando um entregador"), EM_TRANSITO(4,
+						"Saiu para entrega"), ENTREGUE(5, "Entregue"), CANCELADO(6, "Cancelado");
 
-	    private final int codigo;
-	    private final String descricao;
+		private final int codigo;
+		private final String descricao;
 
-	    private Status(int codigo, String descricao) {
-	        this.codigo = codigo;
-	        this.descricao = descricao;
-	    }
+		private Status(int codigo, String descricao) {
+			this.codigo = codigo;
+			this.descricao = descricao;
+		}
 
-	    public int getCodigo() {
-	        return this.codigo;
-	    }
-	    
-	    public String getDescricao() {
-	        return this.descricao;
-	    }
-	    
+		public int getCodigo() {
+			return this.codigo;
+		}
+
+		public String getDescricao() {
+			return this.descricao;
+		}
+
 	}
-	
+
 	private class ProdutoQuantidade {
 		Produto produto;
 		int quantidade;
-		
+
 		ProdutoQuantidade(Produto produto, int quantidade) {
 			this.produto = produto;
 			this.quantidade = quantidade;
 		}
 	}
-	
+
 	private int id;
 	private float volumeTotal;
 	private float pesoTotal;
@@ -54,9 +51,8 @@ public class Pedido {
 	private Calendar dataHoraEntrega;
 	private Endereco enderecoEntrega;
 	private List<ProdutoQuantidade> produtosQuantidade;
-	
-		
-	public Pedido(int id, Status status, String descricao, Entregador entregador, Calendar dataHoraAbertura, 
+
+	public Pedido(int id, Status status, String descricao, Entregador entregador, Calendar dataHoraAbertura,
 			Calendar dataHoraEntrega, Endereco enderecoEntrega) {
 		super();
 		this.id = id;
@@ -75,47 +71,47 @@ public class Pedido {
 	public int getId() {
 		return id;
 	}
-		
+
 	public float getVolumeTotal() {
 		return volumeTotal;
 	}
-		
+
 	public float getPesoTotal() {
 		return pesoTotal;
 	}
-	
+
 	public float getValorTotal() {
 		return valorTotal;
 	}
-		
+
 	public Status getStatus() {
 		return status;
 	}
-	
+
 	public void setStatus(Status status) {
 		this.status = status;
 	}
-	
+
 	public String getDescricao() {
 		return descricao;
 	}
-	
+
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
+
 	public Entregador getEntregador() {
 		return entregador;
 	}
-	
+
 	public void setEntregador(Entregador entregador) {
 		this.entregador = entregador;
 	}
-	
+
 	public Calendar getDataHoraEntrega() {
 		return dataHoraEntrega;
 	}
-	
+
 	public void setDataHoraEntrega(Calendar dataHoraEntrega) {
 		this.dataHoraEntrega = dataHoraEntrega;
 	}
@@ -135,27 +131,26 @@ public class Pedido {
 	public void setEnderecoEntrega(Endereco enderecoEntrega) {
 		this.enderecoEntrega = enderecoEntrega;
 	}
-	
-	
+
 	// MÃ©todos mais complexos.
-	
+
 	public void addProduto(Produto p, int quantidade) {
 		if (quantidade <= p.getQuantidadeEstoque()) {
 			ProdutoQuantidade pq = new ProdutoQuantidade(p, quantidade);
-			produtosQuantidade.add(pq);	
+			produtosQuantidade.add(pq);
 			valorTotal += p.getPreco() * quantidade;
 			pesoTotal += p.getPeso() * quantidade;
 			volumeTotal += p.getVolume() * quantidade;
-			
+
 		}
 	}
-	
-	public void removerProduto(Produto p, int quantidade) {	
-		for(ProdutoQuantidade pq: produtosQuantidade) {
-			if(pq.produto.getId() == p.getId()) {
-				if(pq.quantidade <= quantidade) { 
+
+	public void removerProduto(Produto p, int quantidade) {
+		for (ProdutoQuantidade pq : produtosQuantidade) {
+			if (pq.produto.getId() == p.getId()) {
+				if (pq.quantidade <= quantidade) {
 					produtosQuantidade.remove(pq);
-				}else {
+				} else {
 					produtosQuantidade.get(produtosQuantidade.indexOf(pq)).quantidade -= quantidade;
 				}
 				valorTotal -= p.getPreco() * pq.quantidade;
@@ -163,16 +158,30 @@ public class Pedido {
 				volumeTotal -= p.getVolume() * pq.quantidade;
 				break;
 			}
-		}		
+		}
 	}
-	
+
+	/**
+	 * @param p
+	 *            objeto de Produto a ser pesquisado
+	 * @return retorna um topo int com quantidade do produto (ou -1 se não tiver
+	 *         o produto)
+	 */
 	public int getQuantidadeProduto(Produto p) {
-		for(ProdutoQuantidade pq: produtosQuantidade) {
-			if(pq.produto.getId() == p.getId()) {
+		for (ProdutoQuantidade pq : produtosQuantidade) {
+			if (pq.produto.getId() == p.getId()) {
 				return pq.quantidade;
 			}
 		}
 		return -1;
 	}
-	
+
+	public List<Produto> getProdutos() {
+		List<Produto> lista = new ArrayList<Produto>();
+		for (ProdutoQuantidade pq : produtosQuantidade) {
+			lista.add(pq.produto);
+		}
+		return lista;
+	}
+
 }
