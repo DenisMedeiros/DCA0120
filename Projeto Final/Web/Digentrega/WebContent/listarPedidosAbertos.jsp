@@ -56,14 +56,10 @@
 				        	  <td align="center">
 				        	  <c:choose>
 				        	  	<c:when test="${current.status.codigo eq 1}">
-					        	  	<a href="${pageContext.request.contextPath}/avancar/status/?id=${current.id}">
-					        	  		<button type="button" class="btn btn-primary"> Preparar </button>
-					        	  	</a>
+					        	  		<button id="botaoAvancar_${current.id}" type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});"> Preparar </button>
 				        	  	</c:when>
 				        	     <c:when test="${current.status.codigo eq 2}">
-					        	  	<a href="${pageContext.request.contextPath}/avancar/status/?id=${current.id}">
-					        	  		<button type="button" class="btn btn-primary"> Entregar </button>
-					        	  	</a>
+					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});"> Entregar </button>
 				        	  	</c:when>
 				        	  </c:choose>
 				        	  </td>
@@ -122,13 +118,34 @@
 			</c:forEach>
 	    
 	    
-	    
-	    
-	    
     </jsp:attribute>
     
         
 	<jsp:attribute name="rodapeExtra">  
+	
+		<script>
+			function avancarEtapa(pedidoID) {
+			    $.ajax({
+			        url: "${pageContext.request.contextPath}/avancar/pedido/?id=" + pedidoID,
+			        type: 'GET',
+			        async: false,
+			        cache: false,
+			        timeout: 30000,
+			        error: function(retorno){
+			        	if(retorno = 1) {
+			        		$("#botaoAvancar_" + id).text('Entregar');
+			        	} else if (retorno = 2) {
+			        		$("#botaoAvancar_" + id).text('Finalizar');
+			        	}
+			        	
+			        },
+			        success: function(data){ 
+						
+			        }
+			    });
+			}
+		
+		</script>
 		
 	</jsp:attribute>
 	

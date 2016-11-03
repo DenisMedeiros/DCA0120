@@ -217,6 +217,25 @@ public class Pedido {
 		return saida;
 	}
 	
+	public void avancarStatus() {	
+		switch (status) {
+		case ABERTO:
+			status = Status.EM_PREPARO;
+			break;
+		case EM_PREPARO:
+			status = Status.AGUARDANDO_ENTREGADOR;
+			break;
+		case AGUARDANDO_ENTREGADOR:
+			status = Status.EM_TRANSITO;
+			break;
+		case EM_TRANSITO:
+			status = Status.ENTREGUE;
+			break;
+		default:
+			break;
+		}
+	}
+	
 
 
 }

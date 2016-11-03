@@ -173,5 +173,14 @@
     <servlet-name>ListarPedidosAbertosServlet</servlet-name>
     <url-pattern>/listar/pedidos/abertos/*</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+    <servlet-name>AvancarEtapaServlet</servlet-name>
+    <servlet-class>dca0120.views.AvancarEtapaServlet</servlet-class>
+  </servlet> 
+  <servlet-mapping>
+    <servlet-name>AvancarEtapaServlet</servlet-name>
+    <url-pattern>/avancar/pedido/*</url-pattern>
+	</servlet-mapping>
   
 </web-app>

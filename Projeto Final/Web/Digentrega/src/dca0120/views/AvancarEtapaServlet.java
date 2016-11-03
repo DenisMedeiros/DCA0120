@@ -1,18 +1,19 @@
 package dca0120.views;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.sun.xml.internal.ws.policy.jaxws.PolicyWSDLGeneratorExtension;
+
+import dca0120.dao.CaixasDAO;
 import dca0120.dao.PedidosDAO;
 import dca0120.model.Pedido;
 
-public class ListarPedidosAbertosServlet extends HttpServlet {
+public class AvancarEtapaServlet extends HttpServlet {
 
 
 	private static final long serialVersionUID = -7552121270167541493L;
@@ -30,17 +31,26 @@ public class ListarPedidosAbertosServlet extends HttpServlet {
         	return;
 		}
 		
-		PedidosDAO pd = new PedidosDAO();	
-		List<Pedido> pedidos = pd.getPedidosAbertos();
-		
-		if(pedidos.size() > 0) {
-			request.setAttribute("pedidos", pedidos);
-		} else {
-			request.setAttribute("pedidos", pedidos);
+		// Verifica se o usuário que quer acessar esta função é o administrador.
+		Integer caixa = (Integer) session.getAttribute("caixa");
+		if(caixa == null) {
+	     	session.setAttribute("mensagem", "Apenas o caixa pode cadastrar funcionários.");
+        	response.sendRedirect(request.getContextPath());
+        	return;
 		}
 		
-		request.getRequestDispatcher("/listarPedidosAbertos.jsp").forward(request, response);
-	
+		String idStr = request.getParameter("id");
+		int id = Integer.parseInt(idStr);
+		
+		PedidosDAO pd = new PedidosDAO();
+		Pedido ped = pd.getPedidoWithID(id);
+		ped.avancarStatus();
+		pd.alterarPedido(ped);
+		
+	    response.setContentType("text/text"); 
+	    response.setCharacterEncoding("UTF-8");
+		response.getWriter().write(ped.getStatus().getCodigo());
+
     }
 
 	@Override
