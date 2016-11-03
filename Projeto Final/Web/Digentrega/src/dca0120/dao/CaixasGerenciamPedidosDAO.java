@@ -170,4 +170,19 @@ public final class CaixasGerenciamPedidosDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public void alterarCaixas(Pedido p, int caixaID) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement(
+					"Update CaixasGerenciamPedidos SET Caixa=? WHERE PedidoID=?");
+
+			pst.setInt(1, caixaID);
+			pst.setInt(2, p.getId());
+			
+
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
