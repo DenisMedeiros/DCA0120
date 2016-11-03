@@ -11,6 +11,7 @@
 		<%-- Mais arquivos CSS e Javascript aqui. --%>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/formulario.css">
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/parsley.css"/>
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/modal-picture.css">
 	</jsp:attribute>
 
 
@@ -94,7 +95,7 @@
 				<div class="form-group">
 					<label for="foto" class="cols-sm-2 control-label">Foto do produto</label>
 					<div class="cols-sm-10">
-						<p> <a href="${pageContext.request.contextPath}/${produto.foto}" target="_blank"> Foto atual </a> </p>
+						<p> <a href="#" data-toggle="modal" data-target="#modalFoto"> Foto atual </a> </p>
 						<label class="btn btn-primary btn-lg btn-file">
 						   Selecionar foto <input type="file" id="foto" name="foto" style="display: none;">
 						</label>
@@ -108,6 +109,29 @@
 				</div>
 			</form>
 	    </div> <!-- /container -->
+	    
+	    
+	    
+	   	<div id="modalFoto" class="modal fade" role="dialog">
+			  <div class="modal-dialog">
+			
+			    <!-- Modal content-->
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        <h4 class="modal-title">Foto do produto #${produto.id}</h4>
+			      </div>
+			      <div class="modal-body">
+			        <img class="img-responsive" src="${pageContext.request.contextPath}/${produto.foto}" alt="foto_${current.id}" />
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+			      </div>
+			    </div>
+			
+			  </div>
+			</div>
+	    
 	    
     </jsp:attribute>
     

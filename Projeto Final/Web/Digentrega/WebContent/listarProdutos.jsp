@@ -10,6 +10,7 @@
 	<jsp:attribute name="cabecalhoExtra">   
 		<%-- Mais arquivos CSS e Javascript aqui. --%>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/formulario.css">
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/modal-picture.css">
 	</jsp:attribute>
 
 
@@ -35,8 +36,8 @@
 			        <th>Peso</th>
 			        <th>Volume</th>
 			        <th>Quantidade em Estoque</th>
-			        <th>Foto</th>
 			        <th>Descricao</th>
+			        <th>Foto</th>
 			        <th>Editar</th>
 			        <th>Remover</th>
 			      </tr>
@@ -49,12 +50,10 @@
 					          <td><c:out value="${current.peso}" /></td>
 					          <td><c:out value="${current.volume}" /></td>
 					          <td><c:out value="${current.quantidadeEstoque}" /></td>
-					          <td>
-						          <a href="${pageContext.request.contextPath}/${current.foto}" target="_blank">
-						          	Ver foto
-						          </a>
-					          </td>
 					          <td><c:out value="${current.descricaoFormatada}" /></td>
+					          <td align="center">
+					          	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal_${current.id}">Ver</button>
+					          </td>
 					          <td align="center">
 					          	<a href="${pageContext.request.contextPath}/editar/produto/?id=${current.id}">
 					       			<button type="button" class="btn btn-default">Editar</button>
@@ -73,11 +72,35 @@
 			</c:if>
 	    </div> <!-- /container -->
 	    
+	    
+	    <c:forEach items="${requestScope.produtos}" var="current">
+			<!-- Modal -->
+			<div id="modal_${current.id}" class="modal fade" role="dialog">
+			  <div class="modal-dialog">
+			
+			    <!-- Modal content-->
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal">&times;</button>
+			        <h4 class="modal-title">Foto do produto #${current.id}</h4>
+			      </div>
+			      <div class="modal-body">
+			        <img class="img-responsive" src="${pageContext.request.contextPath}/${current.foto}" alt="foto_${current.id}" />
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+			      </div>
+			    </div>
+			
+			  </div>
+			</div>
+		</c:forEach>
+	    
+	    
     </jsp:attribute>
     
         
 	<jsp:attribute name="rodapeExtra">  
-		
 	</jsp:attribute>
 	
 </template:base>

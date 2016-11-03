@@ -135,6 +135,13 @@
 		
 		</script>
 		
+		<script>
+		 $("#preco").mask("9?999");
+		 $("#peso").mask("9?999");
+		 $("#volume").mask("9?999");
+		 $("#quantidade").mask("9?999");
+		</script>
+		
 				
 	</jsp:attribute>
 	
