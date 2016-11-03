@@ -294,8 +294,6 @@
 	
 		    $("#formulario").submit(function(e) {
 		    	
-		    	console.log("denis");
-		    	
 		    	if(!$("#tabelaProdutos .linha").length) {
 		    		alert("Adicione pelo menos um produto no pedido.");
 		    		return false;
