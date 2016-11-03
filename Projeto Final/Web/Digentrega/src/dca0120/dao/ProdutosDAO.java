@@ -251,7 +251,7 @@ public class ProdutosDAO {
 	public void alterarProduto(Produto p) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("UPDATE Produtos SET Nome=?, Preco=?, Foto=?, Peso=?, Volume=?,"
-					+ "QuantidadeEmEstoque=?, Descricao=? WHERE ID=?)");
+					+ "QuantidadeEmEstoque=?, Descricao=? WHERE ID=?;");
 
 			pst.setString(1, p.getNome());
 			pst.setFloat(2, p.getPreco());
