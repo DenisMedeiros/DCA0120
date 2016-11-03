@@ -86,12 +86,12 @@
 					          <td><c:out value="${current.dataNascimentoFormatada}" /></td>
 					          <td><c:out value="${current.telefonesFormatados}" /></td>
 					          <td align="center">
-					          	<a href="${pageContext.request.contextPath}/editar/caixa/?id=${current.id}">
+					          	<a href="${pageContext.request.contextPath}/editar/entregador/?id=${current.id}">
 					          		<button type="button" class="btn btn-default">Editar</button>
 					          	</a>
 					          </td>
 				        	  <td align="center">
-				        	  	<a href="${pageContext.request.contextPath}/remover/caixa/?id=${current.id}">
+				        	  	<a href="${pageContext.request.contextPath}/remover/entregador/?id=${current.id}">
 				        	  		<button type="button" class="btn btn-danger">Remover</button>
 				        	  	</a>
 				        	  </td>

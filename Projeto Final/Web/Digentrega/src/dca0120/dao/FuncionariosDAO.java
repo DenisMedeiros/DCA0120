@@ -259,6 +259,7 @@ public abstract class FuncionariosDAO {
 			pst.setInt(1, id);
 
 			pst.executeUpdate();
+			System.out.println("func");
 
 		} catch (SQLException e) {
 			e.printStackTrace();

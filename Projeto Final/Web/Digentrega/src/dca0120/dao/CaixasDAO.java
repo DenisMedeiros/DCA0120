@@ -206,9 +206,8 @@ public class CaixasDAO extends FuncionariosDAO {
 
 	public void removerCaixa(int id) {
 		TelefonesDAO td = new TelefonesDAO();
-		for(String telefone: this.getCaixaWithID(id).getTelefones()) {
-			td.removerTelefone(id, telefone);
-		}
+		
+		td.removerTelefones(id);
 		
 		CaixasGerenciamProdutosDAO gcpr = new CaixasGerenciamProdutosDAO();
 		gcpr.removerCaixas(id);
@@ -222,22 +221,28 @@ public class CaixasDAO extends FuncionariosDAO {
 			pst.setInt(1, id);
 
 			pst.executeUpdate();
-
-			this.removerFuncionario(id);
+			System.out.println("caixa");
+			
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		this.removerFuncionario(id);
 	}
 
 	public void alterarCaixa(Caixa c, int admID) {
 		TelefonesDAO td = new TelefonesDAO();
+		
+		for(String tel: td.getTelefones(c.getId())) {
+			td.removerTelefone(c.getId(), tel);
+		}
 		for(String telefone: c.getTelefones()) {
-			td.alterarTelefone(c.getId(), telefone);
+			td.inserirTelefone(c.getId(), telefone);
 		}
 		try {
-			PreparedStatement pst = conexao
-					.prepareStatement("UPDATE Caixas SET EAdministrador=? WHERE FuncionarioID=?");
+			String sql = "UPDATE Caixas SET EAdministrador=? WHERE FuncionarioID=?";
+			PreparedStatement pst = conexao.prepareStatement(sql);
 
 			pst.setBoolean(1, c.isAdministrador());
 			pst.setInt(2, c.getId());

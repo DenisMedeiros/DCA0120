@@ -142,12 +142,13 @@ public class TelefonesDAO {
 		return true;
 	}
 	
-	public void alterarTelefone(int funcionarioID, String telefone) {
+	public void alterarTelefone(int funcionarioID, String telefoneAntigo, String telefoneNovo) {
 		try {
-			PreparedStatement pst = conexao.prepareStatement("UPDATE Telefones SET DDDeNumero=? WHERE FuncionarioID=?)");
+			PreparedStatement pst = conexao.prepareStatement("UPDATE Telefones SET DDDeNumero=? WHERE FuncionarioID=? AND DDDeNumero=?");
 			
-			pst.setString(1, telefone);
+			pst.setString(1, telefoneNovo);
 			pst.setInt(2, funcionarioID);
+			pst.setString(3, telefoneAntigo);
 			
 	        pst.executeUpdate();
 		} catch (SQLException e) {
@@ -157,11 +158,26 @@ public class TelefonesDAO {
 	
 	public void removerTelefone(int funcionarioID, String telefone) {
 		try {
-			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Telefones WHERE FuncionarioID=?)");
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Telefones WHERE FuncionarioID=? AND DDDeNumero=?");
+			
+			pst.setInt(1, funcionarioID);
+			pst.setString(2, telefone);
+			
+	        pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void removerTelefones(int funcionarioID) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM TELEFONES WHERE FUNCIONARIOID = ?");
 			
 			pst.setInt(1, funcionarioID);
 			
 	        pst.executeUpdate();
+	        
+	        System.out.println("tel");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

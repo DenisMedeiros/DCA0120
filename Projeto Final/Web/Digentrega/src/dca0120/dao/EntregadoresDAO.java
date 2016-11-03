@@ -210,12 +210,12 @@ public class EntregadoresDAO extends FuncionariosDAO {
 
 	public void removerEntregador(int id) {
 		TelefonesDAO td = new TelefonesDAO();
-		for(String telefone: this.getEntregadorWithID(id).getTelefones()) {
-			td.removerTelefone(id, telefone);
-		}
+		
+		td.removerTelefones(id);
+		
 		try {
 
-			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Entregador WHERE FuncionarioID=?");
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Entregadores WHERE FuncionarioID=?");
 
 			pst.setInt(1, id);
 
@@ -230,8 +230,11 @@ public class EntregadoresDAO extends FuncionariosDAO {
 
 	public void alterarEntregador(Entregador e, int admID) {
 		TelefonesDAO td = new TelefonesDAO();
+		for(String tel: td.getTelefones(e.getId())) {
+			td.removerTelefone(e.getId(), tel);
+		}
 		for(String telefone: e.getTelefones()) {
-			td.alterarTelefone(e.getId(), telefone);
+			td.inserirTelefone(e.getId(), telefone);
 		}
 		try {
 			PreparedStatement pst = conexao
