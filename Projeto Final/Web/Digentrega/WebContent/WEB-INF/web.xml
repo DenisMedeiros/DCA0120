@@ -97,7 +97,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ListarFuncionariosServlet</servlet-name>
-    <url-pattern>/funcionarios/listar/*</url-pattern>
+    <url-pattern>/listar/funcionarios/*</url-pattern>
   </servlet-mapping>
   
 

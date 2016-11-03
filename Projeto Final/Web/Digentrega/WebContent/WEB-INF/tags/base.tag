@@ -85,7 +85,7 @@
                 <ul class="dropdown-menu">
                   <li><a href="${pageContext.request.contextPath}/cadastrar/caixa/">Cadastrar Caixa</a></li>
                   <li><a href="${pageContext.request.contextPath}/cadastrar/entregador/">Cadastrar Entregador</a></li>
-                  <li><a href="${pageContext.request.contextPath}/funcionarios/listar/">Listar Funcionários</a></li>
+                  <li><a href="${pageContext.request.contextPath}/listar/funcionarios/">Listar Funcionários</a></li>
                 </ul>
               </li>
               

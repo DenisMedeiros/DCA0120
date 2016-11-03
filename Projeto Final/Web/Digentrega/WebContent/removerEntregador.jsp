@@ -20,6 +20,9 @@
               <div class="panel-title text-center">
               		<h1 class="title">Entregador(a) removido(a)!</h1>
               		<hr />
+              		<a href="${pageContext.request.contextPath}/listar/funcionarios/">
+              			<button class="btn btn-primary btn-lg"> Voltar </button>
+              		</a>
               	</div>
            </div>
 	    </div> <!-- /container -->

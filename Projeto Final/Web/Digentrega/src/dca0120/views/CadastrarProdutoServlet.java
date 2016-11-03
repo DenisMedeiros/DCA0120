@@ -113,7 +113,7 @@ public class CadastrarProdutoServlet extends HttpServlet {
 			String aleatorio = String.valueOf(ThreadLocalRandom.current().nextInt(10000, 99999 + 1));
 			String extension = fileName.substring(fileName.indexOf("."));
 
-            caminhoFoto = "/media" + "/" + "produtos" + "/" + md5 + aleatorio + extension;
+            caminhoFoto = "media" + "/" + "produtos" + "/" + md5 + aleatorio + extension;
             filePart.write(savePath + File.separator +  md5 + aleatorio + extension);
         }
         	

@@ -54,7 +54,7 @@
 						</c:forEach>
 				    </select>
 				    <span class="input-group-addon" title="* Price" id="priceLabel">Quantidade</span>
-				    <input type="number" id="quantidade" name="quantidade" required="required" class="form-control" value="1">
+				    <input type="text" id="quantidade" name="quantidade" required="required" class="form-control" value="1">
 				    <!-- insert this line -->
 				    <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
 					<div class="input-group-btn ">
@@ -141,19 +141,17 @@
 			                <div class="col-sm-6">
 			                	<div class="input-group">
 				                	<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"> Latitude </i></span>
-				                    <input type="text" class="form-control" id="latitude" name="latitude" value="0">
+				                    <input type="text" class="form-control" id="latitude" name="latitude" value="0" data-parsley-type="number">
 				                </div>
 				            </div>
 			                <div class="col-sm-6">
 			                	<div class="input-group">
 				                	<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"> Longitude</i></span>
-				                    <input type="text" class="form-control" id="longitude" name="latitude" value="0">
+				                    <input type="text" class="form-control" id="longitude" name="latitude" value="0" data-parsley-type="number">
 			                    </div>
 			                </div>
 			            </div>
 						<a class="btn btn-primary btn-lg btn-block login-button" id="botaoMapa">Abrir mapa </a>
-						<input type="hidden" id="latitude" name="latidude" value="0" />
-						<input type="hidden" id="longitude" name="longitude" value="0" />
 					</div>
 				</div>
 
@@ -241,22 +239,35 @@
 			var id = $("#listaProdutos option:selected").val();
 			var quantidade = parseInt($("#quantidade").val());
 			
+			if(quantidade < 1) {
+				alert("A quantidade deve ser positiva!");
+				return;
+			}
+			
 			if(!$("#linha_" + id).length) {
-				$('#tabelaProdutos tr:last').after('' +
-				  '<tr id="linha_'+ id +'" class="linha" >'+
-				  '<td class="idProduto">'+ id +'</td>'+
-		          '<td>'+ produtos[id].nome +'</td>'+
-		          '<td>'+ produtos[id].preco +'</td>'+
-		          '<td>'+ produtos[id].peso +'</td>'+
-		          '<td>'+ produtos[id].volume +'</td>'+
-		          '<td id="quantidade_'+ id +'">'+ quantidade +'</td>'+
-	      	  	  '<td align="center">'+
-		      	  	'<a href="#">'+
-		      	  		'<button type="button" class="btn btn-danger" id="remover_'+ id +'" onclick="removerProduto('+ id +');"> Remover </button>'+
-		      	  	'</a>'+
-		      	  '</td>'+
-			       '</tr>'
-				);
+				
+				if(quantidade <= produtos[id].quantidadeInicial) {
+				
+					$('#tabelaProdutos tr:last').after('' +
+					  '<tr id="linha_'+ id +'" class="linha" >'+
+					  '<td class="idProduto">'+ id +'</td>'+
+			          '<td>'+ produtos[id].nome +'</td>'+
+			          '<td>'+ produtos[id].preco +'</td>'+
+			          '<td>'+ produtos[id].peso +'</td>'+
+			          '<td>'+ produtos[id].volume +'</td>'+
+			          '<td id="quantidade_'+ id +'">'+ quantidade +'</td>'+
+		      	  	  '<td align="center">'+
+			      	  	'<a href="#">'+
+			      	  		'<button type="button" class="btn btn-danger" id="remover_'+ id +'" onclick="removerProduto('+ id +');"> Remover </button>'+
+			      	  	'</a>'+
+			      	  '</td>'+
+				       '</tr>'
+					);
+					
+				} else {
+					alert("Não existe estoque suficiente deste produto!");
+					return;
+				}
 				
 			} else {
 				var quantidadeCarrinho = parseInt($("#quantidade_" + id).text());
@@ -290,6 +301,12 @@
 	
 		$(function() {
 		    $("#formulario").submit(function(e) {
+		    	
+		    	if(!$("#tabelaProdutos .linha").length) {
+		    		alert("Adicione pelo menos um produto no pedido.");
+		    		return false;
+		    	}
+		    	
 				// Pega todos os dados da tabela e inclui no formulário.
 				$("#tabelaProdutos .linha").each(function(i, row) {
 					 var $row = $(row);
@@ -299,9 +316,15 @@
 					 console.log(quantidade);
 					 $('<input>').attr('type', 'hidden').attr('name', 'produto_' + id).attr('value', quantidade).appendTo('#formulario');				 
 			    });
+				
 				return true;
 		    });
 		});
+		</script>
+		
+		<script>
+			$.mask.definitions['h'] = "[A-Fa-f0-9]";
+			$("#quantidade").mask("9?999");
 		</script>
 		
 	</jsp:attribute>

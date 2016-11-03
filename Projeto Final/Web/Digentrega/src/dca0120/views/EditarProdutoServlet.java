@@ -79,10 +79,10 @@ public class EditarProdutoServlet extends HttpServlet {
         	response.sendRedirect(request.getContextPath());
         	return;
 		}
-		
+		int id = Integer.parseInt(request.getParameter("id"));
 		ProdutosDAO pd = new ProdutosDAO();
 		CaixasDAO cd = new CaixasDAO();
-
+		Produto original = pd.getProduto(id);
 	
         String nome = request.getParameter("nome");
         String precoStr = request.getParameter("preco");
@@ -91,28 +91,44 @@ public class EditarProdutoServlet extends HttpServlet {
         String quantidadeStr = request.getParameter("quantidade");
         String descricao = request.getParameter("descricao");
         
-        int id = Integer.parseInt(request.getParameter("id"));
+        if(!nome.trim().isEmpty()) {
+        	original.setNome(nome);
+        }
+        
+        if(!precoStr.trim().isEmpty()) {
+        	float preco = Float.parseFloat(precoStr);
+        	original.setPreco(preco);
+        }
+        
+        if(pesoStr.trim().isEmpty()) {
+        	float peso = Float.parseFloat(pesoStr);
+        	original.setPreco(peso);
+        }
+        
+        if(volumeStr.trim().isEmpty()) {
+        	float volume = Float.parseFloat(volumeStr);
+        	original.setPreco(volume);
+        }
+        
+        if(quantidadeStr.trim().isEmpty()) {
+            int quantidade = Integer.parseInt(quantidadeStr);
+        	original.setQuantidadeEstoque(quantidade);
+        }       
+       
         
         Part filePart = request.getPart("foto"); 
-               
+        
         String fileName = null;
         InputStream fileContent = null;
-        if(filePart != null) {
+        
+        if(filePart != null && filePart.getSize() > 0) {
 	        fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
 	        fileContent = filePart.getInputStream();
 		}
 
-        // Verifica se algum campo chegou em branco.
-        if(nome.trim().isEmpty() || precoStr.trim().isEmpty() || pesoStr.trim().isEmpty() || 
-        		volumeStr.trim().isEmpty() || quantidadeStr.trim().isEmpty()) {
-            session.setAttribute("mensagem", "Algum dos campos foi enviado em branco. Tente novamente!");
-            response.sendRedirect(request.getHeader("referer"));
-            return;
-        }
-        
         String caminhoFoto = null;
         
-        if(fileContent != null) {
+        if(filePart != null && filePart.getSize() > 0) {
         	
             String appPath = request.getServletContext().getRealPath("media");
             String savePath = appPath + File.separator + "produtos";
@@ -130,24 +146,17 @@ public class EditarProdutoServlet extends HttpServlet {
 				e.printStackTrace();
 			}			
 			
+			
 			String aleatorio = String.valueOf(ThreadLocalRandom.current().nextInt(10000, 99999 + 1));
 			String extension = fileName.substring(fileName.indexOf("."));
 
-            caminhoFoto = "/media" + "/" + "produtos" + "/" + md5 + aleatorio + extension;
+            caminhoFoto = "media" + "/" + "produtos" + "/" + md5 + aleatorio + extension;
+            original.setFoto(caminhoFoto);
             filePart.write(savePath + File.separator +  md5 + aleatorio + extension);
         }
         	
-        
-        float preco = Float.parseFloat(precoStr);
-        float peso = Float.parseFloat(pesoStr);
-        float volume = Float.parseFloat(volumeStr);
-        int quantidade = Integer.parseInt(quantidadeStr);
-		Caixa responsavel = cd.getCaixaWithID(caixa);        
-       
-        Produto produto = new Produto(id, nome, preco, caminhoFoto, peso, volume, descricao, responsavel, quantidade);
-       
         // Insere-o no BD.
-        pd.alterarProduto(produto);
+        pd.alterarProduto(original);
         
         session.setAttribute("mensagem", "Produto editado com sucesso!");
         response.sendRedirect(request.getContextPath());

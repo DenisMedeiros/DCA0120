@@ -120,6 +120,8 @@ public class CadastrarPedidoServlet extends HttpServlet {
         		int quantidade = Integer.parseInt(quantidadeStr);
         		int idProduto = Integer.parseInt(idStr);
         		Produto prod = prodDAO.getProduto(idProduto);
+        		prod.setQuantidadeEstoque(prod.getQuantidadeEstoque() - quantidade);
+        		prodDAO.alterarEstoque(prod);
         		pedido.addProduto(prod, quantidade);
         	}
         }

@@ -258,7 +258,7 @@ public class ProdutosDAO {
 			pst.setString(3, p.getFoto());
 			pst.setFloat(4, p.getPeso());
 			pst.setFloat(5, p.getVolume());
-			pst.setInt(6, p.getResponsavelCadastro().getId());
+			pst.setInt(6, p.getQuantidadeEstoque());
 			pst.setString(7, p.getDescricao());
 			pst.setInt(8, p.getId());
 
