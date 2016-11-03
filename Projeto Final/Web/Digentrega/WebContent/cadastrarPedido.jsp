@@ -45,7 +45,7 @@
 				</div>
 			
 			
-			    <label class="cols-sm-2 control-label">Lista de produos</label>
+			    <label class="cols-sm-2 control-label">Lista de produtos</label>
 				<div class="input-group">	
 					<span class="input-group-addon" title="* Produto" id="priceLabel">Produto</span>
 				    <select id="listaProdutos" name="listaProdutos" class="form-control">
@@ -102,22 +102,17 @@
 			          </div>
 			      </div>
 			      
-			   <label class="cols-sm-2 control-label">Designar Entregador</label>
+			    <label class="cols-sm-2 control-label"> Tempo Estimado Para Entrega</label>
 				<div class="input-group">	
-					<span class="input-group-addon" title="" id="priceLabel"></span>
-				    <select id="entregador" name="entregador" class="form-control">
-						<c:forEach items="${requestScope.entregadores}" var="current">
-							<option value="${current.id}">${current.nome} </option>
-						</c:forEach>
-				    </select>
+				    <span class="input-group-addon" title="* Price" id="priceLabel"></span>
+				    <input type="text" id="tempo" name="tempo" class="form-control" placeholder="Tempo em minutos" required>
 				    <!-- insert this line -->
 				    <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
 				</div>
-			
-							
-				<br />
+				<span class="mensagem-ajuda"></span>
 				
-			
+				<br />
+			      
 				<div class="form-group">
 					<label for="descricao" class="cols-sm-2 control-label">Descrição do Endereço</label>
 					<div class="cols-sm-10">
@@ -141,17 +136,19 @@
 			                <div class="col-sm-6">
 			                	<div class="input-group">
 				                	<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"> Latitude </i></span>
-				                    <input type="text" class="form-control" id="latitude" name="latitude" value="0" data-parsley-type="number">
+				                    <input type="text" class="form-control" id="latitude" name="latitude" value="0" data-parsley-latitude>
 				                </div>
+				                <span class="mensagem-ajuda"></span>
 				            </div>
 			                <div class="col-sm-6">
 			                	<div class="input-group">
 				                	<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"> Longitude</i></span>
-				                    <input type="text" class="form-control" id="longitude" name="latitude" value="0" data-parsley-type="number">
+				                    <input type="text" class="form-control" id="longitude" name="latitude" value="0" data-parsley-longitude>
 			                    </div>
+			                    <span class="mensagem-ajuda"></span>
 			                </div>
 			            </div>
-						<a class="btn btn-primary btn-lg btn-block login-button" id="botaoMapa">Abrir mapa </a>
+						<a class="btn btn-primary btn-lg btn-block login-button" id="botaoMapa">Fechar mapa </a>
 					</div>
 				</div>
 
@@ -191,10 +188,6 @@
 		
 		<script>
 		
-		$( document ).ready(function() {
-			$("#areaMapa").hide();
-		});
-		
 		$("#botaoMapa").on('click', function(){
 			$("#areaMapa").toggle();
 			if($('#areaMapa').is(':visible')){
@@ -230,9 +223,9 @@
 		}
 		
 		var produtos = {
-			<c:forEach items="${requestScope.produtos}" var="current">
-				${current.id}: {nome: '${current.nome}', preco: '${current.preco}', peso: '${current.peso}', volume: '${current.volume}', quantidadeInicial: '${current.quantidadeEstoque}'},
-			</c:forEach>
+				<c:forEach items="${requestScope.produtos}" var="current">
+					${current.id}: {nome: '${current.nome}', preco: '${current.preco}', peso: '${current.peso}', volume: '${current.volume}', quantidadeInicial: '${current.quantidadeEstoque}'},
+				</c:forEach>
 		};
 			
 		$("#adicionarProduto").on('click', function(){
@@ -299,8 +292,9 @@
 		
 		<script>
 	
-		$(function() {
 		    $("#formulario").submit(function(e) {
+		    	
+		    	console.log("denis");
 		    	
 		    	if(!$("#tabelaProdutos .linha").length) {
 		    		alert("Adicione pelo menos um produto no pedido.");
@@ -319,12 +313,50 @@
 				
 				return true;
 		    });
+		</script>
+		
+		<script>
+		
+		$('#formulario').parsley({
+			errorsContainer: function(pEle) {
+		        var $err = pEle.$element.parent().siblings('.mensagem-ajuda');
+		        return $err;
+		    },
+	        errorClass: 'parsley-error',
+	        successClass: 'parsley-success',
+		 	errorsWrapper: '<ul class="pasley-errors-message"></ul>',
+		 	errorTemplate: '<li></li>',
 		});
+		
+		window.Parsley.addValidator('latitude', {
+			  validateString: function(value) {	  
+				  var re = new RegExp("^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$");
+				  if (re.test(value)) {
+				      return true;
+				  } else {
+				      return false;
+				  } 
+			  },
+			}).addMessage('pt-br', 'latitude', 'Latitude inválida.');	
+		
+		
+		window.Parsley.addValidator('longitude', {
+			  validateString: function(value) {	  
+				  var re = new RegExp("^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$");
+				  if (re.test(value)) {
+				      return true;
+				  } else {
+				      return false;
+				  } 
+			  },
+			}).addMessage('pt-br', 'longitude', 'Longitude inválida.');	
+		
 		</script>
 		
 		<script>
 			$.mask.definitions['h'] = "[A-Fa-f0-9]";
 			$("#quantidade").mask("9?999");
+			$("#tempo").mask("9?999");
 		</script>
 		
 	</jsp:attribute>

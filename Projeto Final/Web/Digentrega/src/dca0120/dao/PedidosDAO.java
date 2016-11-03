@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -53,7 +54,7 @@ public class PedidosDAO {
 					+ "ValorTotal FLOAT, "
 					+ "Status INTEGER, "
 					+ "Descricao VARCHAR(800), "
-					+ "EntregadorID INTEGER NOT NULL, "
+					+ "EntregadorID INTEGER NULL, "
 					+ "DataHoraEntrega TIMESTAMP, "
 					+ "PRIMARY KEY (ID), "
 					+ "FOREIGN KEY (EntregadorID) REFERENCES Entregadores (FuncionarioID) ON DELETE CASCADE ON UPDATE CASCADE)";
@@ -83,7 +84,12 @@ public class PedidosDAO {
 			pst.setFloat(3, p.getValorTotal());
 			pst.setInt(4, p.getStatus().getCodigo());
 			pst.setString(5, p.getDescricao());
-			pst.setInt(6, p.getEntregador().getId());
+			
+			if(p.getEntregador() != null) {
+				pst.setInt(6, p.getEntregador().getId());
+			} else {
+				pst.setNull(6, Types.NULL);
+			}
 
 			Calendar calendar = p.getDataHoraEntrega();
 			java.sql.Timestamp javaSqlTimestamp = null;

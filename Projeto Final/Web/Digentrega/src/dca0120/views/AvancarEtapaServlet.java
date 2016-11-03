@@ -7,9 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.sun.xml.internal.ws.policy.jaxws.PolicyWSDLGeneratorExtension;
-
-import dca0120.dao.CaixasDAO;
 import dca0120.dao.PedidosDAO;
 import dca0120.model.Pedido;
 

@@ -80,7 +80,6 @@ public class CadastrarPedidoServlet extends HttpServlet {
 		
 		ProdutosDAO prodDAO = new ProdutosDAO();
 		PedidosDAO pedDAO = new PedidosDAO();
-		EntregadoresDAO ed = new EntregadoresDAO();
 		
 		// Verifica se o usuário que quer acessar esta função é o caixa.
 		Integer caixaID = (Integer) session.getAttribute("caixa");
@@ -94,12 +93,11 @@ public class CadastrarPedidoServlet extends HttpServlet {
         String latitudeStr = request.getParameter("latitude");
         String longitudeStr = request.getParameter("latitude");
         String descricaoEndereco = request.getParameter("descricaoEndereco");
-        String entregadorIdStr = request.getParameter("entregador");
-        int entregadorId = Integer.parseInt(entregadorIdStr);
-        Entregador entregador = ed.getEntregadorWithID(entregadorId);
+        String tempoStr = request.getParameter("tempo");
    
         float latitude = Float.parseFloat(latitudeStr);
         float longitude = Float.parseFloat(longitudeStr);
+        int tempo = Integer.parseInt(tempoStr);
 
         Endereco endereco = new Endereco(latitude, longitude, descricaoEndereco);
 
@@ -107,9 +105,9 @@ public class CadastrarPedidoServlet extends HttpServlet {
         // Prepara a lista de produtos.
         Calendar momentoAbertura = Calendar.getInstance();
         Calendar momentoEntrega =  Calendar.getInstance();
-        momentoEntrega.add(Calendar.MINUTE, 30);
+        momentoEntrega.add(Calendar.MINUTE, tempo);
         
-        Pedido pedido = new Pedido(0, Pedido.Status.ABERTO, descricaoPedido, entregador, momentoAbertura, momentoEntrega, endereco);
+        Pedido pedido = new Pedido(0, Pedido.Status.ABERTO, descricaoPedido, null, momentoAbertura, momentoEntrega, endereco);
        
         Enumeration<String> parametros = request.getParameterNames();
         while(parametros.hasMoreElements()) {

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
-import java.util.Enumeration;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.ServletException;
@@ -15,9 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-import dca0120.dao.CaixasDAO;
 import dca0120.dao.ProdutosDAO;
-import dca0120.model.Caixa;
 import dca0120.model.Produto;
 import dca0120.utils.Hashing;
 
@@ -81,7 +78,6 @@ public class EditarProdutoServlet extends HttpServlet {
 		}
 		int id = Integer.parseInt(request.getParameter("id"));
 		ProdutosDAO pd = new ProdutosDAO();
-		CaixasDAO cd = new CaixasDAO();
 		Produto original = pd.getProduto(id);
 	
         String nome = request.getParameter("nome");
@@ -100,22 +96,25 @@ public class EditarProdutoServlet extends HttpServlet {
         	original.setPreco(preco);
         }
         
-        if(pesoStr.trim().isEmpty()) {
+        if(!pesoStr.trim().isEmpty()) {
         	float peso = Float.parseFloat(pesoStr);
         	original.setPreco(peso);
         }
         
-        if(volumeStr.trim().isEmpty()) {
+        if(!volumeStr.trim().isEmpty()) {
         	float volume = Float.parseFloat(volumeStr);
         	original.setPreco(volume);
         }
         
-        if(quantidadeStr.trim().isEmpty()) {
+        if(!quantidadeStr.trim().isEmpty()) {
             int quantidade = Integer.parseInt(quantidadeStr);
         	original.setQuantidadeEstoque(quantidade);
         }       
        
-        
+        if(!descricao.trim().isEmpty()) {
+        	original.setDescricao(descricao);
+        }       
+       
         Part filePart = request.getPart("foto"); 
         
         String fileName = null;
