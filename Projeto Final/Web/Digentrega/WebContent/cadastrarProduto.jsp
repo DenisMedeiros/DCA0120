@@ -4,15 +4,13 @@
 <template:base>
 
 	<jsp:attribute name="titulo">   
-		Cadastrar Caixa
+		Cadastrar Produto
 	</jsp:attribute>
 		
 	<jsp:attribute name="cabecalhoExtra">   
 		<%-- Mais arquivos CSS e Javascript aqui. --%>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/formulario.css">
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/bootstrap-datepicker3.css"/>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/parsley.css"/>
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/telefones.css"/>
 	</jsp:attribute>
 
 
@@ -84,7 +82,6 @@
 
 				<div class="form-group">
 					<label for="descricao" class="cols-sm-2 control-label">Descrição</label>
-					
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
@@ -95,13 +92,14 @@
 				</div>
 				
 				<div class="form-group">
-					<label for="descricao" class="cols-sm-2 control-label">Foto do produto</label>
+					<label for="foto" class="cols-sm-2 control-label">Foto do produto</label>
 					<div class="cols-sm-10">
 						<label class="btn btn-primary btn-lg btn-file">
 						   Selecionar foto <input type="file" id="foto" name="foto" style="display: none;">
 						</label>
 					</div>
 				</div>
+				
 
 				
 				<div class="form-group ">
@@ -117,6 +115,8 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/parsley.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/i18n/pt-br.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery.maskedinput.min.js"></script>
+
+		
 		<script>
 		$(document).ready(function(){
 			
