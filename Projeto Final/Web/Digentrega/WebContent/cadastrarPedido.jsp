@@ -85,7 +85,7 @@
 			          <div class="col-sm-4">
 			          	<div class="input-group">
 			           	<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"> Preco Total </i></span>
-			               <input type="text" class="form-control" id="precoTotal" name=""precoTotal"" value="0" readonly>
+			               <input type="text" class="form-control" id="precoTotal" name="precoTotal" value="0" readonly>
 			           </div>
 			       </div>
 			          <div class="col-sm-4">
