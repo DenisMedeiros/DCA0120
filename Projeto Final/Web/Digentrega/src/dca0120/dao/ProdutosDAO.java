@@ -75,8 +75,8 @@ public class ProdutosDAO {
 
 			pst.executeUpdate();
 			
-			p.getResponsavelCadastro().getId();
-
+			CaixasGerenciamProdutosDAO cgpr = new CaixasGerenciamProdutosDAO();
+			cgpr.inserirCaixasGerenciamProdutos(p);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -107,10 +107,14 @@ public class ProdutosDAO {
 			CaixasDAO caixas = new CaixasDAO();
 			Caixa c = null;
 			if (res.next()) {
-				c = caixas.getCaixaWithID(res.getInt("CaixaID"));
+				CaixasGerenciamProdutosDAO cgpr = new CaixasGerenciamProdutosDAO();
+				int caixaID = cgpr.getCaixaIDwithProduto(id);
+				
+				c = caixas.getCaixaWithID(caixaID);
 				p = new Produto(id, res.getString("Nome"), res.getFloat("Preco"), res.getString("Foto"),
 						res.getFloat("Peso"), res.getFloat("Volume"), res.getString("Descricao"), c,
 						res.getInt("QuantidadeEmEstoque"));
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -182,8 +186,12 @@ public class ProdutosDAO {
 			CaixasDAO caixas = new CaixasDAO();
 			Caixa c = null;
 			while (res.next()) {
-				c = caixas.getCaixaWithID(res.getInt("CaixaID"));
-				Produto p = new Produto(res.getInt("ID"), res.getString("Nome"), res.getFloat("Preco"),
+				CaixasGerenciamProdutosDAO cgpr = new CaixasGerenciamProdutosDAO();
+				int id = res.getInt("ID");
+				int caixaID = cgpr.getCaixaIDwithProduto(id);
+				
+				c = caixas.getCaixaWithID(caixaID);
+				Produto p = new Produto(id, res.getString("Nome"), res.getFloat("Preco"),
 						res.getString("Foto"), res.getFloat("Peso"), res.getFloat("Volume"), res.getString("Descricao"),
 						c, res.getInt("QuantidadeEmEstoque"));
 				lista.add(p);
@@ -235,7 +243,7 @@ public class ProdutosDAO {
 	public void alterarProduto(Produto p) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("UPDATE Produtos SET Nome=?, Preco=?, Foto=?, Peso=?, Volume=?,"
-					+ "CaixaID=?, QuantidadeEmEstoque=?, Descricao=? WHERE ID=?)");
+					+ "QuantidadeEmEstoque=?, Descricao=? WHERE ID=?)");
 
 			pst.setString(1, p.getNome());
 			pst.setFloat(2, p.getPreco());
@@ -243,9 +251,8 @@ public class ProdutosDAO {
 			pst.setFloat(4, p.getPeso());
 			pst.setFloat(5, p.getVolume());
 			pst.setInt(6, p.getResponsavelCadastro().getId());
-			pst.setInt(7, p.getQuantidadeEstoque());
-			pst.setString(8, p.getDescricao());
-			pst.setInt(9, p.getId());
+			pst.setString(7, p.getDescricao());
+			pst.setInt(8, p.getId());
 
 			pst.executeUpdate();
 		} catch (SQLException e) {

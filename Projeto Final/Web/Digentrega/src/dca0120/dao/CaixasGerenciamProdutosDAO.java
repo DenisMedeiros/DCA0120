@@ -100,6 +100,27 @@ public final class CaixasGerenciamProdutosDAO {
 		return m;
 	}
 	
+	public int getCaixaIDwithProduto(int produtoID) {
+		int caixaId = -1;
+		try {
+			String sql = "SELECT CaixaID FROM CaixasGerenciamProdutos WHERE ProdutoID=?";
+
+			PreparedStatement pst = conexao.prepareStatement(sql);
+			ResultSet res = pst.executeQuery();
+
+			if (res.wasNull()) {
+				return caixaId;
+			}
+
+			while (res.next()) {
+				caixaId = res.getInt("CaixaID");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return caixaId;
+	}
+	
 	public boolean isEmpty() {
 		String sql = "SELECT * FROM CaixasGerenciamProdutos;";
 
@@ -159,4 +180,20 @@ public final class CaixasGerenciamProdutosDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public void alterarCaixa(int caixaID, int produtoID) {
+		try {
+			PreparedStatement pst = conexao
+					.prepareStatement("UPDATE CaixasGerenciamProdutos SET CaixaID=? WHERE ProdutoID=?)");
+		
+			pst.setInt(1, caixaID);
+			pst.setInt(2, produtoID);
+
+
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

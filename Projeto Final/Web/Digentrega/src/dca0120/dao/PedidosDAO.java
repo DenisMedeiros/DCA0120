@@ -377,4 +377,18 @@ public class PedidosDAO {
 		}
 	}
 	
+	public void alterarEntregador(int pedidoID, int entregadorID) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement("UPDATE Pedidos SET EntregadorID=? WHERE ID=?");
+
+			pst.setInt(1, entregadorID);
+			pst.setInt(2, pedidoID);
+			
+			pst.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
