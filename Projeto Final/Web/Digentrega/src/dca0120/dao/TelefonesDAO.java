@@ -177,7 +177,6 @@ public class TelefonesDAO {
 			
 	        pst.executeUpdate();
 	        
-	        System.out.println("tel");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -111,11 +111,13 @@ public class EditarCaixaServlet extends HttpServlet {
         	// Transforma o CPF em números apenas.
             cpf = cpfStr.replace(".", "").replace("-", "");
             
-         // Valida o CPF.
-            if(!ValidadorCPF.isValidCPF(cpf)) {
-            	session.setAttribute("mensagem", "CPF inválido! Tente novamente.");
-                response.sendRedirect(request.getHeader("referer"));
-                return;
+            if(cpf != original.getCpf()) {
+	            // Valida o CPF.
+	            if(!ValidadorCPF.isValidCPF(cpf)) {
+	            	session.setAttribute("mensagem", "CPF inválido! Tente novamente.");
+	                response.sendRedirect(request.getHeader("referer"));
+	                return;
+	            }
             }
             
             original.setCpf(cpf);

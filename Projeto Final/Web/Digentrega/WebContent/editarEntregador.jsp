@@ -5,7 +5,7 @@
 <template:base>
 
 	<jsp:attribute name="titulo">   
-		Cadastrar Caixa
+		Cadastrar Entregador(a)
 	</jsp:attribute>
 		
 	<jsp:attribute name="cabecalhoExtra">   
@@ -22,17 +22,17 @@
 		<div class="container theme-showcase" role="main">
 		   	<div class="panel-heading">
               <div class="panel-title text-center">
-              		<h1 class="title">Editar Caixa</h1>
+              		<h1 class="title">Editar Entregador</h1>
               		<hr />
               	</div>
            </div>
 			<form id="formulario" class="form-signup" method="post" enctype="multipart/form-data">
 				<div class="form-group">
-					<label for="nome" class="cols-sm-2 control-label">Nome Completo</label>
+					<label for="name" class="cols-sm-2 control-label">Nome Completo</label>
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="nome" id="nome" maxlength="255"  placeholder="Digite seu nome" value="${caixa.nome}" data-parsley-required />
+							<input type="text" class="form-control" name="nome" id="nome" maxlength="255"  placeholder="Digite seu nome" value="${entregador.nome}" data-parsley-required />
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>
@@ -43,7 +43,7 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="cpf" id="cpf"  placeholder="Apenas números" value="${caixa.cpf}" data-parsley-required data-parsley-cpf data-parsley-duplicado />
+							<input type="text" class="form-control" name="cpf" id="cpf"  placeholder="Apenas números" value="${entregador.cpf}" data-parsley-required data-parsley-cpf data-parsley-duplicado />
 							<input type="hidden" id="cpfJaExiste" name="jaExiste" value="0">
 						</div>
 						<span class="mensagem-ajuda"></span>
@@ -55,7 +55,7 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="dataNascimento" id="dataNascimento"  placeholder="dd/mm/aaaa" value="${caixa.dataNascimentoFormatada}" data-parsley-required />
+							<input type="text" class="form-control" name="dataNascimento" id="dataNascimento"  placeholder="dd/mm/aaaa" value="${entregador.dataNascimentoFormatada}" data-parsley-required />
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>
@@ -64,13 +64,25 @@
 				<div class="form-group">
 					<label for="telefones" class="cols-sm-2 control-label">Telefones</label>
 					<div class="phone-list">
+						<c:forEach var="telefone" items="${entregador.telefones}" varStatus="index" >
 						<div>
+							<div class="input-group phone-input">
+								<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+								<input type="text" id="telefone_${index}"  name="telefone_${index}" class="form-control" maxlength="11" placeholder="Somente números" value="${telefone}" data-parsley-required data-parsley-type="number" />
+								<span class="input-group-btn">
+									<button class="btn btn-danger btn-remove-phone" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+								</span>
+							</div>
+						<span class="mensagem-ajuda"></span>
+						</div>
+						</c:forEach>
+						<!-- <div>
 							<div class="input-group phone-input">
 								<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
 								<input type="text" id="telefone_1"  name="telefone_1" class="form-control" placeholder="Somente números" value="${caixa.telefonesFormatados}" maxlength="11" data-parsley-required data-parsley-type="number" />
 							</div>
 							<span class="mensagem-ajuda"></span>
-						</div>
+						</div>-->
 					</div>
 					<button type="button" class="btn btn-success btn-sm btn-add-phone"><span class="glyphicon glyphicon-plus"></span> Adicionar outro</button>
 				</div>
@@ -92,6 +104,32 @@
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
 							<input type="password" class="form-control" name="senha2" id="senha2" maxlength="64"  placeholder="Confirme sua senha" data-parsley-required/>
+						</div>
+						<span class="mensagem-ajuda"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="email" class="cols-sm-2 control-label">CNH</label>
+					<div class="cols-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-user fa"
+								aria-hidden="true"></i></span>
+							<input type="text" class="form-control" name="cnh" id="cnh"
+								maxlength="10" placeholder="Informe CNH" data-parsley-required />
+						</div>
+						<span class="mensagem-ajuda"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="placa" class="cols-sm-2 control-label">Placa</label>
+					<div class="cols-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-user fa"
+								aria-hidden="true"></i></span>
+							<input type="text" class="form-control" name="placa" id="placa"
+								placeholder="AAA0000" maxlength="7" data-parsley-required />
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>
@@ -216,6 +254,18 @@
 		<script>
 			$(document).ready(function(){	
 				$("#cpf").mask("999.999.999-99");
+			});
+		</script>
+		
+		<script>
+			$(document).ready(function() {
+				$("#cnh").mask("9999999999");
+			});
+		</script>
+		
+		<script>
+			$(document).ready(function() {
+				$("#placa").mask("aaa9999");
 			});
 		</script>
 		

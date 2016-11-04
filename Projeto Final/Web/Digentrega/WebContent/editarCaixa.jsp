@@ -28,7 +28,7 @@
            </div>
 			<form id="formulario" class="form-signup" method="post" enctype="multipart/form-data">
 				<div class="form-group">
-					<label for="nome" class="cols-sm-2 control-label">Nome Completo</label>
+					<label for="name" class="cols-sm-2 control-label">Nome Completo</label>
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
@@ -64,13 +64,25 @@
 				<div class="form-group">
 					<label for="telefones" class="cols-sm-2 control-label">Telefones</label>
 					<div class="phone-list">
+						<c:forEach var="telefone" items="${caixa.telefones}" varStatus="index" >
 						<div>
+							<div class="input-group phone-input">
+								<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+								<input type="text" id="telefone_${index}"  name="telefone_${index}" class="form-control" maxlength="11" placeholder="Somente números" value="${telefone}" data-parsley-required data-parsley-type="number" />
+								<span class="input-group-btn">
+									<button class="btn btn-danger btn-remove-phone" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+								</span>
+							</div>
+						<span class="mensagem-ajuda"></span>
+						</div>
+						</c:forEach>
+						<!-- <div>
 							<div class="input-group phone-input">
 								<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
 								<input type="text" id="telefone_1"  name="telefone_1" class="form-control" placeholder="Somente números" value="${caixa.telefonesFormatados}" maxlength="11" data-parsley-required data-parsley-type="number" />
 							</div>
 							<span class="mensagem-ajuda"></span>
-						</div>
+						</div>-->
 					</div>
 					<button type="button" class="btn btn-success btn-sm btn-add-phone"><span class="glyphicon glyphicon-plus"></span> Adicionar outro</button>
 				</div>

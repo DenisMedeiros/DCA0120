@@ -139,7 +139,7 @@ public class CadastrarEntregadorServlet extends HttpServlet {
         
         String senhaCriptografada = Hashing.plainToSHA256(senha1, cpf.getBytes());
 
-        // Cria o objeto Caixa.
+        // Cria o objeto Entregador.
         Entregador entregador = new Entregador(0, cpf, senhaCriptografada, nome, dataNascimento, telefones, cnh, placa);
        
         // Insere-o no BD.

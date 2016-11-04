@@ -222,9 +222,6 @@ public class CaixasDAO extends FuncionariosDAO {
 			pst.setInt(1, id);
 
 			pst.executeUpdate();
-			System.out.println("caixa");
-			
-			
 
 		} catch (SQLException e) {
 			e.printStackTrace();

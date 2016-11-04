@@ -69,13 +69,13 @@ public class EntregadoresDAO extends FuncionariosDAO {
 			pst.setNString(3, e.getPlacaVeiculo());
 
 			pst.executeUpdate();
-			
+
 			TelefonesDAO td = new TelefonesDAO();
 			int idFuncionario = this.getID(e.getCpf());
-			
-			for(String telefone: e.getTelefones()) {
+
+			for (String telefone : e.getTelefones()) {
 				td.inserirTelefone(idFuncionario, telefone);
-			}			
+			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		}
@@ -209,17 +209,25 @@ public class EntregadoresDAO extends FuncionariosDAO {
 		return true;
 	}
 
+	/**
+	 * Remove o entregador informado pelo ID. Se o entregador tem a ele
+	 * designado algum pedido, este pedido terá como Identificador de Entregador
+	 * um valor null
+	 * 
+	 * @param id
+	 *            identificador do objeto Entregador
+	 */
 	public void removerEntregador(int id) {
 		TelefonesDAO td = new TelefonesDAO();
-		
+
 		td.removerTelefones(id);
-		
+
 		PedidosDAO pd = new PedidosDAO();
 		List<Pedido> lista = pd.getPedidosDoEntregador(id);
-		for(Pedido p: lista) {
+		for (Pedido p : lista) {
 			pd.alterarEntregador(p.getId(), 0);
 		}
-		
+
 		try {
 
 			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Entregadores WHERE FuncionarioID=?");
@@ -237,10 +245,10 @@ public class EntregadoresDAO extends FuncionariosDAO {
 
 	public void alterarEntregador(Entregador e, int admID) {
 		TelefonesDAO td = new TelefonesDAO();
-		for(String tel: td.getTelefones(e.getId())) {
+		for (String tel : td.getTelefones(e.getId())) {
 			td.removerTelefone(e.getId(), tel);
 		}
-		for(String telefone: e.getTelefones()) {
+		for (String telefone : e.getTelefones()) {
 			td.inserirTelefone(e.getId(), telefone);
 		}
 		try {

@@ -206,6 +206,10 @@ public final class PedidosContemProdutosDAO {
 		}
 	}
 	
+	/**
+	 * Remove o pedido pelo ID
+	 * @param pedidoID
+	 */
 	public void removerPedido(int pedidoID) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("DELETE FROM PedidosContemProdutos WHERE PedidoID=?");
@@ -218,6 +222,10 @@ public final class PedidosContemProdutosDAO {
 		}
 	}
 	
+	/**
+	 * Remove o produto de todos os pedidos, identificado pelo ID
+	 * @param produtoID
+	 */
 	public void removerProduto(int produtoID) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("DELETE FROM PedidosContemProdutos WHERE ProdutoID=?");

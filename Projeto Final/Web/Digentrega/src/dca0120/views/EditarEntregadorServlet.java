@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,9 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dca0120.dao.CaixasDAO;
+import dca0120.dao.EntregadoresDAO;
 import dca0120.dao.TelefonesDAO;
-import dca0120.model.Caixa;
+import dca0120.model.Entregador;
 import dca0120.utils.Hashing;
 import dca0120.utils.ValidadorCPF;
 
@@ -45,17 +46,17 @@ public class EditarEntregadorServlet extends HttpServlet {
 			return;
 		}
 
-		CaixasDAO cd = new CaixasDAO();
+		EntregadoresDAO ed = new EntregadoresDAO();
 		TelefonesDAO td = new TelefonesDAO();
 		
 		try {
 			int id = Integer.parseInt(request.getParameter("id"));
-			Caixa caixa = cd.getCaixaWithID(id);
+			Entregador entregador = ed.getEntregadorWithID(id);
 			List<String> telefones = td.getTelefones(id);
-			if (caixa != null) {
-				caixa.setTelefones(telefones);
-				request.setAttribute("caixa", caixa);
-				request.getRequestDispatcher("/editarCaixa.jsp").forward(request, response);
+			if (entregador != null) {
+				entregador.setTelefones(telefones);
+				request.setAttribute("entregador", entregador);
+				request.getRequestDispatcher("/editarEntregador.jsp").forward(request, response);
 				return;
 			} else {
 				response.sendRedirect(request.getContextPath());
@@ -91,8 +92,8 @@ public class EditarEntregadorServlet extends HttpServlet {
 		
 		
 		int id = Integer.parseInt(request.getParameter("id"));
-		CaixasDAO cd = new CaixasDAO();
-		Caixa original = cd.getCaixaWithID(id);
+		EntregadoresDAO ed = new EntregadoresDAO();
+		Entregador original = ed.getEntregadorWithID(id);
 
 		//coletando parametros
 		String nome = request.getParameter("nome");
@@ -101,6 +102,8 @@ public class EditarEntregadorServlet extends HttpServlet {
         String telefone1 = request.getParameter("telefone_1");
         String senha1 = request.getParameter("senha1");
         String senha2 = request.getParameter("senha2");
+        String cnh = request.getParameter("cnh");
+        String placa = request.getParameter("placa");
 
         String cpf = original.getCpf();//inicializando variavel
         
@@ -111,12 +114,14 @@ public class EditarEntregadorServlet extends HttpServlet {
         if(!cpfStr.trim().isEmpty()) {
         	// Transforma o CPF em números apenas.
             cpf = cpfStr.replace(".", "").replace("-", "");
-            
-         // Valida o CPF.
-            if(!ValidadorCPF.isValidCPF(cpf)) {
-            	session.setAttribute("mensagem", "CPF inválido! Tente novamente.");
-                response.sendRedirect(request.getHeader("referer"));
-                return;
+          
+            if(cpf != original.getCpf()) {
+            	// Valida o CPF.
+	            if(!ValidadorCPF.isValidCPF(cpf)) {
+	            	session.setAttribute("mensagem", "CPF inválido! Tente novamente.");
+	                response.sendRedirect(request.getHeader("referer"));
+	                return;
+	            }
             }
             
             original.setCpf(cpf);
@@ -161,9 +166,14 @@ public class EditarEntregadorServlet extends HttpServlet {
             original.setTelefones(telefones);
         }
         
+        placa = placa.toUpperCase(Locale.ROOT);
+        
+        original.setPlacaVeiculo(placa);
+        
+        original.setCnh(cnh);
         
         // Insere-o no BD.
-        cd.alterarCaixa(original, administrador);
+        ed.alterarEntregador(original, administrador);
         
         session.setAttribute("mensagem", "Caixa editado com sucesso!");
 		response.sendRedirect(request.getContextPath());
