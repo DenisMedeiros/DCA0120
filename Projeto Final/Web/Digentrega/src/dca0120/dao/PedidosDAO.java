@@ -511,7 +511,12 @@ public class PedidosDAO {
 			pst.setFloat(3, p.getValorTotal());
 			pst.setInt(4, p.getStatus().getCodigo());
 			pst.setString(5, p.getDescricao());
-			pst.setInt(6, p.getEntregador().getId());
+			
+			if(p.getEntregador() != null) {
+				pst.setInt(6, p.getEntregador().getId());
+			} else {
+				pst.setNull(6, Types.NULL);
+			}
 
 			Calendar calendar = p.getDataHoraEntrega();
 			java.sql.Timestamp javaSqlTimestamp = null;

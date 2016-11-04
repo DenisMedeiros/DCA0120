@@ -36,8 +36,8 @@
 			        <th>Momento Abertura</th>
 			        <th>Previsão Entrega</th>
 			        <th>Entregador</th>
-					<th>Local de Entrega </th>
 			        <th>Status Atual</th>
+			        <th>Local de Entrega </th>
 			        <th>Listar Produtos</th>
 			        <th>Avançar Etapa</th>
 			        <th>Cancelar</th>
@@ -50,14 +50,13 @@
 							 <td><c:out value="${current.dataHoraAberturaFormatada}" /></td>
  							 <td><c:out value="${current.dataHoraEntregaFormatada}" /></td>	
  							 <td><c:out value="${current.entregadorFormatado}" /></td>
+ 							 <td align="center"> <span id="status_${current.id}"> <c:out value="${current.status}" /> </span></td>	
 							 <td align="center">
-							 
 								 <button class="btn btn-info" onclick="qrCodeModal(${current.id},${current.enderecoEntrega.latitude},${current.enderecoEntrega.longitude});">
 								 	QR Code
 								 </button>
-							 
 							 </td>
- 							 <td align="center"><c:out value="${current.status}" /></td>					  
+ 					  
 					         <td align="center">
 					       			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal_${current.id}">Abrir Lista</button>
 					          </td>
@@ -67,13 +66,13 @@
 					        	  		<button id="botaoAvancar_${current.id}" type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});"> Preparar </button>
 				        	  	</c:when>
 				        	     <c:when test="${current.status.codigo eq 2}">
-					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});"> Designar Entregador </button>
+					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});"> Escolher Entregador </button>
 				        	  	</c:when>
 				        	  	<c:when test="${current.status.codigo eq 3}">
 					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});"> Entregar </button>
 				        	  	</c:when>
 				        	  	<c:when test="${current.status.codigo eq 4}">
-					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});"> Entregar </button>
+					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});" disabled> Aguardando Entrega </button>
 				        	  	</c:when>
 				        	  </c:choose>
 				        	  </td>
@@ -141,24 +140,34 @@
 		
 		<script>
 			function avancarEtapa(pedidoID) {
+												
 			    $.ajax({
 			        url: "${pageContext.request.contextPath}/avancar/pedido/?id=" + pedidoID,
-			        type: 'GET',
+			        type: 'POST',
 			        async: false,
 			        cache: false,
 			        timeout: 30000,
 			        success: function(retorno){
-			        	if(retorno = 1) {
-			        		$("#botaoAvancar_" + id).text('Entregar');
-			        	} else if (retorno = 2) {
-			        		$("#botaoAvancar_" + id).text('Finalizar');
+  			        	
+			        	if(retorno.statusCodigo == 2) {
+			        		$("#botaoAvancar_" + pedidoID).text('Escolher Entregador');
+			        		$("#status_" + pedidoID).text(retorno.statusDescricao);
+			        	} else if (retorno.statusCodigo == 3) {
+			        		$("#botaoAvancar_" + pedidoID).text('Entregar');
+			        		$("#status_" + pedidoID).text(retorno.statusDescricao);
+			        	} else if (retorno.statusCodigo == 4){
+			        		$("#botaoAvancar_" + pedidoID).text('Aguardando Entrega');
+			        		$("#status_" + pedidoID).text(retorno.statusDescricao);
+			        		$("#botaoAvancar_" + pedidoID).prop("disabled", true);
+			        	} else {
+			        		console.log("Falhou!");
 			        	}
-			        	location.reload();
 			        	
 			        },
-			        success: function(data){ 
-						
+			        error: function(retorno){
+			        	console.log("Erro");
 			        }
+			 
 			    });
 			}
 		

@@ -1,11 +1,15 @@
 package dca0120.views;
 
 import java.io.IOException;
+
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 
 import dca0120.dao.PedidosDAO;
 import dca0120.model.Pedido;
@@ -18,6 +22,12 @@ public class AvancarEtapaServlet extends HttpServlet {
 	
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+    		throws ServletException, IOException {
+		
+    }
+
+	@Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
 		
 		HttpSession session = request.getSession(false);	
@@ -37,6 +47,7 @@ public class AvancarEtapaServlet extends HttpServlet {
 		}
 		
 		String idStr = request.getParameter("id");
+		
 		int id = Integer.parseInt(idStr);
 		
 		PedidosDAO pd = new PedidosDAO();
@@ -44,15 +55,19 @@ public class AvancarEtapaServlet extends HttpServlet {
 		ped.avancarStatus();
 		pd.alterarPedido(ped);
 		
-	    response.setContentType("text/text"); 
+
+		
+		JsonObject json = Json.createObjectBuilder()
+	                .add("statusCodigo", ped.getStatus().getCodigo())
+	                .add("statusDescricao", ped.getStatus().toString())
+	                .build();
+	         
+		
+		
+		response.setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(ped.getStatus().getCodigo());
-
-    }
-
-	@Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-    		throws ServletException, IOException {
+	    System.out.println(json.toString());
+		response.getWriter().write(json.toString());
 		
     }
 
