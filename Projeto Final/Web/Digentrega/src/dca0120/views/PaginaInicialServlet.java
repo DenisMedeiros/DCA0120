@@ -16,7 +16,7 @@ public class PaginaInicialServlet extends HttpServlet {
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
 		
 		
         request.getRequestDispatcher("/inicio.jsp").forward(request, response);
@@ -25,6 +25,8 @@ public class PaginaInicialServlet extends HttpServlet {
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String message = null;

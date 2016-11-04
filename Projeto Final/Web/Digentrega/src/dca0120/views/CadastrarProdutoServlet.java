@@ -31,6 +31,8 @@ public class CadastrarProdutoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
 		
+		request.setCharacterEncoding("UTF-8");
+		
 		HttpSession session = request.getSession(false);	
 		if(session == null) {
 			session = request.getSession(true);	
@@ -45,6 +47,8 @@ public class CadastrarProdutoServlet extends HttpServlet {
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession(false);	
 		if(session == null) {
@@ -64,8 +68,7 @@ public class CadastrarProdutoServlet extends HttpServlet {
 		
 		ProdutosDAO pd = new ProdutosDAO();
 		CaixasDAO cd = new CaixasDAO();
-
-	
+		
         String nome = request.getParameter("nome");
         String precoStr = request.getParameter("preco");
         String pesoStr = request.getParameter("peso");
@@ -73,10 +76,8 @@ public class CadastrarProdutoServlet extends HttpServlet {
         String quantidadeStr = request.getParameter("quantidade");
         String descricao = request.getParameter("descricao");
         
-        
         String precoFormatado = precoStr.replace("R$", "").replace(".", "").replace(",", ".");
         
-
         Part filePart = request.getPart("foto"); 
                
         String fileName = null;

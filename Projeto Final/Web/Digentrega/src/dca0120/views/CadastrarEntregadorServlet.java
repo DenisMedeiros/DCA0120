@@ -28,6 +28,8 @@ public class CadastrarEntregadorServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
 		
+		request.setCharacterEncoding("UTF-8");
+		
 		HttpSession session = request.getSession(false);	
 		if(session == null) {
 			session = request.getSession(true);	
@@ -50,6 +52,8 @@ public class CadastrarEntregadorServlet extends HttpServlet {
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession(false);	
 		if(session == null) {

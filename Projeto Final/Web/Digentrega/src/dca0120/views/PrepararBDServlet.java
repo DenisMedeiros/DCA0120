@@ -32,7 +32,7 @@ public class PrepararBDServlet extends HttpServlet {
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
 		// Cria todas as tabelas, caso não existam ainda.
 		
 		CaixasDAO cd = new CaixasDAO();
@@ -77,6 +77,7 @@ public class PrepararBDServlet extends HttpServlet {
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
     }
 
 } 

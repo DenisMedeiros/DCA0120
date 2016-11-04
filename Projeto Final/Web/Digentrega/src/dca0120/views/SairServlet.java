@@ -16,7 +16,7 @@ public class SairServlet extends HttpServlet {
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession(true);
 		
 		session.setAttribute("caixa", null);
@@ -30,6 +30,7 @@ public class SairServlet extends HttpServlet {
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
     }
 
 } 

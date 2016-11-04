@@ -18,7 +18,7 @@ private static final long serialVersionUID = -7552121270167541493L;
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession(false);	
 		if(session == null) {
 			session = request.getSession(true);	
@@ -48,7 +48,7 @@ private static final long serialVersionUID = -7552121270167541493L;
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
-		
+		request.setCharacterEncoding("UTF-8");
     }
 
 }

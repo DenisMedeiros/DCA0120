@@ -81,7 +81,7 @@ public class ProdutosDAO {
             }
             
             p.setId(id);
-			
+            			
 			CaixasGerenciamProdutosDAO cgpr = new CaixasGerenciamProdutosDAO();
 			cgpr.inserirCaixasGerenciamProdutos(p);
 		} catch (SQLException e) {
