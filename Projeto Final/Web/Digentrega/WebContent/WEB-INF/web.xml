@@ -198,5 +198,14 @@
     <servlet-name>AvancarEtapaServlet</servlet-name>
     <url-pattern>/avancar/pedido/*</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+    <servlet-name>CancelarEtapaServlet</servlet-name>
+    <servlet-class>dca0120.views.CancelarEtapaServlet</servlet-class>
+  </servlet> 
+  <servlet-mapping>
+    <servlet-name>CancelarEtapaServlet</servlet-name>
+    <url-pattern>/cancelar/pedido/*</url-pattern>
+	</servlet-mapping>
   
 </web-app>

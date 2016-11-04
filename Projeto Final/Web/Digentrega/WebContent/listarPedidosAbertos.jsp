@@ -74,12 +74,22 @@
 				        	  	<c:when test="${current.status.codigo eq 4}">
 					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});" disabled> Aguardando Entrega </button>
 				        	  	</c:when>
+				        	  	<c:when test="${current.status.codigo eq 6}">
+					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});" disabled> Cancelado </button>
+				        	  	</c:when>
 				        	  </c:choose>
 				        	  </td>
 				        	  <td align="center">
-				        	  	<a href="${pageContext.request.contextPath}/remover/produto/?id=${current.id}">
-				        	  		<button type="button" class="btn btn-danger"> Cancelar </button>
-				        	  	</a>
+<%-- 				        	  	<a href="${pageContext.request.contextPath}/cancelar/pedido/?id=${current.id}"> --%>
+				        	  		<c:choose>
+				        	  		<c:when test="${current.status.codigo eq 6}">
+				        	  			<button id="botaoCancelar_${current.id}" type="button" class="btn btn-danger" onclick="cancelarEtapa(${current.id});" disabled> Cancelar </button>
+				        	  		</c:when>
+				        	  		<c:otherwise>
+				        	  			<button id="botaoCancelar_${current.id}" type="button" class="btn btn-danger" onclick="cancelarEtapa(${current.id});"> Cancelar </button>
+				        	  		</c:otherwise>
+				        	  		</c:choose>
+<!-- 				        	  	</a> -->
 				        	  </td>
 					        </tr>
 				        
@@ -159,6 +169,38 @@
 			        		$("#botaoAvancar_" + pedidoID).text('Aguardando Entrega');
 			        		$("#status_" + pedidoID).text(retorno.statusDescricao);
 			        		$("#botaoAvancar_" + pedidoID).prop("disabled", true);
+			        	} else if (retorno.statusCodigo == 6){
+			        		$("#botaoAvancar_" + pedidoID).text('Cancelado');
+			        		$("#status_" + pedidoID).text(retorno.statusDescricao);
+			        		$("#botaoAvancar_" + pedidoID).prop("disabled", true);
+			        	} else {
+			        		console.log("Falhou!");
+			        	}
+			        	
+			        },
+			        error: function(retorno){
+			        	console.log("Erro");
+			        }
+			 
+			    });
+			}
+		
+		</script>
+		
+		<script>
+			function cancelarEtapa(pedidoID) {
+												
+			    $.ajax({
+			        url: "${pageContext.request.contextPath}/cancelar/pedido/?id=" + pedidoID,
+			        type: 'POST',
+			        async: false,
+			        cache: false,
+			        timeout: 30000,
+			        success: function(retorno){
+  			        	
+			        	if(retorno.statusCodigo == 6) {
+			        		$("#status_" + pedidoID).text(retorno.statusDescricao);
+			        		$("#botaoCancelar_" + pedidoID).prop("disabled", true);
 			        	} else {
 			        		console.log("Falhou!");
 			        	}
