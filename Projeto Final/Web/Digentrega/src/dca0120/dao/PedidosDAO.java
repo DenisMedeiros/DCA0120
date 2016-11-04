@@ -378,7 +378,11 @@ public class PedidosDAO {
 				}
 				Entregador ent;
 				EntregadoresDAO ents = new EntregadoresDAO();
-				ent = ents.getEntregadorWithID(res.getInt("EntregadorID"));
+				if(res.getInt("EntregadorID") != 0) { 
+					ent = ents.getEntregadorWithID(res.getInt("EntregadorID"));
+				}else {
+					ent = null;
+				}
 				
 				Calendar dataHoraEntrega = Calendar.getInstance(), dataHoraAbertura;
 				dataHoraEntrega.setTimeInMillis(res.getTimestamp("DataHoraEntrega").getTime());
@@ -406,7 +410,7 @@ public class PedidosDAO {
 	}
 	
 	/**
-	 * Retorna uma lista com todos os pedidos abertos
+	 * Retorna uma lista com todos os pedidos fechados
 	 * @return Lista com os objetos de tipo Pedido registrados no banco de dados
 	 */
 	public List<Pedido> getPedidosFechados() {
@@ -445,7 +449,11 @@ public class PedidosDAO {
 				}
 				Entregador ent;
 				EntregadoresDAO ents = new EntregadoresDAO();
-				ent = ents.getEntregadorWithID(res.getInt("EntregadorID"));
+				if(res.getInt("EntregadorID") != 0) { 
+					ent = ents.getEntregadorWithID(res.getInt("EntregadorID"));
+				}else {
+					ent = null;
+				}
 				
 				Calendar dataHoraEntrega = Calendar.getInstance(), dataHoraAbertura;
 				dataHoraEntrega.setTimeInMillis(res.getTimestamp("DataHoraEntrega").getTime());
@@ -475,8 +483,12 @@ public class PedidosDAO {
 	
 	
 	
+	/**
+	 * Testa se a tabela tem dados inseridos
+	 * @return true para tabela vazia, false para tabela com dados inseridos
+	 */
 	public boolean isEmpty() {
-		String sql = "SELECT * FROM Pedidos;";
+		String sql = "SELECT * FROM Pedidos";
 
 		try {
 			PreparedStatement pst = conexao.prepareStatement(sql);
@@ -528,11 +540,20 @@ public class PedidosDAO {
 		}
 	}
 	
+	/**
+	 * Alterar entregador no pedido informado
+	 * @param pedidoID identificador do pedido a ter entegador alterado
+	 * @param entregadorID identificador do entregador (por 0 para valor null)
+	 */
 	public void alterarEntregador(int pedidoID, int entregadorID) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement("UPDATE Pedidos SET EntregadorID=? WHERE ID=?");
 
-			pst.setInt(1, entregadorID);
+			if(entregadorID > 0) {
+				pst.setInt(1, entregadorID);
+			}else {
+				pst.setNull(1, Types.NULL);
+			}
 			pst.setInt(2, pedidoID);
 			
 			pst.executeUpdate();
@@ -540,6 +561,104 @@ public class PedidosDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Entregador getEntregador(Pedido p) {
+		Entregador e = null;
+		try {
+			PreparedStatement pst = conexao.prepareStatement("SELECT EntregadorID FROM Pedidos WHERE ID=?");
+
+			pst.setInt(1, p.getId());
+			
+			ResultSet res = pst.executeQuery();
+			
+			EntregadoresDAO ed = new EntregadoresDAO();
+			
+			if (res.wasNull()) {
+				return e;
+			}
+			if(res.next()) {
+				if(res.getInt("EntregadorID") != 0) { 
+					e = ed.getEntregadorWithID(res.getInt("EntregadorID"));
+				}
+			}
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		return e;
+	}
+	
+	public List<Pedido> getPedidosDoEntregador(int entregadorID) {
+		List<Pedido> lista = new ArrayList<Pedido>();
+		try {
+			PreparedStatement pst = conexao.prepareStatement("SELECT * FROM Pedidos WHERE EntregadorID=?");
+
+			pst.setInt(1, entregadorID);
+			
+			ResultSet res = pst.executeQuery();
+			
+			if (res.wasNull()) {
+				return lista;
+			}
+			
+			while (res.next()) {
+				Status status = Status.ABERTO;
+				switch (res.getInt("Status")) {
+				case 1:
+					status = Status.ABERTO;
+					break;
+				case 2:
+					status = Status.EM_PREPARO;
+					break;
+				case 3:
+					status = Status.AGUARDANDO_ENTREGADOR;
+					break;
+				case 4:
+					status = Status.EM_TRANSITO;
+					break;
+				case 5:
+					status = Status.ENTREGUE;
+					break;
+				case 6:
+					status = Status.CANCELADO;
+					break;
+				}
+				Entregador ent;
+				EntregadoresDAO ents = new EntregadoresDAO();
+				if(res.getInt("EntregadorID") != 0) { 
+					ent = ents.getEntregadorWithID(res.getInt("EntregadorID"));
+				}else {
+					ent = null;
+				}
+				
+				Calendar dataHoraEntrega = Calendar.getInstance(), dataHoraAbertura;
+				dataHoraEntrega.setTimeInMillis(res.getTimestamp("DataHoraEntrega").getTime());
+				CaixasGerenciamPedidosDAO cgp = new CaixasGerenciamPedidosDAO();
+				dataHoraAbertura = cgp.getDataHoraAbertura(res.getInt("ID"));
+				
+				EnderecosEntregaDAO endereco = new EnderecosEntregaDAO();
+				Endereco enderecoEntrega = endereco.getEnderecoEntrega(res.getInt("ID"));
+				
+				Pedido p = new Pedido(res.getInt("ID"), status, res.getString("Descricao"), ent, dataHoraAbertura,
+						dataHoraEntrega, enderecoEntrega);
+				
+				PedidosContemProdutosDAO pcp = new PedidosContemProdutosDAO();
+				List<Produto> lprod = pcp.getProdutosDoPedido(p);
+				for(Produto pr: lprod) {
+					p.addProduto(pr, pcp.getQuantidade(pr, p));
+				}
+				
+				lista.add(p);
+				
+			}
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
+		
+		return lista;
 	}
 	
 }

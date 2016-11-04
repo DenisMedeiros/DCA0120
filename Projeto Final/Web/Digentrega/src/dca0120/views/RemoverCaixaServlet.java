@@ -39,7 +39,7 @@ private static final long serialVersionUID = -7552121270167541493L;
 		try {
 			int id = Integer.parseInt(request.getParameter("id"));
 			if(cd.getCaixaWithID(id) != null) {
-				cd.removerCaixa(id);
+				cd.removerCaixa(id,administrador);
 			}  else {
 				response.sendRedirect(request.getContextPath());
 				return;

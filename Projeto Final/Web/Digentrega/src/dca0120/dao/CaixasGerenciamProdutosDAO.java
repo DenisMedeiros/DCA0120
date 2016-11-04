@@ -42,7 +42,7 @@ public final class CaixasGerenciamProdutosDAO {
 			String sql = "CREATE TABLE IF NOT EXISTS CaixasGerenciamProdutos (ProdutoID INTEGER NOT NULL, "
 					+ "CaixaID INTEGER NOT NULL, PRIMARY KEY (ProdutoID,CaixaID), "
 					+ "FOREIGN KEY (CaixaID) REFERENCES Caixas(FuncionarioID) ON DELETE CASCADE ON UPDATE CASCADE, "
-					+ "FOREIGN KEY (ProdutoID) REFERENCES Produtos(ID) ON DELETE CASCADE ON UPDATE CASCADE);";
+					+ "FOREIGN KEY (ProdutoID) REFERENCES Produtos(ID) ON DELETE CASCADE ON UPDATE CASCADE;";
 			st.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -59,7 +59,7 @@ public final class CaixasGerenciamProdutosDAO {
 	public void inserirCaixasGerenciamProdutos(Produto p) {
 		try {
 			PreparedStatement pst = conexao
-					.prepareStatement("INSERT INTO CaixasGerenciamProdutos(ProdutoID, CaixaID) VALUES (?, ?);");
+					.prepareStatement("INSERT INTO CaixasGerenciamProdutos(ProdutoID, CaixaID) VALUES (?, ?)");
 		
 			pst.setInt(1, p.getId());
 			pst.setInt(2, p.getResponsavelCadastro().getId());
@@ -80,7 +80,7 @@ public final class CaixasGerenciamProdutosDAO {
 		HashMap<Integer, Integer> m = new HashMap<Integer, Integer>();
 
 		try {
-			String sql = "SELECT * FROM CaixasGerenciamProdutos;";
+			String sql = "SELECT * FROM CaixasGerenciamProdutos";
 
 			PreparedStatement pst = conexao.prepareStatement(sql);
 			ResultSet res = pst.executeQuery();
@@ -121,7 +121,7 @@ public final class CaixasGerenciamProdutosDAO {
 	}
 	
 	public boolean isEmpty() {
-		String sql = "SELECT * FROM CaixasGerenciamProdutos;";
+		String sql = "SELECT * FROM CaixasGerenciamProdutos";
 
 		try {
 			PreparedStatement pst = conexao.prepareStatement(sql);
@@ -180,13 +180,28 @@ public final class CaixasGerenciamProdutosDAO {
 		}
 	}
 	
-	public void alterarCaixa(int caixaID, int produtoID) {
+	public void alterarCaixaDoProduto(int caixaID, int produtoID) {
 		try {
 			PreparedStatement pst = conexao
-					.prepareStatement("UPDATE CaixasGerenciamProdutos SET CaixaID=? WHERE ProdutoID=?)");
+					.prepareStatement("UPDATE CaixasGerenciamProdutos SET CaixaID=? WHERE ProdutoID=?");
 		
 			pst.setInt(1, caixaID);
 			pst.setInt(2, produtoID);
+
+
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void alterarCaixa(int caixaIdOld, int caixaIdNew) {
+		try {
+			PreparedStatement pst = conexao
+					.prepareStatement("UPDATE CaixasGerenciamProdutos SET CaixaID=? WHERE CaixaID=?");
+		
+			pst.setInt(1, caixaIdNew);
+			pst.setInt(2, caixaIdOld);
 
 
 			pst.executeUpdate();
