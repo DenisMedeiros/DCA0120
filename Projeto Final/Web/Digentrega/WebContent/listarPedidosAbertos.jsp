@@ -10,6 +10,8 @@
 	<jsp:attribute name="cabecalhoExtra">   
 		<%-- Mais arquivos CSS e Javascript aqui. --%>
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/formulario.css">
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/dataTables.bootstrap.min.css">
+		
 	</jsp:attribute>
 
 
@@ -27,7 +29,7 @@
            		<p class="text-center"> Nenhum produto cadastrado ainda. </p>
            </c:if>
            <c:if test="${requestScope.pedidos ne null}">
-			<table class="table table-striped table-bordered table-hover"> 
+			<table id="tabelaPedidosAbertos" class="table table-striped table-bordered table-hover"> 
 				<thead>
 			      <tr>
 			      	<th>Prioridade</th>
@@ -128,7 +130,8 @@
     
         
 	<jsp:attribute name="rodapeExtra">  
-	
+		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/dataTables.bootstrap.min.js "></script>
 		<script>
 			function avancarEtapa(pedidoID) {
 			    $.ajax({
@@ -152,6 +155,13 @@
 			    });
 			}
 		
+		</script>
+		<script>
+			$("#tabelaPedidosAbertos").DataTable( {
+				"language": {
+		            "url": "${pageContext.request.contextPath}/static/js/datatable/pt-br.json",
+		        }
+			});
 		</script>
 		
 	</jsp:attribute>

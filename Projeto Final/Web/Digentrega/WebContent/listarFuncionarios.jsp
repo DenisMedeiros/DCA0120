@@ -27,7 +27,7 @@
            		<p class="text-center"> Nenhum caixa cadastrado ainda. </p>
            </c:if>
            <c:if test="${requestScope.caixas ne null}">
-			<table class="table table-striped table-bordered table-hover"> 
+			<table id="tabelaCaixas" class="table table-striped table-bordered table-hover"> 
 				<thead>
 			      <tr>
 			        <th>Nome</th>
@@ -67,7 +67,7 @@
            		<p class="text-center"> Nenhum entregador cadastrado ainda. </p>
            </c:if>
 			<c:if test="${requestScope.entregadores ne null}">
-				<table class="table table-striped table-bordered table-hover"> 
+				<table id="tabelaEntregadores" class="table table-striped table-bordered table-hover"> 
 					<thead>
 				      <tr>
 				        <th>Nome</th>
@@ -106,7 +106,21 @@
     
         
 	<jsp:attribute name="rodapeExtra">  
+		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/dataTables.bootstrap.min.js "></script>
 		
+		<script>
+			$("#tabelaCaixas").DataTable( {
+				"language": {
+		            "url": "${pageContext.request.contextPath}/static/js/datatable/pt-br.json",
+		        }
+			});
+			$("#tabelaEntregadores").DataTable( {
+				"language": {
+		            "url": "${pageContext.request.contextPath}/static/js/datatable/pt-br.json",
+		        }
+			});
+		</script>
 	</jsp:attribute>
 	
 </template:base>
