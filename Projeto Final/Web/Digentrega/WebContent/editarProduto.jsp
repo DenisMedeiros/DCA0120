@@ -92,14 +92,14 @@
 					</div>
 				</div>
 				
+				
 				<div class="form-group">
-					<label for="foto" class="cols-sm-2 control-label">Foto do produto</label>
+					<label for="foto" class="control-label">Foto do produto</label>
 					<div class="cols-sm-10">
 						<p> <a href="#" data-toggle="modal" data-target="#modalFoto"> Foto atual </a> </p>
-						<label class="btn btn-primary btn-lg btn-file">
-						   Selecionar foto <input type="file" id="foto" name="foto" style="display: none;">
-						</label>
+						<input type="file" id="foto" name="foto">
 					</div>
+					<span class="mensagem-ajuda"></span>
 				</div>
 				
 
@@ -140,8 +140,9 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/parsley.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/i18n/pt-br.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery.maskedinput.min.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery.maskMoney.min.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap-filestyle.min.js"></script>
 
-		
 		<script>
 		$(document).ready(function(){
 			
@@ -159,6 +160,18 @@
 		});
 		
 		</script>
+		
+		<script>
+
+		 $('#preco').maskMoney();
+		 $("#peso").mask("9?9999");
+		 $("#volume").mask("9?9999");
+		 $("#quantidade").mask("9?9999");
+		 
+		 $("#foto").filestyle({buttonText: "Foto", buttonBefore: true, placeholder: "Nenhuma arquivo", size: "lg"});
+		 
+		</script>
+		
 		
 				
 	</jsp:attribute>

@@ -73,6 +73,10 @@ public class CadastrarProdutoServlet extends HttpServlet {
         String quantidadeStr = request.getParameter("quantidade");
         String descricao = request.getParameter("descricao");
         
+        
+        String precoFormatado = precoStr.replace("R$", "").replace(".", "").replace(",", ".");
+        
+
         Part filePart = request.getPart("foto"); 
                
         String fileName = null;
@@ -118,7 +122,7 @@ public class CadastrarProdutoServlet extends HttpServlet {
         }
         	
         
-        float preco = Float.parseFloat(precoStr);
+        float preco = Float.parseFloat(precoFormatado);
         float peso = Float.parseFloat(pesoStr);
         float volume = Float.parseFloat(volumeStr);
         int quantidade = Integer.parseInt(quantidadeStr);

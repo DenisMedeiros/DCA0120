@@ -40,7 +40,7 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="preco" id="preco"  placeholder="Apenas números (em R$)" data-parsley-required  />
+							<input type="text" class="form-control" name="preco" id="preco"  placeholder="Apenas números (em R$)" data-parsley-required data-affixes-stay="true" data-prefix="R$ " data-thousands="." data-decimal=","  />
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>
@@ -91,16 +91,15 @@
 					</div>
 				</div>
 				
+				
 				<div class="form-group">
-					<label for="foto" class="cols-sm-2 control-label">Foto do produto</label>
+					<label for="foto" class="control-label">Foto do produto</label>
 					<div class="cols-sm-10">
-						<label class="btn btn-primary btn-lg btn-file">
-						   Selecionar foto <input type="file" id="foto" name="foto" style="display: none;">
-						</label>
+						<input type="file" id="foto" name="foto" data-parsley-required>
 					</div>
+					<span class="mensagem-ajuda"></span>
 				</div>
 				
-
 				
 				<div class="form-group ">
 					<button type="submit" class="btn btn-primary btn-lg btn-block login-button">Cadastrar</button>
@@ -115,8 +114,10 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/parsley.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/i18n/pt-br.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery.maskedinput.min.js"></script>
-
+		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery.maskMoney.min.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/bootstrap-filestyle.min.js"></script>
 		
+
 		<script>
 		$(document).ready(function(){
 			
@@ -136,10 +137,14 @@
 		</script>
 		
 		<script>
-		 $("#preco").mask("9?999");
-		 $("#peso").mask("9?999");
-		 $("#volume").mask("9?999");
-		 $("#quantidade").mask("9?999");
+
+		 $('#preco').maskMoney();
+		 $("#peso").mask("9?9999");
+		 $("#volume").mask("9?9999");
+		 $("#quantidade").mask("9?9999");
+		 
+		 $("#foto").filestyle({buttonText: "Foto", buttonBefore: true, placeholder: "Nenhuma arquivo", size: "lg"});
+		 
 		</script>
 		
 				

@@ -1,0 +1,1 @@
+Diretório com as fotos dos produtos.
