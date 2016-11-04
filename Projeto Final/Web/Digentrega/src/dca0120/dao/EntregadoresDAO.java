@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import dca0120.model.Entregador;
+import dca0120.model.Pedido;
 
 /**
  * @author ney
@@ -212,6 +213,12 @@ public class EntregadoresDAO extends FuncionariosDAO {
 		TelefonesDAO td = new TelefonesDAO();
 		
 		td.removerTelefones(id);
+		
+		PedidosDAO pd = new PedidosDAO();
+		List<Pedido> lista = pd.getPedidosDoEntregador(id);
+		for(Pedido p: lista) {
+			pd.alterarEntregador(p.getId(), 0);
+		}
 		
 		try {
 

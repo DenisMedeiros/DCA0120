@@ -204,6 +204,7 @@ public class CaixasDAO extends FuncionariosDAO {
 		return true;
 	}
 
+	@Deprecated
 	public void removerCaixa(int id) {
 		TelefonesDAO td = new TelefonesDAO();
 		
@@ -214,6 +215,34 @@ public class CaixasDAO extends FuncionariosDAO {
 		
 		CaixasGerenciamPedidosDAO gcpe = new CaixasGerenciamPedidosDAO();
 		gcpe.removerCaixas(id);
+		try {
+
+			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Caixas WHERE FuncionarioID=?");
+			
+			pst.setInt(1, id);
+
+			pst.executeUpdate();
+			System.out.println("caixa");
+			
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		this.removerFuncionario(id);
+	}
+	
+	public void removerCaixa(int id, int admID) {
+		TelefonesDAO td = new TelefonesDAO();
+		
+		td.removerTelefones(id);
+		
+		CaixasGerenciamProdutosDAO gcpr = new CaixasGerenciamProdutosDAO();
+		gcpr.alterarCaixa(id, admID);
+		
+		CaixasGerenciamPedidosDAO gcpe = new CaixasGerenciamPedidosDAO();
+		gcpe.alterarCaixas(id, admID);
+		
 		try {
 
 			PreparedStatement pst = conexao.prepareStatement("DELETE FROM Caixas WHERE FuncionarioID=?");

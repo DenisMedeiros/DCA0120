@@ -171,13 +171,43 @@ public final class CaixasGerenciamPedidosDAO {
 		}
 	}
 	
-	public void alterarCaixas(Pedido p, int caixaID) {
+	public void alterarCaixaDoPedido(Pedido p, int caixaID) {
 		try {
 			PreparedStatement pst = conexao.prepareStatement(
-					"Update CaixasGerenciamPedidos SET Caixa=? WHERE PedidoID=?");
+					"Update CaixasGerenciamPedidos SET CaixaID=? WHERE PedidoID=?");
 
 			pst.setInt(1, caixaID);
 			pst.setInt(2, p.getId());
+			
+
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void alterarPedidoDoCaixa(Pedido p, int caixaID) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement(
+					"Update CaixasGerenciamPedidos SET PedidoID=? WHERE CaixaID=?");
+
+			pst.setInt(1, p.getId());
+			pst.setInt(2, caixaID);
+			
+
+			pst.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void alterarCaixas(int caixaIdOld, int caixaIdNew) {
+		try {
+			PreparedStatement pst = conexao.prepareStatement(
+					"Update CaixasGerenciamPedidos SET CaixaID=? WHERE CaixaID=?");
+
+			pst.setInt(1, caixaIdNew);
+			pst.setInt(2, caixaIdOld);
 			
 
 			pst.executeUpdate();
