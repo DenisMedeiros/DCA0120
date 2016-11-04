@@ -25,7 +25,6 @@
               		<hr />
               	</div>
            </div>
-           <h3 class="text-center"> Produtos </h3>
            <c:if test="${requestScope.produtos eq null}">
            		<p class="text-center"> Nenhum produto cadastrado ainda. </p>
            </c:if>

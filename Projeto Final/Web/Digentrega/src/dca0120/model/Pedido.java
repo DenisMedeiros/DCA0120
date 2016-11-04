@@ -1,5 +1,6 @@
 package dca0120.model;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -236,6 +237,18 @@ public class Pedido {
 		}
 	}
 	
+	public String getEntregadorFormatado() {
+		if(entregador != null) {
+			return entregador.getNome();
+		}
+		
+		return "Sem entregador";
+	}
+	
 
-
+	public String getValorTotalFormatado() {
+		NumberFormat formatter = NumberFormat.getCurrencyInstance();
+		String valorFormatado = formatter.format(valorTotal);
+		return valorFormatado;
+	}
 }

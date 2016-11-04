@@ -84,19 +84,19 @@
 			<div class="form-group row">
 			          <div class="col-sm-4">
 			          	<div class="input-group">
-			           	<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"> Preco Total </i></span>
+			           	<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"> Preco Total (R$) </i></span>
 			               <input type="text" class="form-control" id="precoTotal" name="precoTotal" value="0" readonly>
 			           </div>
 			       </div>
 			          <div class="col-sm-4">
 			          	<div class="input-group">
-			           	<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"> Peso Total</i></span>
+			           	<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"> Peso Total (g) </i></span>
 			               <input type="text" class="form-control" id="pesoTotal" name="pesoTotal" value="0" readonly>
 			              </div>
 			          </div>
 			         <div class="col-sm-4">
 			          	<div class="input-group">
-			           	<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"> Volume Total</i></span>
+			           	<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"> Volume Total (l)</i></span>
 			               <input type="text" class="form-control" id="volumeTotal" name="volumeTotal" value="0" readonly>
 			              </div>
 			          </div>
@@ -105,9 +105,9 @@
 			    <label class="cols-sm-2 control-label"> Tempo Estimado Para Entrega</label>
 				<div class="input-group">	
 				    <span class="input-group-addon" title="* Price" id="priceLabel"></span>
-				    <input type="text" id="tempo" name="tempo" class="form-control" placeholder="Tempo em minutos" required>
+				    <input type="text" id="tempo" name="tempo" class="form-control" placeholder="Tempo em minutos" required value="60">
 				    <!-- insert this line -->
-				    <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+				    <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;" ></span>
 				</div>
 				<span class="mensagem-ajuda"></span>
 				
@@ -136,14 +136,14 @@
 			                <div class="col-sm-6">
 			                	<div class="input-group">
 				                	<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"> Latitude </i></span>
-				                    <input type="text" class="form-control" id="latitude" name="latitude" value="0" data-parsley-latitude>
+				                    <input type="text" class="form-control" id="latitude" name="latitude" required data-parsley-latitude>
 				                </div>
 				                <span class="mensagem-ajuda"></span>
 				            </div>
 			                <div class="col-sm-6">
 			                	<div class="input-group">
 				                	<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"> Longitude</i></span>
-				                    <input type="text" class="form-control" id="longitude" name="latitude" value="0" data-parsley-longitude>
+				                    <input type="text" class="form-control" id="longitude" name="latitude" required data-parsley-longitude>
 			                    </div>
 			                    <span class="mensagem-ajuda"></span>
 			                </div>
@@ -214,6 +214,8 @@
 				var pesoFinal = pesoTotal - quantidade *  produtos[id].peso;
 				var volumeFinal = volumeTotal - quantidade *  produtos[id].volume;
 				
+				precoFinal = Math.round(precoFinal * 100) / 100;
+				
 				$("#precoTotal").val(precoFinal);
 				$("#pesoTotal").val(pesoFinal);
 				$("#volumeTotal").val(volumeFinal);
@@ -282,6 +284,8 @@
 			var pesoFinal = pesoTotal + quantidade *  produtos[id].peso;
 			var volumeFinal = volumeTotal + quantidade *  produtos[id].volume;
 			
+			precoFinal = Math.round(precoFinal * 100) / 100;
+			
 			$("#precoTotal").val(precoFinal);
 			$("#pesoTotal").val(pesoFinal);
 			$("#volumeTotal").val(volumeFinal);
@@ -328,6 +332,11 @@
 		
 		window.Parsley.addValidator('latitude', {
 			  validateString: function(value) {	  
+				  
+				  if(!value || 0 === value.length) {
+					  return false;
+				  }
+				  
 				  var re = new RegExp("^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$");
 				  if (re.test(value)) {
 				      return true;
@@ -339,7 +348,12 @@
 		
 		
 		window.Parsley.addValidator('longitude', {
-			  validateString: function(value) {	  
+			validateString: function(value) {	
+				
+				  if(!value || 0 === value.length) {
+					  return false;
+				  }
+				
 				  var re = new RegExp("^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$");
 				  if (re.test(value)) {
 				      return true;
