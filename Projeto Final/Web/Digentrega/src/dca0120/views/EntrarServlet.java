@@ -32,8 +32,11 @@ public class EntrarServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession(true);
 		
-        String cpf = request.getParameter("cpf");
+        String cpfStr = request.getParameter("cpf");
         String senha = request.getParameter("senha");
+        
+        // Transforma o CPF em números apenas.
+        String cpf = cpfStr.replace(".", "").replace("-", "");
         
         CaixasDAO cd = new CaixasDAO();
         EntregadoresDAO ed = new EntregadoresDAO();
