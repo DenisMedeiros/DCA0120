@@ -83,10 +83,10 @@
 <%-- 				        	  	<a href="${pageContext.request.contextPath}/cancelar/pedido/?id=${current.id}"> --%>
 				        	  		<c:choose>
 				        	  		<c:when test="${current.status.codigo eq 6}">
-				        	  			<button id="botaoCancelar_${current.id}" type="button" class="btn btn-danger" onclick="cancelarEtapa(${current.id});" disabled> Cancelar </button>
+				        	  			<button id="botaoCancelar_${current.id}" type="button" class="btn btn-danger" onclick="cancelarPedido(${current.id});" disabled> Cancelar </button>
 				        	  		</c:when>
 				        	  		<c:otherwise>
-				        	  			<button id="botaoCancelar_${current.id}" type="button" class="btn btn-danger" onclick="cancelarEtapa(${current.id});"> Cancelar </button>
+				        	  			<button id="botaoCancelar_${current.id}" type="button" class="btn btn-danger" onclick="cancelarPedido(${current.id});"> Cancelar </button>
 				        	  		</c:otherwise>
 				        	  		</c:choose>
 <!-- 				        	  	</a> -->
@@ -188,29 +188,37 @@
 		</script>
 		
 		<script>
-			function cancelarEtapa(pedidoID) {
+			function cancelarPedido(pedidoID) {
+
+			    var resposta = confirm("Você realmente deseja cancelar este pedido?");
+			   
+			    if (resposta == true) {
+			    	
+				    $.ajax({
+				        url: "${pageContext.request.contextPath}/cancelar/pedido/?id=" + pedidoID,
+				        type: 'POST',
+				        async: false,
+				        cache: false,
+				        timeout: 30000,
+				        success: function(retorno){
+	  			        	
+				        	if(retorno.statusCodigo == 6) {
+				        		$("#status_" + pedidoID).text(retorno.statusDescricao);
+				        		$("#botaoCancelar_" + pedidoID).prop("disabled", true);
+				        	} else {
+				        		console.log("Falhou!");
+				        	}
+				        	
+				        },
+				        error: function(retorno){
+				        	console.log("Erro");
+				        }
+				 
+				    });
+
+			    } 
 												
-			    $.ajax({
-			        url: "${pageContext.request.contextPath}/cancelar/pedido/?id=" + pedidoID,
-			        type: 'POST',
-			        async: false,
-			        cache: false,
-			        timeout: 30000,
-			        success: function(retorno){
-  			        	
-			        	if(retorno.statusCodigo == 6) {
-			        		$("#status_" + pedidoID).text(retorno.statusDescricao);
-			        		$("#botaoCancelar_" + pedidoID).prop("disabled", true);
-			        	} else {
-			        		console.log("Falhou!");
-			        	}
-			        	
-			        },
-			        error: function(retorno){
-			        	console.log("Erro");
-			        }
-			 
-			    });
+
 			}
 		
 		</script>
@@ -263,17 +271,16 @@
 			    });
 			    
 			    $("#qdCodeModal_"+ id).modal('show');
-			}
-		    
-			
-		    
+			} 
 		}
-
-
 		</script>
 		
-		
-		
+		<script>
+			$(".remover").on("click", function(e) {
+				var link = this;
+
+			});
+		</script>
 		
 		
 	</jsp:attribute>

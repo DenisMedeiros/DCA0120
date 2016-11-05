@@ -61,7 +61,7 @@
 					          	</a>
 					          </td>
 				        	  <td align="center">
-				        	  	<a href="${pageContext.request.contextPath}/remover/produto/?id=${current.id}">
+				        	  	<a class="remover" href="${pageContext.request.contextPath}/remover/produto/?id=${current.id}">
 				        	  		<button type="button" class="btn btn-danger"> Remover </button>
 				        	  	</a>
 				        	  </td>
@@ -110,6 +110,18 @@
 				"language": {
 		            "url": "${pageContext.request.contextPath}/static/js/datatable/pt-br.json",
 		        }
+			});
+		</script>
+		
+		<script>
+			$(".remover").on("click", function(e) {
+				var link = this;
+			    e.preventDefault();
+			    var resposta = confirm("Você realmente deseja cancelar este produto?");
+			   
+			    if (resposta == true) {
+			    	window.location = link.href;
+			    } 
 			});
 		</script>
 	</jsp:attribute>
