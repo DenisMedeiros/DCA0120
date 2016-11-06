@@ -66,7 +66,7 @@ public class EntregadoresDAO extends FuncionariosDAO {
 
 			pst.setInt(1, this.getID(e.getCpf()));
 			pst.setString(2, e.getCnh());
-			pst.setNString(3, e.getPlacaVeiculo());
+			pst.setNString(3, e.getPlaca());
 
 			pst.executeUpdate();
 
@@ -256,7 +256,7 @@ public class EntregadoresDAO extends FuncionariosDAO {
 					.prepareStatement("UPDATE Entregadores SET CNH=?, Placa=? WHERE FuncionarioID=?");
 
 			pst.setString(1, e.getCnh());
-			pst.setString(2, e.getPlacaVeiculo());
+			pst.setString(2, e.getPlaca());
 			pst.setInt(3, e.getId());
 
 			pst.executeUpdate();

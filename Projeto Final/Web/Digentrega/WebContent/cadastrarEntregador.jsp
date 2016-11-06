@@ -91,7 +91,32 @@
 						<span class="glyphicon glyphicon-plus"></span> Adicionar outro</button>
 				</div>
 
-
+				<div class="form-group">
+					<label for="email" class="cols-sm-2 control-label">CNH</label>
+					<div class="cols-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-user fa"
+								aria-hidden="true"></i></span>
+							<input type="text" class="form-control" name="cnh" id="cnh"
+								maxlength="10" placeholder="Informe CNH" data-parsley-required />
+						</div>
+						<span class="mensagem-ajuda"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="placa" class="cols-sm-2 control-label">Placa</label>
+					<div class="cols-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-user fa"
+								aria-hidden="true"></i></span>
+							<input type="text" class="form-control" name="placa" id="placa"
+								placeholder="AAA0000" maxlength="7" data-parsley-required />
+						</div>
+						<span class="mensagem-ajuda"></span>
+					</div>
+				</div>
+				
 				<div class="form-group">
 					<label for="password" class="cols-sm-2 control-label">Senha</label>
 					<div class="cols-sm-10">
@@ -115,32 +140,6 @@
 							<input type="password" class="form-control" name="senha2"
 								id="senha2" maxlength="64" placeholder="Confirme sua senha"
 								data-parsley-required data-parsley-equalto="#senha1" />
-						</div>
-						<span class="mensagem-ajuda"></span>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="email" class="cols-sm-2 control-label">CNH</label>
-					<div class="cols-sm-10">
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-user fa"
-								aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="cnh" id="cnh"
-								maxlength="10" placeholder="Informe CNH" data-parsley-required />
-						</div>
-						<span class="mensagem-ajuda"></span>
-					</div>
-				</div>
-				
-				<div class="form-group">
-					<label for="placa" class="cols-sm-2 control-label">Placa</label>
-					<div class="cols-sm-10">
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-user fa"
-								aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="placa" id="placa"
-								placeholder="AAA0000" maxlength="7" data-parsley-required />
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>

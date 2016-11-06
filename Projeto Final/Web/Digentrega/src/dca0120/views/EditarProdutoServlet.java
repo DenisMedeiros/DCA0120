@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
+import java.util.Enumeration;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.ServletException;
@@ -79,6 +80,10 @@ public class EditarProdutoServlet extends HttpServlet {
 	     	session.setAttribute("mensagem", "Apenas o caixa pode cadastrar produtos.");
         	response.sendRedirect(request.getContextPath());
         	return;
+		}
+		
+		for(Enumeration<String> e = request.getParameterNames(); e.hasMoreElements();) {
+			System.out.println("postEditParam: "+e.nextElement());
 		}
 		int id = Integer.parseInt(request.getParameter("id"));
 		ProdutosDAO pd = new ProdutosDAO();

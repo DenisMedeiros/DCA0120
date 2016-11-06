@@ -1,6 +1,7 @@
 package dca0120.views;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -10,8 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dca0120.dao.PedidosContemProdutosDAO;
 import dca0120.dao.PedidosDAO;
+import dca0120.dao.ProdutosDAO;
 import dca0120.model.Pedido;
+import dca0120.model.Produto;
 
 public class CancelarEtapaServlet extends HttpServlet {
 
@@ -51,6 +55,17 @@ private static final long serialVersionUID = -7552121270167541493L;
 		PedidosDAO pd = new PedidosDAO();
 		Pedido ped = pd.getPedidoWithID(id);
 		ped.setStatus(Pedido.Status.CANCELADO);
+		pd.alterarPedido(ped);
+		PedidosContemProdutosDAO pcp = new PedidosContemProdutosDAO();
+		ProdutosDAO prodDAO = new ProdutosDAO();
+		List<Produto> lista = pcp.getProdutosDoPedido(ped);
+		for(Produto prod: lista) {	
+			ped.removerProduto(prod, ped.getQuantidadeProduto(prod));
+			prod.setQuantidadeEstoque(prod.getQuantidadeEstoque() + ped.getQuantidadeProduto(prod));
+			prodDAO.alterarEstoque(prod);
+			pcp.alterarQuantidade(prod, ped);
+			
+		}
 		pd.alterarPedido(ped);
 		
 

@@ -24,7 +24,7 @@ public class Entregador extends Funcionario {
 		this.cnh = cnh;
 	}
 
-	public String getPlacaVeiculo() {
+	public String getPlaca() {
 		return placaVeiculo;
 	}
 

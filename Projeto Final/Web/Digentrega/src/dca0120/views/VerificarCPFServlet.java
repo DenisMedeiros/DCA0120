@@ -1,6 +1,7 @@
 package dca0120.views;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,7 @@ public class VerificarCPFServlet extends HttpServlet {
 		
 		// Verifica se o usuário que quer acessar esta função é o administrador.
 		Integer administrador = (Integer) session.getAttribute("administrador");
+		
 		if(administrador == null) {
 	     	session.setAttribute("mensagem", "Apenas o administrador pode cadastrar funcionários.");
         	response.sendRedirect(request.getContextPath());
@@ -37,12 +39,18 @@ public class VerificarCPFServlet extends HttpServlet {
 		
 		CaixasDAO cd = new CaixasDAO();
 		String cpf = request.getParameter("cpf");
+		int id = Integer.parseInt(request.getParameter("id"));
+		
+		System.out.println("1getVCPFr: " + request.getParameter("id"));
+		System.out.println("2getVCPFr: " + cd.getID(cpf));
 		
 	    response.setContentType("text/text"); 
 	    response.setCharacterEncoding("UTF-8");
-		if (cd.getID(cpf) != -1) {
+		if (cd.getID(cpf) != -1 && cd.getID(cpf) != id) {
+			System.out.println("1");
 		    response.getWriter().write('1');
 		} else {
+			System.out.println("0");
 			response.getWriter().write('0');
 		}
     }
