@@ -41,16 +41,11 @@ public class VerificarCPFServlet extends HttpServlet {
 		String cpf = request.getParameter("cpf");
 		int id = Integer.parseInt(request.getParameter("id"));
 		
-		System.out.println("1getVCPFr: " + request.getParameter("id"));
-		System.out.println("2getVCPFr: " + cd.getID(cpf));
-		
 	    response.setContentType("text/text"); 
 	    response.setCharacterEncoding("UTF-8");
 		if (cd.getID(cpf) != -1 && cd.getID(cpf) != id) {
-			System.out.println("1");
 		    response.getWriter().write('1');
 		} else {
-			System.out.println("0");
 			response.getWriter().write('0');
 		}
     }

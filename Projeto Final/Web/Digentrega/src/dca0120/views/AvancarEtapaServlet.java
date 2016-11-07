@@ -66,7 +66,6 @@ public class AvancarEtapaServlet extends HttpServlet {
 		
 		response.setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");
-	    System.out.println(json.toString());
 		response.getWriter().write(json.toString());
 		
     }

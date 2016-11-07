@@ -79,7 +79,6 @@ private static final long serialVersionUID = -7552121270167541493L;
 		
 		response.setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");
-	    System.out.println(json.toString());
 		response.getWriter().write(json.toString());
 		
     }

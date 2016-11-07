@@ -261,7 +261,9 @@ public class PedidosDAO {
 				PedidosContemProdutosDAO pcp = new PedidosContemProdutosDAO();
 				List<Produto> lprod = pcp.getProdutosDoPedido(p);
 				for(Produto pr: lprod) {
-					p.addProduto(pr, pcp.getQuantidade(pr, p));
+					if(pcp.getQuantidade(pr, p) != -1) {
+						p.addProduto(pr, pcp.getQuantidade(pr, p));
+					}
 				}
 			}
 

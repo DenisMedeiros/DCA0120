@@ -105,7 +105,7 @@
 				</div>
 				
 				<div class="form-group">
-					<label for="placa" class="cols-sm-2 control-label">Placa</label>
+					<label for="placa" class="cols-sm-2 control-label">Placa do Veículo</label>
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-user fa"

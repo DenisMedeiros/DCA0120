@@ -47,17 +47,10 @@ public class EntrarServlet extends HttpServlet {
         
         Caixa c = cd.getCaixaWithCPF(cpf);
         Entregador e = ed.getEntregadorWithCpf(cpf);
-        
-        if(c == null && e == null) { // Não existe funcionário com este CPF.
-        	session.setAttribute("mensagem", "Falha de autenticação: CPF e/ou senha incorretos.");
-        	response.sendRedirect(request.getContextPath() + "/entrar/");
-        	return;
-        }
-        
-        String senhaCriptografada = Hashing.plainToSHA256(senha, c.getCpf().getBytes());
-       
-        
+               
         if(c != null) {
+        	
+        	String senhaCriptografada = Hashing.plainToSHA256(senha, c.getCpf().getBytes());
 
 	        if(c.getSenha().equals(senhaCriptografada)) { // Verifica se é um Caixa.
 	        		        	
@@ -75,15 +68,19 @@ public class EntrarServlet extends HttpServlet {
         } 
         
         if (e != null) { // Se e != null
+        	
+        	String senhaCriptografada = Hashing.plainToSHA256(senha, e.getCpf().getBytes());
+        	
         	if (e.getSenha().equals(senhaCriptografada)) {  // Verifica se é um Entregador.
-        		session.setAttribute("entregador", c.getId());
+        		session.setAttribute("entregador", e.getId());
 			    session.setAttribute("mensagem", "Entregador logado com sucesso!");
 			    response.sendRedirect(request.getContextPath());
 			    return;
         	}
         }
-        	
-		// Se chegou até aqui, é porque a senha está errada.
+        
+		// Se chegou até aqui, é porque a senha está errada ou o funcionário não existe.
+    	session.setAttribute("mensagem", "Falha de autenticação: CPF e/ou senha incorretos.");
         response.sendRedirect(request.getContextPath() + "/entrar");
 	}
 
