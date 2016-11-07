@@ -176,7 +176,7 @@ public class EditarEntregadorServlet extends HttpServlet {
         // Insere-o no BD.
         ed.alterarEntregador(original, administrador);
         
-        session.setAttribute("mensagem", "Caixa editado com sucesso!");
+        session.setAttribute("mensagem", "Entregador editado com sucesso!");
 		response.sendRedirect(request.getContextPath());
 	}
 

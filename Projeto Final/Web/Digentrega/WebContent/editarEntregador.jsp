@@ -113,7 +113,7 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-							<input type="password" class="form-control" name="senha1" id="senha1" maxlength="64" placeholder="Senha" data-parsley-required/>
+							<input type="password" class="form-control" name="senha1" id="senha1" maxlength="64" placeholder="Senha" />
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>
@@ -124,7 +124,7 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-							<input type="password" class="form-control" name="senha2" id="senha2" maxlength="64"  placeholder="Confirme sua senha" data-parsley-required/>
+							<input type="password" class="form-control" name="senha2" id="senha2" maxlength="64"  placeholder="Confirme sua senha" />
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>

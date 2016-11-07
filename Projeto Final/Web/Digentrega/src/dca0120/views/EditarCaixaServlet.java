@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Enumeration;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -91,12 +90,6 @@ public class EditarCaixaServlet extends HttpServlet {
 			return;
 		}
 		
-		for(Enumeration<String> e = request.getParameterNames(); e.hasMoreElements();) {
-			System.out.println("postEditParam: "+e.nextElement());
-		}
-		for(Enumeration<String> e = request.getAttributeNames(); e.hasMoreElements();) {
-			System.out.println("postEditAttr: "+e.nextElement());
-		}
 		int id = Integer.parseInt(request.getParameter("id"));
 		CaixasDAO cd = new CaixasDAO();
 		Caixa original = cd.getCaixaWithID(id);
@@ -121,7 +114,6 @@ public class EditarCaixaServlet extends HttpServlet {
             
             if(cpf != original.getCpf()) {
 	            // Valida o CPF.
-            	System.out.println("PostEdit:cpf");
 	            if(!ValidadorCPF.isValidCPF(cpf)) {
 	            	session.setAttribute("mensagem", "CPF inválido! Tente novamente.");
 	                response.sendRedirect(request.getHeader("referer"));
@@ -132,6 +124,7 @@ public class EditarCaixaServlet extends HttpServlet {
             original.setCpf(cpf);
         }
         
+        // Altere a senha somente se ela foi, de fato, alterada.
         if(!senha1.trim().isEmpty()) {
         	// Verifica se as senhas são iguais.
             if(!senha1.equals(senha2)) {

@@ -62,7 +62,7 @@
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-							<input type="text" class="form-control" name="volume" id="volume"  placeholder="Apenas números (em L)" data-parsley-required />
+							<input type="text" class="form-control" name="volume" id="volume"  placeholder="Apenas números (em ml)" data-parsley-required />
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>
