@@ -38,7 +38,7 @@ public class ListarPedidosAbertosServlet extends HttpServlet {
 		if(pedidos.size() > 0) {
 			request.setAttribute("pedidos", pedidos);
 		} else {
-			request.setAttribute("pedidos", pedidos);
+			request.setAttribute("pedidos", null);
 		}
 		
 		request.getRequestDispatcher("/listarPedidosAbertos.jsp").forward(request, response);

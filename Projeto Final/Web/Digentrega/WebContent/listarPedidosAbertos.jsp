@@ -66,13 +66,10 @@
 					        	  		<button id="botaoAvancar_${current.id}" type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});"> Preparar </button>
 				        	  	</c:when>
 				        	     <c:when test="${current.status.codigo eq 2}">
-					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});"> Escolher Entregador </button>
+					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});"> Despachar </button>
 				        	  	</c:when>
 				        	  	<c:when test="${current.status.codigo eq 3}">
-					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});"> Entregar </button>
-				        	  	</c:when>
-				        	  	<c:when test="${current.status.codigo eq 4}">
-					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});" disabled> Aguardando Entrega </button>
+					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});" disabled> Aguardando Entregador </button>
 				        	  	</c:when>
 				        	  	<c:when test="${current.status.codigo eq 6}">
 					        	  		<button id="botaoAvancar_${current.id}"  type="button" class="btn btn-primary" onclick="avancarEtapa(${current.id});" disabled> Cancelado </button>
@@ -160,13 +157,10 @@
 			        success: function(retorno){
   			        	
 			        	if(retorno.statusCodigo == 2) {
-			        		$("#botaoAvancar_" + pedidoID).text('Escolher Entregador');
+			        		$("#botaoAvancar_" + pedidoID).text('Despachar');
 			        		$("#status_" + pedidoID).text(retorno.statusDescricao);
-			        	} else if (retorno.statusCodigo == 3) {
-			        		$("#botaoAvancar_" + pedidoID).text('Entregar');
-			        		$("#status_" + pedidoID).text(retorno.statusDescricao);
-			        	} else if (retorno.statusCodigo == 4){
-			        		$("#botaoAvancar_" + pedidoID).text('Aguardando Entrega');
+			        	} else if (retorno.statusCodigo == 3){
+			        		$("#botaoAvancar_" + pedidoID).text('Aguardando Entregador');
 			        		$("#status_" + pedidoID).text(retorno.statusDescricao);
 			        		$("#botaoAvancar_" + pedidoID).prop("disabled", true);
 			        	} else if (retorno.statusCodigo == 6){

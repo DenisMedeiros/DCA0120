@@ -409,6 +409,79 @@ public class PedidosDAO {
 		return lista;
 	}
 	
+	
+	/**
+	 * Retorna uma lista com todos os pedidos abertos
+	 * @return Lista com os objetos de tipo Pedido registrados no banco de dados
+	 */
+	public List<Pedido> getPedidosAguardandoEntrega() {
+		List<Pedido> lista = new ArrayList<Pedido>();
+
+		try {
+			Statement st = conexao.createStatement();
+			String sql = "SELECT * FROM Pedidos WHERE Status=3";
+			ResultSet res = st.executeQuery(sql);
+
+			if (res.wasNull()) {
+				return lista;
+			}
+
+			while (res.next()) {
+				Status status = Status.ABERTO;
+				switch (res.getInt("Status")) {
+				case 1:
+					status = Status.ABERTO;
+					break;
+				case 2:
+					status = Status.EM_PREPARO;
+					break;
+				case 3:
+					status = Status.AGUARDANDO_ENTREGADOR;
+					break;
+				case 4:
+					status = Status.EM_TRANSITO;
+					break;
+				case 5:
+					status = Status.ENTREGUE;
+					break;
+				case 6:
+					status = Status.CANCELADO;
+					break;
+				}
+				Entregador ent;
+				EntregadoresDAO ents = new EntregadoresDAO();
+				if(res.getInt("EntregadorID") != 0) { 
+					ent = ents.getEntregadorWithID(res.getInt("EntregadorID"));
+				}else {
+					ent = null;
+				}
+				
+				Calendar dataHoraEntrega = Calendar.getInstance(), dataHoraAbertura;
+				dataHoraEntrega.setTimeInMillis(res.getTimestamp("DataHoraEntrega").getTime());
+				CaixasGerenciamPedidosDAO cgp = new CaixasGerenciamPedidosDAO();
+				dataHoraAbertura = cgp.getDataHoraAbertura(res.getInt("ID"));
+				
+				EnderecosEntregaDAO endereco = new EnderecosEntregaDAO();
+				Endereco enderecoEntrega = endereco.getEnderecoEntrega(res.getInt("ID"));
+				
+				Pedido p = new Pedido(res.getInt("ID"), status, res.getString("Descricao"), ent, dataHoraAbertura,
+						dataHoraEntrega, enderecoEntrega);
+				
+				PedidosContemProdutosDAO pcp = new PedidosContemProdutosDAO();
+				List<Produto> lprod = pcp.getProdutosDoPedido(p);
+				for(Produto pr: lprod) {
+					p.addProduto(pr, pcp.getQuantidade(pr, p));
+				}
+				
+				lista.add(p);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return lista;
+	}
+	
+	
 	/**
 	 * Retorna uma lista com todos os pedidos fechados
 	 * @return Lista com os objetos de tipo Pedido registrados no banco de dados
