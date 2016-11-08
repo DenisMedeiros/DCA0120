@@ -60,8 +60,8 @@ private static final long serialVersionUID = -7552121270167541493L;
 		ProdutosDAO prodDAO = new ProdutosDAO();
 		List<Produto> lista = pcp.getProdutosDoPedido(ped);
 		for(Produto prod: lista) {	
-			ped.removerProduto(prod, ped.getQuantidadeProduto(prod));
 			prod.setQuantidadeEstoque(prod.getQuantidadeEstoque() + ped.getQuantidadeProduto(prod));
+			ped.removerProduto(prod, ped.getQuantidadeProduto(prod));
 			prodDAO.alterarEstoque(prod);
 			pcp.alterarQuantidade(prod, ped);
 			
