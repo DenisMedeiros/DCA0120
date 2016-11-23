@@ -14,7 +14,7 @@ import ga.digentre.mobile.R;
 import ga.digentre.mobile.utils.Mascaras;
 import ga.digentre.mobile.utils.ValidadorCPF;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     final Context context = this;
     EditText editTextCPF;
@@ -84,10 +84,10 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
-                Intent intent = new Intent(MainActivity.this, PedidosActivity.class);
-                intent.putExtra("numero", "12"); //Optional parameters
-                MainActivity.this.startActivity(intent);
-                
+                Intent intent = new Intent(LoginActivity.this, PedidosActivity.class);
+                intent.putExtra("cpf", cpf); //Optional parameters
+                LoginActivity.this.startActivity(intent);
+
 
             }
         });
