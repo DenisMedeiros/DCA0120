@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import dca0120.model.Endereco;
-import dca0120.model.Entregador;
-import dca0120.model.Pedido;
-import dca0120.model.Pedido.Status;
-import dca0120.model.Produto;
+import ga.digentre.mobile.model.Endereco;
+import ga.digentre.mobile.model.Entregador;
+import ga.digentre.mobile.model.Pedido;
+import ga.digentre.mobile.model.Pedido.Status;
+import ga.digentre.mobile.model.Produto;
 
 /**
  * @author ney

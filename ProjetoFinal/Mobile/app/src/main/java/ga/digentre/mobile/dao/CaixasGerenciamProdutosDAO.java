@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
-import dca0120.model.Produto;
+import ga.digentre.mobile.model.Produto;
 
 /**
  * @author ney

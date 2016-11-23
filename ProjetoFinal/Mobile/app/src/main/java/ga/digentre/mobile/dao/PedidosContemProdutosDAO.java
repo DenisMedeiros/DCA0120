@@ -8,8 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import dca0120.model.Pedido;
-import dca0120.model.Produto;
+import ga.digentre.mobile.model.Pedido;
+import ga.digentre.mobile.model.Produto;
 
 /**
  * @author neypi

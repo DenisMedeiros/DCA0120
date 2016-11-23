@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import dca0120.model.Endereco;
-import dca0120.model.Pedido;
+import ga.digentre.mobile.model.Endereco;
+import ga.digentre.mobile.model.Pedido;
 
 /**
  * @author ney

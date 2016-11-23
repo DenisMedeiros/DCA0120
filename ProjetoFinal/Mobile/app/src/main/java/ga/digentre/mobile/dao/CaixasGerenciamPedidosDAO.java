@@ -7,7 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
 
-import dca0120.model.Pedido;
+import ga.digentre.mobile.model.Pedido;
+
 
 /**
  * @author ney

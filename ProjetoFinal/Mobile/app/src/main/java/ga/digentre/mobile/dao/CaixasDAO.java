@@ -7,7 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import dca0120.model.Caixa;
+
+import ga.digentre.mobile.model.Caixa;
 
 /**
  * @author ney

@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import dca0120.model.Entregador;
-import dca0120.model.Pedido;
+import ga.digentre.mobile.model.Entregador;
+import ga.digentre.mobile.model.Pedido;
 
 /**
  * @author ney
