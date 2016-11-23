@@ -21,18 +21,32 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:scaleType="center"
-        app:srcCompat="?android:attr/actionModePasteDrawable"
-        app:backgroundTint="@android:color/holo_blue_light" />
-
     <include layout="@layout/content_pedidos"
         android:id="@+id/includePedidos"
         android:visibility="visible" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/calcularRota"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="@dimen/fab_margin"
+        android:scaleType="center"
+        app:srcCompat="@mipmap/caminhao"
+        app:backgroundTint="@android:color/holo_red_dark"
+        app:layout_anchor="@+id/includePedidos"
+        app:layout_anchorGravity="bottom|left"
+        android:layout_gravity="center_vertical|center_horizontal" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/adicionarPedido"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="@dimen/fab_margin"
+        android:scaleType="center"
+        app:srcCompat="@mipmap/camera"
+        app:backgroundTint="@android:color/holo_blue_bright"
+        app:layout_anchor="@+id/includePedidos"
+        app:layout_anchorGravity="bottom|right"
+        android:layout_gravity="center_vertical|left" />
 
 </android.support.design.widget.CoordinatorLayout>
