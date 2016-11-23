@@ -80,6 +80,7 @@ public class EditarProdutoServlet extends HttpServlet {
         	response.sendRedirect(request.getContextPath());
         	return;
 		}
+		
 		int id = Integer.parseInt(request.getParameter("id"));
 		ProdutosDAO pd = new ProdutosDAO();
 		Produto original = pd.getProduto(id);

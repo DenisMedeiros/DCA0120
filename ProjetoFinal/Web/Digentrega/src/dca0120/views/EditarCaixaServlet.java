@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import dca0120.model.Caixa;
 import dca0120.utils.Hashing;
 import dca0120.utils.ValidadorCPF;
 
+@MultipartConfig
 public class EditarCaixaServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -7552123280167571493L;
@@ -88,11 +90,10 @@ public class EditarCaixaServlet extends HttpServlet {
 			return;
 		}
 		
-		
 		int id = Integer.parseInt(request.getParameter("id"));
 		CaixasDAO cd = new CaixasDAO();
 		Caixa original = cd.getCaixaWithID(id);
-
+		
 		//coletando parametros
 		String nome = request.getParameter("nome");
         String cpfStr = request.getParameter("cpf");
@@ -101,7 +102,7 @@ public class EditarCaixaServlet extends HttpServlet {
         String senha1 = request.getParameter("senha1");
         String senha2 = request.getParameter("senha2");
 
-        String cpf = original.getCpf();//inicializando variavel
+        //String cpf = original.getCpf();//inicializando variavel
         
         if(!nome.trim().isEmpty()) {
         	original.setNome(nome);
@@ -109,7 +110,7 @@ public class EditarCaixaServlet extends HttpServlet {
         
         if(!cpfStr.trim().isEmpty()) {
         	// Transforma o CPF em números apenas.
-            cpf = cpfStr.replace(".", "").replace("-", "");
+            String cpf = cpfStr.replace(".", "").replace("-", "");
             
             if(cpf != original.getCpf()) {
 	            // Valida o CPF.
@@ -123,6 +124,7 @@ public class EditarCaixaServlet extends HttpServlet {
             original.setCpf(cpf);
         }
         
+        // Altere a senha somente se ela foi, de fato, alterada.
         if(!senha1.trim().isEmpty()) {
         	// Verifica se as senhas são iguais.
             if(!senha1.equals(senha2)) {
@@ -131,7 +133,7 @@ public class EditarCaixaServlet extends HttpServlet {
                 return;
             }
             
-        	String senhaCriptografada = Hashing.plainToSHA256(senha1, cpf.getBytes());
+        	String senhaCriptografada = Hashing.plainToSHA256(senha1, original.getCpf().getBytes());
         	original.setSenha(senhaCriptografada);
         }    
         

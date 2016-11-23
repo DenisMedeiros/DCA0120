@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import dca0120.model.Entregador;
 import dca0120.utils.Hashing;
 import dca0120.utils.ValidadorCPF;
 
+@MultipartConfig
 public class EditarEntregadorServlet extends HttpServlet {
 	private static final long serialVersionUID = -7552123280167571493L;
 
@@ -105,7 +107,6 @@ public class EditarEntregadorServlet extends HttpServlet {
         String cnh = request.getParameter("cnh");
         String placa = request.getParameter("placa");
 
-        String cpf = original.getCpf();//inicializando variavel
         
         if(!nome.trim().isEmpty()) {
         	original.setNome(nome);
@@ -113,7 +114,7 @@ public class EditarEntregadorServlet extends HttpServlet {
         
         if(!cpfStr.trim().isEmpty()) {
         	// Transforma o CPF em números apenas.
-            cpf = cpfStr.replace(".", "").replace("-", "");
+            String cpf = cpfStr.replace(".", "").replace("-", "");
           
             if(cpf != original.getCpf()) {
             	// Valida o CPF.
@@ -135,7 +136,7 @@ public class EditarEntregadorServlet extends HttpServlet {
                 return;
             }
             
-        	String senhaCriptografada = Hashing.plainToSHA256(senha1, cpf.getBytes());
+        	String senhaCriptografada = Hashing.plainToSHA256(senha1, original.getCpf().getBytes());
         	original.setSenha(senhaCriptografada);
         }    
         
@@ -175,7 +176,7 @@ public class EditarEntregadorServlet extends HttpServlet {
         // Insere-o no BD.
         ed.alterarEntregador(original, administrador);
         
-        session.setAttribute("mensagem", "Caixa editado com sucesso!");
+        session.setAttribute("mensagem", "Entregador editado com sucesso!");
 		response.sendRedirect(request.getContextPath());
 	}
 

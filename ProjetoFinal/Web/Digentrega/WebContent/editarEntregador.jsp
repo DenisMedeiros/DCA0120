@@ -39,7 +39,7 @@
 				</div>
 				
 				<div class="form-group">
-					<label for="cpf" class="cols-sm-2 control-label">CPF</label>
+					<label for="email" class="cols-sm-2 control-label">CPF</label>
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
@@ -51,7 +51,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="datanascimento" class="cols-sm-2 control-label">Data de Nascimento</label>
+					<label for="username" class="cols-sm-2 control-label">Data de Nascimento</label>
 					<div class="cols-sm-10">
 						<div class="input-group">
 							<span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
@@ -68,47 +68,20 @@
 						<div>
 							<div class="input-group phone-input">
 								<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-								<input type="text" id="telefone_${index}"  name="telefone_${index}" class="form-control" maxlength="11" placeholder="Somente números" value="${telefone}" data-parsley-required data-parsley-type="number" />
-								<span class="input-group-btn">
-									<button class="btn btn-danger btn-remove-phone" type="button"><span class="glyphicon glyphicon-remove"></span></button>
-								</span>
+								<input type="text" id="telefone_${index.count}"  name="telefone_${index.count}" class="form-control" maxlength="11" placeholder="Somente números" value="${telefone}" data-parsley-required data-parsley-type="number" />
+								<c:if test="${index.count > 1}">
+									<span class="input-group-btn">
+										<button class="btn btn-danger btn-remove-phone" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+									</span>
+								</c:if>
 							</div>
 						<span class="mensagem-ajuda"></span>
 						</div>
 						</c:forEach>
-						<!-- <div>
-							<div class="input-group phone-input">
-								<span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-								<input type="text" id="telefone_1"  name="telefone_1" class="form-control" placeholder="Somente números" value="${caixa.telefonesFormatados}" maxlength="11" data-parsley-required data-parsley-type="number" />
-							</div>
-							<span class="mensagem-ajuda"></span>
-						</div>-->
 					</div>
 					<button type="button" class="btn btn-success btn-sm btn-add-phone"><span class="glyphicon glyphicon-plus"></span> Adicionar outro</button>
 				</div>
 
-				<div class="form-group">
-					<label for="password" class="cols-sm-2 control-label">Senha</label>
-					<div class="cols-sm-10">
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-							<input type="password" class="form-control" name="senha1" id="senha1" maxlength="64" placeholder="Senha" data-parsley-required/>
-						</div>
-						<span class="mensagem-ajuda"></span>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label for="confirm" class="cols-sm-2 control-label">Confirmar Senha</label>
-					<div class="cols-sm-10">
-						<div class="input-group">
-							<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-							<input type="password" class="form-control" name="senha2" id="senha2" maxlength="64"  placeholder="Confirme sua senha" data-parsley-required/>
-						</div>
-						<span class="mensagem-ajuda"></span>
-					</div>
-				</div>
-				
 				<div class="form-group">
 					<label for="email" class="cols-sm-2 control-label">CNH</label>
 					<div class="cols-sm-10">
@@ -116,7 +89,7 @@
 							<span class="input-group-addon"><i class="fa fa-user fa"
 								aria-hidden="true"></i></span>
 							<input type="text" class="form-control" name="cnh" id="cnh"
-								maxlength="10" placeholder="Informe CNH" data-parsley-required />
+								maxlength="10" placeholder="Informe CNH" value="${entregador.cnh}" data-parsley-required />
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>
@@ -129,7 +102,29 @@
 							<span class="input-group-addon"><i class="fa fa-user fa"
 								aria-hidden="true"></i></span>
 							<input type="text" class="form-control" name="placa" id="placa"
-								placeholder="AAA0000" maxlength="7" data-parsley-required />
+								placeholder="AAA0000" value="${entregador.placa}" maxlength="7" data-parsley-required />
+						</div>
+						<span class="mensagem-ajuda"></span>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="password" class="cols-sm-2 control-label">Senha</label>
+					<div class="cols-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+							<input type="password" class="form-control" name="senha1" id="senha1" maxlength="64" placeholder="Senha" />
+						</div>
+						<span class="mensagem-ajuda"></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="confirm" class="cols-sm-2 control-label">Confirmar Senha</label>
+					<div class="cols-sm-10">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+							<input type="password" class="form-control" name="senha2" id="senha2" maxlength="64"  placeholder="Confirme sua senha" />
 						</div>
 						<span class="mensagem-ajuda"></span>
 					</div>
@@ -221,10 +216,10 @@
 				window.Parsley.addValidator('duplicado', {
 					  validateString: function(value) {	
 						cpf = value.replace(/[^\d]+/g,''); 
-						
+						id = ${entregador.id};
 						
 					    $.ajax({
-					        url: "${pageContext.request.contextPath}/verificarCPF?cpf=" + cpf,
+					    	url: "${pageContext.request.contextPath}/verificarCPF?cpf=" + cpf + "&id="+id,
 					        type: 'GET',
 					        async: false,
 					        cache: false,

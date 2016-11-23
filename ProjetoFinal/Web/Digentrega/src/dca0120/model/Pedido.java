@@ -163,7 +163,11 @@ public class Pedido {
 		for (ProdutoQuantidade pq : produtosQuantidade) {
 			if (pq.produto.getId() == p.getId()) {
 				if (pq.quantidade <= quantidade) {
-					produtosQuantidade.remove(pq);
+					if(pq.quantidade == quantidade) {
+						produtosQuantidade.get(produtosQuantidade.indexOf(pq)).quantidade = 0;
+					} else {
+						produtosQuantidade.remove(pq);
+					}
 				} else {
 					produtosQuantidade.get(produtosQuantidade.indexOf(pq)).quantidade -= quantidade;
 				}
@@ -174,6 +178,8 @@ public class Pedido {
 			}
 		}
 	}
+	
+	
 
 	/**
 	 * @param p
