@@ -46,7 +46,8 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/editTextCpf"
-            android:hint="CPF" />
+            android:hint="CPF"
+            android:singleLine="true" />
 
         <EditText
             android:layout_width="match_parent"

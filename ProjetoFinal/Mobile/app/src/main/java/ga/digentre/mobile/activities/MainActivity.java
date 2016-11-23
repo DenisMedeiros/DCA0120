@@ -3,60 +3,91 @@ package ga.digentre.mobile.activities;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import ga.digentre.mobile.R;
+import ga.digentre.mobile.utils.Mascaras;
+import ga.digentre.mobile.utils.ValidadorCPF;
 
 public class MainActivity extends AppCompatActivity {
 
     final Context context = this;
+    EditText editTextCPF;
+    EditText editTextSenha;
+    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        editTextSenha = (EditText) this.findViewById(R.id.editTextSenha);
+        editTextCPF = (EditText) this.findViewById(R.id.editTextCpf);
+        button = (Button) this.findViewById(R.id.buttonEntrar);
 
-        Button button = (Button) this.findViewById(R.id.buttonEntrar);
+        this.setTitle("DigEntrega - Login");
+        editTextCPF.addTextChangedListener(Mascaras.insert(Mascaras.CPF_MASK, editTextCPF));
 
+        // Faz a autenticação do usuário.
         button.setOnClickListener(new View.OnClickListener()
         {
-
-            // Tenta autenticar o usuário.
             public void onClick(View v)
             {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                String cpfFormatado = editTextCPF.getText().toString();
+                String cpf = cpfFormatado.replace(".", "").replace("-", "");
+                String senha = editTextSenha.getText().toString();
 
-                // set title
-                alertDialogBuilder.setTitle("Your Title");
+                AlertDialog.Builder ad  = new AlertDialog.Builder(context);
+                ad.setTitle("Erro");
+                ad.setPositiveButton("OK", null);
+                ad.setCancelable(true);
+                ad.setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
 
-                // set dialog message
-                alertDialogBuilder
-                        .setMessage("Click yes to exit!")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                // if this button is clicked, close
-                                // current activity
-                                MainActivity.this.finish();
-                            }
-                        })
-                        .setNegativeButton("No",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // if this button is clicked, just close
-                                // the dialog box and do nothing
-                                dialog.cancel();
                             }
                         });
 
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
+                // Verifica se algum campo está em branco.
+                if(cpf.trim().isEmpty() || senha.trim().isEmpty()) {
+                    ad.setMessage("Algum dos campos está em branco!");
+                    ad.create().show();
+                    return;
+                }
 
-                // show it
-                alertDialog.show();
+                // Verifica se o CPF é válido.
+                if(!ValidadorCPF.isValidCPF(cpf)) {
+                    // Log.d("erro", "CPF inválido!");
+                    //int duration = Toast.LENGTH_SHORT;
+                    // Toast toast = Toast.makeText(context, "CPF inválido!", duration);
+                    //toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_VERTICAL, 0, 0);
+                    //toast.show();
+
+                    ad.setMessage("Este CPF não é válido!");
+                    ad.create().show();
+                    return;
+
+                }
+
+                // Tenta autenticar o usuário.
+                // TODO
+                // Na situação final, é para buscar no BD o usuário e senha.
+                if(!(cpf.equals("11111111111") && senha.equals("123"))) {
+                    ad.setMessage("CPF e/ou senha incorreta.");
+                    ad.create().show();
+                    return;
+
+                }
+
+                Intent intent = new Intent(MainActivity.this, PedidosActivity.class);
+                intent.putExtra("numero", "12"); //Optional parameters
+                MainActivity.this.startActivity(intent);
+                
 
             }
         });
