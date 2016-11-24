@@ -33,6 +33,12 @@ public class LoginActivity extends AppCompatActivity {
         this.setTitle("DigEntrega - Login");
         editTextCPF.addTextChangedListener(Mascaras.insert(Mascaras.CPF_MASK, editTextCPF));
 
+        // temporario para evitar o login
+
+        Intent intent = new Intent(LoginActivity.this, PedidosActivity.class);
+        intent.putExtra("cpf", "11111111111"); //Optional parameters
+        LoginActivity.this.startActivity(intent);
+
         // Faz a autenticação do usuário.
         button.setOnClickListener(new View.OnClickListener()
         {
