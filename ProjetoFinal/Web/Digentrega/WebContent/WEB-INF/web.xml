@@ -208,4 +208,15 @@
     <url-pattern>/cancelar/pedido/*</url-pattern>
 	</servlet-mapping>
   
+  	<servlet>
+    <servlet-name>LoginEntregadorServlet</servlet-name>
+    <servlet-class>dca0120.webservices.LoginEntregadorServlet</servlet-class>
+  </servlet> 
+  <servlet-mapping>
+    <servlet-name>LoginEntregadorServlet</servlet-name>
+    <url-pattern>/webservice/login/entregador/</url-pattern>
+	</servlet-mapping>
+  
+  
+  
 </web-app>

@@ -16,6 +16,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -61,6 +62,33 @@ public class PedidosActivity extends AppCompatActivity {
                 new String[] {"id", "detalhes"},
                 new int[] {android.R.id.text1,
                         android.R.id.text2});
+
+
+        listaPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                Map<String, String> pedido = (Map<String, String>) parent.getAdapter().getItem(position);
+                String pedidoId = pedido.get("id");
+                String detalhes = pedido.get("detalhes");
+
+
+                android.app.AlertDialog.Builder ad  = new android.app.AlertDialog.Builder(context);
+                ad.setTitle("Confirmar entrega");
+                ad.setNegativeButton("Cancelar", null);
+                ad.setCancelable(true);
+                ad.setPositiveButton("Sim",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                pedidos.remove(position);
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                ad.setMessage("Confirmar entrega do " + pedidoId + "?");
+                ad.create().show();
+
+            }
+        });
 
         // Temporario
 
@@ -128,6 +156,8 @@ public class PedidosActivity extends AppCompatActivity {
             if(result.getContents() == null) {
                 Toast.makeText(this, "Cancelado", Toast.LENGTH_LONG).show();
             } else {
+
+
 
                 // Supondo que o QR code do sistema web seja gerado no formato "id;latitude;longitude;peso;volume;".
                 String conteudo = result.getContents();

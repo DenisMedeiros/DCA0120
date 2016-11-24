@@ -1,6 +1,7 @@
 package ga.digentre.mobile.activities;
 
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,7 +15,10 @@ import ga.digentre.mobile.R;
 import ga.digentre.mobile.utils.Mascaras;
 import ga.digentre.mobile.utils.ValidadorCPF;
 
+
 public class LoginActivity extends AppCompatActivity {
+
+    public static final String DigEntregaURL = "http://localhost:8000/DigEntrega/";
 
     final Context context = this;
     EditText editTextCPF;
@@ -35,9 +39,9 @@ public class LoginActivity extends AppCompatActivity {
 
         // temporario para evitar o login
 
-        Intent intent = new Intent(LoginActivity.this, PedidosActivity.class);
-        intent.putExtra("cpf", "11111111111"); //Optional parameters
-        LoginActivity.this.startActivity(intent);
+//        Intent intent = new Intent(LoginActivity.this, PedidosActivity.class);
+//        intent.putExtra("cpf", "11111111111"); //Optional parameters
+//        LoginActivity.this.startActivity(intent);
 
         // Faz a autenticação do usuário.
         button.setOnClickListener(new View.OnClickListener()
@@ -79,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
 
                 }
+
 
                 // Tenta autenticar o usuário.
                 // TODO
