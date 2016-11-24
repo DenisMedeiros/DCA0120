@@ -95,12 +95,12 @@ public class CadastrarPedidoServlet extends HttpServlet {
 		
         String descricaoPedido = request.getParameter("descricaoPedido");
         String latitudeStr = request.getParameter("latitude");
-        String longitudeStr = request.getParameter("latitude");
+        String longitudeStr = request.getParameter("longitude");
         String descricaoEndereco = request.getParameter("descricaoEndereco");
         String tempoStr = request.getParameter("tempo");
    
-        float latitude = Float.parseFloat(latitudeStr);
-        float longitude = Float.parseFloat(longitudeStr);
+        double latitude = Double.parseDouble(latitudeStr);
+        double longitude = Double.parseDouble(longitudeStr);
         int tempo = Integer.parseInt(tempoStr);
 
         Endereco endereco = new Endereco(latitude, longitude, descricaoEndereco);

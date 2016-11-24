@@ -65,8 +65,8 @@ public class EnderecosEntregaDAO {
 					"INSERT INTO EnderecosEntrega(PedidoID, Latitude, Longitude, Descricao) VALUES (?, ?, ?, ?)");
 
 			pst.setInt(1, p.getId());
-			pst.setFloat(2, p.getEnderecoEntrega().getLatitude());
-			pst.setFloat(3, p.getEnderecoEntrega().getLongitude());
+			pst.setDouble(2, p.getEnderecoEntrega().getLatitude());
+			pst.setDouble(3, p.getEnderecoEntrega().getLongitude());
 			pst.setString(4, p.getEnderecoEntrega().getDescricao());
 
 			pst.executeUpdate();
@@ -99,7 +99,7 @@ public class EnderecosEntregaDAO {
 			}
 
 			if (res.next()) {
-				endereco = new Endereco(res.getFloat("Longitude"), res.getFloat("Latitude"),
+				endereco = new Endereco(res.getFloat("Latitude"), res.getFloat("Longitude"),
 						res.getString("Descricao"));
 			}
 
@@ -128,8 +128,8 @@ public class EnderecosEntregaDAO {
 			PreparedStatement pst = conexao.prepareStatement(
 					"UPDATE EnderecosEntrega SET Latitude=?, Longitude=?, Descricao=? WHERE PedidoID=?");
 
-			pst.setFloat(1, p.getEnderecoEntrega().getLatitude());
-			pst.setFloat(2, p.getEnderecoEntrega().getLongitude());
+			pst.setDouble(1, p.getEnderecoEntrega().getLatitude());
+			pst.setDouble(2, p.getEnderecoEntrega().getLongitude());
 			pst.setString(3, p.getEnderecoEntrega().getDescricao());
 			pst.setInt(4, p.getId());
 

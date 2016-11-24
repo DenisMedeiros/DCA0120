@@ -30,6 +30,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -40,8 +41,8 @@ public class PedidosActivity extends AppCompatActivity {
     final Context context = this;
     ListView listaPedidos;
     SimpleAdapter adapter;
-    List<Map<String, String>> pedidos = new ArrayList<Map<String, String>>();
-    public static Map<Integer, double[]> coordenadas = new HashMap<Integer, double[]>();
+    List<Map<String, String>> pedidosItemSubitem = new ArrayList<Map<String, String>>();
+    Map<Integer, String> pedidos = new HashMap<Integer, String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,80 +55,46 @@ public class PedidosActivity extends AppCompatActivity {
         String cpf = intent.getStringExtra("cpf");
 
         listaPedidos = (ListView) this.findViewById(R.id.listaPedidos);
-        View pedidosView = findViewById(R.id.includePedidos);
 
 
-        adapter = new SimpleAdapter(this, pedidos,
+        adapter = new SimpleAdapter(this, pedidosItemSubitem,
                 android.R.layout.simple_list_item_2,
                 new String[] {"id", "detalhes"},
                 new int[] {android.R.id.text1,
                         android.R.id.text2});
 
 
-        listaPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
-                Map<String, String> pedido = (Map<String, String>) parent.getAdapter().getItem(position);
-                String pedidoId = pedido.get("id");
-                String detalhes = pedido.get("detalhes");
-
-
-                android.app.AlertDialog.Builder ad  = new android.app.AlertDialog.Builder(context);
-                ad.setTitle("Confirmar entrega");
-                ad.setNegativeButton("Cancelar", null);
-                ad.setCancelable(true);
-                ad.setPositiveButton("Sim",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                pedidos.remove(position);
-                                adapter.notifyDataSetChanged();
-                            }
-                        });
-                ad.setMessage("Confirmar entrega do " + pedidoId + "?");
-                ad.create().show();
-
-            }
-        });
-
-        // Temporario
-
-
+     /*  // Temporario
         Map<String, String> pedido1 = new HashMap<String, String>(2);
         pedido1.put("id", "Pedido #" + 1);
         pedido1.put("detalhes", "(" + 6000 + " g, " + 15 + " l)");
-        pedidos.add(pedido1);
+        pedidosItemSubitem.add(pedido1);
         adapter.notifyDataSetChanged();
-        coordenadas.put(1, new double[]{-5.8459685,-35.2036081});
 
         Map<String, String> pedido2 = new HashMap<String, String>(2);
         pedido2.put("id", "Pedido #" + 2);
         pedido2.put("detalhes", "(" + 3000 + " g, " + 2 + " l)");
-        pedidos.add(pedido2);
+        pedidosItemSubitem.add(pedido2);
         adapter.notifyDataSetChanged();
-        coordenadas.put(2, new double[]{-5.8325928,-35.2090004});
 
         Map<String, String> pedido3 = new HashMap<String, String>(2);
         pedido3.put("id", "Pedido #" + 3);
         pedido3.put("detalhes", "(" + 3 + " g, " + 2 + " l)");
-        pedidos.add(pedido3);
+        pedidosItemSubitem.add(pedido3);
         adapter.notifyDataSetChanged();
-        coordenadas.put(3, new double[]{-5.8375942,-35.2233547});
 
         Map<String, String> pedido4 = new HashMap<String, String>(2);
         pedido4.put("id", "Pedido #" + 4);
         pedido4.put("detalhes", "(" + 600 + " g, " + 24 + " l)");
-        pedidos.add(pedido4);
+        pedidosItemSubitem.add(pedido4);
         adapter.notifyDataSetChanged();
-        coordenadas.put(4, new double[]{-5.8418456,-35.2169791});
 
         Map<String, String> pedido5 = new HashMap<String, String>(2);
         pedido5.put("id", "Pedido #" + 5);
         pedido5.put("detalhes", "(" + 100 + " g, " + 2 + " l)");
-        pedidos.add(pedido5);
-        adapter.notifyDataSetChanged();
-        coordenadas.put(5, new double[]{-5.8163808,-35.2200636});
-
+        pedidosItemSubitem.add(pedido5);
+        adapter.notifyDataSetChanged();*/
 
         // Assign adapter to ListView
         listaPedidos.setAdapter(adapter);
@@ -136,31 +103,81 @@ public class PedidosActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Action para abrir a câmera e ler o QR Code.
         FloatingActionButton fabAdicionarPedido = (FloatingActionButton) findViewById(R.id.adicionarPedido);
         fabAdicionarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-               //         .setAction("Action", null).show();
                 IntentIntegrator integrator = new IntentIntegrator(PedidosActivity.this);
                 integrator.initiateScan();
             }
         });
 
+
+        // Action para calcular rota.
         FloatingActionButton fabCriarRota = (FloatingActionButton) findViewById(R.id.calcularRota);
         fabCriarRota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(PedidosActivity.this, MapsActivity.class);
-                intent.setPackage("com.google.android.apps.maps");
-                if (intent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(intent);
+
+                Intent intent = new Intent(PedidosActivity.this, RotasActivity.class);
+                ArrayList<String> pedidosStr = new ArrayList<String>(pedidos.values());
+                if(pedidosStr.size() < 1) {
+
+                    Toast toast = Toast.makeText(PedidosActivity.this, "Nenhum pedido encontrado. Utilize a câmera para adicionar um novo pedido.", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                    return;
                 }
+                intent.putStringArrayListExtra("pedidos", pedidosStr);
+                PedidosActivity.this.startActivity(intent);
+
+//                Intent intent = new Intent(PedidosActivity.this, MapsActivity.class);
+//                intent.setPackage("com.google.android.apps.maps");
+//                if (intent.resolveActivity(getPackageManager()) != null) {
+//                    startActivity(intent);
+//                }
+
+
             }
         });
+
+
+
+        // Action responsável por fechar um pedido.
+        listaPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                Map<String, String> pedido = (Map<String, String>) parent.getAdapter().getItem(position);
+                String pedidoIdStr  = pedido.get("id").replace("Pedido #", "");
+                final int pedidoId = Integer.parseInt(pedidoIdStr);
+
+                android.app.AlertDialog.Builder ad  = new android.app.AlertDialog.Builder(context);
+                ad.setTitle("Confirmar entrega");
+                ad.setNegativeButton("Cancelar", null);
+                ad.setCancelable(true);
+                ad.setPositiveButton("Sim",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                pedidosItemSubitem.remove(position);
+                                pedidos.remove(pedidoId);
+                                adapter.notifyDataSetChanged();
+                                Toast toast = Toast.makeText(PedidosActivity.this, "Pedido " + pedidoId + " removido com sucesso", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+
+                            }
+                        });
+                ad.setMessage("Confirmar entrega do " + pedidoId + "?");
+                ad.create().show();
+
+            }
+        });
+
     }
 
-    // Get the results:
+    // Obtém os resultados do QR-code.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
@@ -169,25 +186,33 @@ public class PedidosActivity extends AppCompatActivity {
                 Toast.makeText(this, "Cancelado", Toast.LENGTH_LONG).show();
             } else {
 
-
-
                 // Supondo que o QR code do sistema web seja gerado no formato "id;latitude;longitude;peso;volume;".
                 String conteudo = result.getContents();
                 String[] valores = conteudo.split(";");
 
                 int pedidoId = Integer.parseInt(valores[0]);
-                float latitude = Float.parseFloat(valores[1]);
-                float longitude = Float.parseFloat(valores[2]);
-                float peso = Float.parseFloat(valores[3]);
-                float volume = Float.parseFloat(valores[4]);
+                double latitude = Double.parseDouble(valores[1]);
+                double longitude = Double.parseDouble(valores[2]);
+                double peso = Double.parseDouble(valores[3]);
+                double volume = Double.parseDouble(valores[4]);
+
+                if(pedidos.get(pedidoId) != null) {
+                    Toast toast = Toast.makeText(this, "O pedido #" + pedidoId + " já está na lista!", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                    return;
+                }
 
                 Map<String, String> pedido = new HashMap<String, String>(2);
                 pedido.put("id", "Pedido #" + pedidoId);
                 pedido.put("detalhes", "(" + peso + " kg, " + volume + " l)");
-                pedidos.add(pedido);
+                pedidosItemSubitem.add(pedido);
+                pedidos.put(pedidoId, conteudo);
                 adapter.notifyDataSetChanged();
 
-                Toast.makeText(this, "Pedido adicionado com sucesso!" + conteudo, Toast.LENGTH_LONG).show();
+                Toast toast = Toast.makeText(this, "Pedido #" + pedidoId + " adicionado com sucesso!", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
 
 
             }

@@ -2,27 +2,28 @@ package dca0120.model;
 
 public class Endereco {
 	
-	private float longitude;
-	private float latitude;
+	
+	private double latitude;
+	private double longitude;
 	private String descricao;
 	
-	public Endereco(float longitude, float latitude, String descricao) {
+	public Endereco(double latitude, double longitude, String descricao) {
 		super();
 		this.longitude = longitude;
 		this.latitude = latitude;
 		this.descricao = descricao;
 	}
 	
-	public float getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(float longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-	public float getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(float latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 	public String getDescricao() {

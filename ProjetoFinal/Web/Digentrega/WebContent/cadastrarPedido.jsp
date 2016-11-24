@@ -143,7 +143,7 @@
 			                <div class="col-sm-6">
 			                	<div class="input-group">
 				                	<span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"> Longitude</i></span>
-				                    <input type="text" class="form-control" id="longitude" name="latitude" required data-parsley-longitude>
+				                    <input type="text" class="form-control" id="longitude" name="longitude" required data-parsley-longitude>
 			                    </div>
 			                    <span class="mensagem-ajuda"></span>
 			                </div>
