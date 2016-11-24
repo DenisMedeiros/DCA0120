@@ -146,6 +146,18 @@ public class PedidosActivity extends AppCompatActivity {
                 integrator.initiateScan();
             }
         });
+
+        FloatingActionButton fabCriarRota = (FloatingActionButton) findViewById(R.id.calcularRota);
+        fabCriarRota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(PedidosActivity.this, MapsActivity.class);
+                intent.setPackage("com.google.android.apps.maps");
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
     // Get the results:
