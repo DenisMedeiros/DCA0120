@@ -12,7 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/formulario.css">
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/modal-picture.css">
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/dataTables.bootstrap.min.css">
-		
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/css/print.css">
 	</jsp:attribute>
 
 
@@ -52,7 +52,7 @@
  							 <td><c:out value="${current.entregadorFormatado}" /></td>
  							 <td align="center"> <span id="status_${current.id}"> <c:out value="${current.status}" /> </span></td>	
 							 <td align="center">
-								 <button class="btn btn-info" onclick="qrCodeModal(${current.id},${current.enderecoEntrega.latitude},${current.enderecoEntrega.longitude});">
+								 <button class="btn btn-info" onclick="qrCodeModal(${current.id},${current.enderecoEntrega.latitude},${current.enderecoEntrega.longitude},${current.pesoTotal},${current.volumeTotal});">
 								 	QR Code
 								 </button>
 							 </td>
@@ -147,7 +147,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery.dataTables.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/dataTables.bootstrap.min.js "></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/qrcode.min.js"></script>
-		
+		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/print.js"></script>
 		<script>
 			function avancarEtapa(pedidoID) {
 												
@@ -234,15 +234,15 @@
 		
 		<script>
 		
-		function qrCodeModal(id, latitude, longitude)
+		function qrCodeModal(id, latitude, longitude, peso, volume)
 		{
 			
-			if($("#qdCodeModal_" + id).length != 0) {
-				 $("#qdCodeModal_"+ id).modal('show');
+			if($("#qrCodeModal_" + id).length != 0) {
+				 $("#qrCodeModal_"+ id).modal('show');
 			} else {
 			
 				var html = '';
-				html += '<div id="qdCodeModal_'+ id +'" class="modal fade" role="dialog">';
+				html += '<div id="qrCodeModal_'+ id +'" class="modal fade" role="dialog">';
 				html += '<div class="modal-dialog">';
 				html += '<div class="modal-content">';
 				html += '<div class="modal-header">';
@@ -252,6 +252,7 @@
 				html += '<div class="modal-body">';
 				html += '<div class="qrcode" id="qrcode_'+ id +'"></div>';
 				html += '<div class="modal-footer">';
+				html += '<button id="imprimir_' + id + '" type="button" class="btn btn-primary" onclick="imprimirQrCode('+ id +');">Imprimir</button>';
 				html += '<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>';
 				html += '</div>';
 				html += '</div>';
@@ -262,7 +263,7 @@
 			    $("#modals").append(html);
 			    
 			    var qrcode = new QRCode("qrcode_"+ id, {
-			        text: "" + id + "," + latitude + "," + longitude,
+			        text: "" + id + ";" + latitude + ";" + longitude + ";" + peso + ";" + volume + ";",
 			        width: 256,
 			        height: 256,
 			        colorDark : "#000000",
@@ -270,9 +271,17 @@
 			        correctLevel : QRCode.CorrectLevel.H,
 			    });
 			    
-			    $("#qdCodeModal_"+ id).modal('show');
+			    $("#qrCodeModal_"+ id).modal('show');
 			} 
 		}
+		
+		function imprimirQrCode(id) {
+			var modal = document.getElementById('qrcode_'+ id);
+			console.log(modal);
+		    printElement(modal);
+		    window.print();
+		}
+		
 		</script>
 		
 		<script>
