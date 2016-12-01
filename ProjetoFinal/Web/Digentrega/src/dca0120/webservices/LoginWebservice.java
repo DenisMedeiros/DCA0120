@@ -13,7 +13,7 @@ import dca0120.dao.EntregadoresDAO;
 import dca0120.model.Entregador;
 import dca0120.utils.Hashing;
 
-public class LoginEntregadorServlet extends HttpServlet {
+public class LoginWebservice extends HttpServlet {
 
 	/**
 	 * 
@@ -37,15 +37,26 @@ public class LoginEntregadorServlet extends HttpServlet {
 		String cpf = request.getParameter("cpf");
 		String senha = request.getParameter("senha");	
 		
+		
+		if(cpf == null || senha == null) {
+			JsonObject json = Json.createObjectBuilder()
+	                .add("erro", "Requisição inválida.")
+	                .build();    	
+			response.getWriter().write(json.toString()); 
+			return;
+		}
+		
+		
 		EntregadoresDAO ed = new EntregadoresDAO();
 		Entregador e = ed.getEntregadorWithCpf(cpf);
 		
 		if(e != null) {
+			
 			String senhaCriptografada = Hashing.plainToSHA256(senha, e.getCpf().getBytes());
 	        if(e.getSenha().equals(senhaCriptografada)) { // Login ocorreu com sucesso.
 	    		JsonObject json = Json.createObjectBuilder()
-		                .add("par1", 2)
-		                .add("par2", 3)
+		                .add("id", e.getId())
+		                .add("sucesso", true)
 		                .build();    	
 	        	  
 			    response.getWriter().write(json.toString());    

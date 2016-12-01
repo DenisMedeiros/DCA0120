@@ -111,11 +111,6 @@ public class CadastrarPedidoServlet extends HttpServlet {
         Calendar momentoEntrega =  Calendar.getInstance();
         momentoEntrega.add(Calendar.MINUTE, tempo);
         
-        System.out.println(tempoStr);
-        System.out.println(tempo);
-        System.out.println(momentoAbertura);
-        System.out.println(momentoEntrega);
-        
         Pedido pedido = new Pedido(0, Pedido.Status.ABERTO, descricaoPedido, null, momentoAbertura, momentoEntrega, endereco);
        
         Enumeration<String> parametros = request.getParameterNames();

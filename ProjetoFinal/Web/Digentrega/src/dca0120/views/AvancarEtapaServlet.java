@@ -55,8 +55,6 @@ public class AvancarEtapaServlet extends HttpServlet {
 		ped.avancarStatus();
 		pd.alterarPedido(ped);
 		
-
-		
 		JsonObject json = Json.createObjectBuilder()
 	                .add("statusCodigo", ped.getStatus().getCodigo())
 	                .add("statusDescricao", ped.getStatus().toString())
