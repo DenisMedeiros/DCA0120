@@ -216,7 +216,23 @@
     <servlet-name>LoginWebservice</servlet-name>
     <url-pattern>/webservice/login/entregador/</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+    <servlet-name>EntregarPedidoWebservice</servlet-name>
+    <servlet-class>dca0120.webservices.EntregarPedidoWebservice</servlet-class>
+  </servlet> 
+  <servlet-mapping>
+    <servlet-name>EntregarPedidoWebservice</servlet-name>
+    <url-pattern>/webservice/entregar/pedido/</url-pattern>
+	</servlet-mapping>
   
-  
+  	<servlet>
+    <servlet-name>FinalizarPedidoWebservice</servlet-name>
+    <servlet-class>dca0120.webservices.FinalizarPedidoWebservice</servlet-class>
+  </servlet> 
+  <servlet-mapping>
+    <servlet-name>FinalizarPedidoWebservice</servlet-name>
+    <url-pattern>/webservice/finalizar/pedido/</url-pattern>
+	</servlet-mapping>
   
 </web-app>

@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Hashing {
 	
+	
 	 public static String plainToSHA256(String passwordToHash, byte[] salt) {
 	        String generatedPassword = null;
 	        try {

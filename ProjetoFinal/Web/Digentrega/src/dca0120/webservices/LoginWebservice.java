@@ -37,7 +37,6 @@ public class LoginWebservice extends HttpServlet {
 		String cpf = request.getParameter("cpf");
 		String senha = request.getParameter("senha");	
 		
-		
 		if(cpf == null || senha == null) {
 			JsonObject json = Json.createObjectBuilder()
 	                .add("erro", "Requisição inválida.")
@@ -56,7 +55,6 @@ public class LoginWebservice extends HttpServlet {
 	        if(e.getSenha().equals(senhaCriptografada)) { // Login ocorreu com sucesso.
 	    		JsonObject json = Json.createObjectBuilder()
 		                .add("id", e.getId())
-		                .add("sucesso", true)
 		                .build();    	
 	        	  
 			    response.getWriter().write(json.toString());    
