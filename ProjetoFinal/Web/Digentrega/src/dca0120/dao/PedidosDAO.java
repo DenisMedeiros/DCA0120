@@ -524,10 +524,6 @@ public class PedidosDAO {
 			java.sql.Timestamp javaSqlTimestamp = null;
 
 			if (calendar != null) {
-				calendar.set(Calendar.HOUR_OF_DAY, 0);
-				calendar.set(Calendar.MINUTE, 0);
-				calendar.set(Calendar.SECOND, 0);
-				calendar.set(Calendar.MILLISECOND, 0);
 				javaSqlTimestamp = new java.sql.Timestamp(calendar.getTime().getTime());
 			} else {
 				javaSqlTimestamp = new java.sql.Timestamp(0);
