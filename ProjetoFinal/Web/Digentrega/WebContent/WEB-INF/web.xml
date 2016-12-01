@@ -235,4 +235,14 @@
     <url-pattern>/webservice/finalizar/pedido/</url-pattern>
 	</servlet-mapping>
   
+  
+    	<servlet>
+    <servlet-name>ListarPedidosEntregadorWebservice</servlet-name>
+    <servlet-class>dca0120.webservices.ListarPedidosEntregadorWebservice</servlet-class>
+  </servlet> 
+  <servlet-mapping>
+    <servlet-name>ListarPedidosEntregadorWebservice</servlet-name>
+    <url-pattern>/webservice/listar/pedidos/entregador/</url-pattern>
+	</servlet-mapping>
+  
 </web-app>
