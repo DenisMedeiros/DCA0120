@@ -51,13 +51,13 @@ public class FinalizarPedidoWebservice extends HttpServlet {
 		
 		EntregadoresDAO ed = new EntregadoresDAO();
 		Entregador e = ed.getEntregadorWithID(entregadorId);
-		
-		PedidosDAO ped = new PedidosDAO();
-		Pedido p = ped.getPedidoWithID(pedidoId);
-		
-		if(e != null && p != null) {
 			
-			if(p.getEntregador() == null) { // Verifica se o pedido já possui um entregador associado.
+		if(e != null) {
+			
+			PedidosDAO ped = new PedidosDAO();
+			Pedido p = ped.getPedidoWithID(pedidoId);
+			
+			if(p != null && p.getEntregador() == null) { // Verifica se o pedido já possui um entregador associado.
 				JsonObject json = Json.createObjectBuilder()
 		                .add("erro", "Este pedido não possui um entregador associado.")
 		                .build();    	
