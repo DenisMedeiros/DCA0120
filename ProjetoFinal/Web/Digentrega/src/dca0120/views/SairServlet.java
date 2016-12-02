@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dca0120.utils.TratadorURI;
+
 public class SairServlet extends HttpServlet {
 
 
@@ -24,7 +26,7 @@ public class SairServlet extends HttpServlet {
 		session.setAttribute("entregador", null);
 		session.invalidate();
 
-		response.sendRedirect(request.getContextPath());
+		response.sendRedirect(TratadorURI.getRaizURL(request));
     }
 
 	@Override

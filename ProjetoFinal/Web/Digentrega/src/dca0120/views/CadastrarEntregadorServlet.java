@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import dca0120.dao.EntregadoresDAO;
 import dca0120.model.Entregador;
 import dca0120.utils.Hashing;
+import dca0120.utils.TratadorURI;
 import dca0120.utils.ValidadorCPF;
 
 public class CadastrarEntregadorServlet extends HttpServlet {
@@ -34,7 +35,7 @@ public class CadastrarEntregadorServlet extends HttpServlet {
 		if(session == null) {
 			session = request.getSession(true);	
 			session.setAttribute("mensagem", "Você precisa entrar no sistema para acessar esta função.");
-        	response.sendRedirect(request.getContextPath());
+        	response.sendRedirect(TratadorURI.getRaizURL(request));
         	return;
 		}
 		
@@ -42,7 +43,7 @@ public class CadastrarEntregadorServlet extends HttpServlet {
 		Integer administrador = (Integer) session.getAttribute("administrador");
 		if(administrador == null) {
 	     	session.setAttribute("mensagem", "Apenas o administrador pode cadastrar funcionários.");
-        	response.sendRedirect(request.getContextPath());
+        	response.sendRedirect(TratadorURI.getRaizURL(request));
         	return;
 		}
 		
@@ -59,7 +60,7 @@ public class CadastrarEntregadorServlet extends HttpServlet {
 		if(session == null) {
 			session = request.getSession(true);	
 			session.setAttribute("mensagem", "Você precisa entrar no sistema para acessar esta função.");
-        	response.sendRedirect(request.getContextPath());
+        	response.sendRedirect(TratadorURI.getRaizURL(request));
         	return;
 		}
 		
@@ -69,7 +70,7 @@ public class CadastrarEntregadorServlet extends HttpServlet {
 		Integer administradorID = (Integer) session.getAttribute("administrador");
 		if(administradorID == null) {
 	     	session.setAttribute("mensagem", "Apenas o administrador pode cadastrar funcionários.");
-        	response.sendRedirect(request.getContextPath());
+        	response.sendRedirect(TratadorURI.getRaizURL(request));
         	return;
 		}
 		
@@ -146,7 +147,7 @@ public class CadastrarEntregadorServlet extends HttpServlet {
         ed.inserirEntregador(entregador, administradorID);
         
         session.setAttribute("mensagem", "Entregador(a) cadastrado(a) com sucesso!");
-        response.sendRedirect(request.getContextPath());
+        response.sendRedirect(TratadorURI.getRaizURL(request));
     }
 
 } 

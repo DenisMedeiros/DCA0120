@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import dca0120.dao.PedidosDAO;
 import dca0120.model.Pedido;
+import dca0120.utils.TratadorURI;
 
 public class ListarPedidosFechadosServlet extends HttpServlet {
 
@@ -26,7 +27,7 @@ public class ListarPedidosFechadosServlet extends HttpServlet {
 		if(session == null) {
 			session = request.getSession(true);	
 			session.setAttribute("mensagem", "Você precisa entrar no sistema para acessar esta função.");
-        	response.sendRedirect(request.getContextPath());
+        	response.sendRedirect(TratadorURI.getRaizURL(request));
         	return;
 		}
 		

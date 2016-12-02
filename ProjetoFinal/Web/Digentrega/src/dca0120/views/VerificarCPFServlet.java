@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dca0120.dao.CaixasDAO;
+import dca0120.utils.TratadorURI;
 
 public class VerificarCPFServlet extends HttpServlet {
 
@@ -24,7 +25,7 @@ public class VerificarCPFServlet extends HttpServlet {
 		if(session == null) {
 			session = request.getSession(true);	
 			session.setAttribute("mensagem", "Você precisa entrar no sistema para acessar esta função.");
-        	response.sendRedirect(request.getContextPath());
+        	response.sendRedirect(TratadorURI.getRaizURL(request));
         	return;
 		}
 		
@@ -33,7 +34,7 @@ public class VerificarCPFServlet extends HttpServlet {
 		
 		if(administrador == null) {
 	     	session.setAttribute("mensagem", "Apenas o administrador pode cadastrar funcionários.");
-        	response.sendRedirect(request.getContextPath());
+        	response.sendRedirect(TratadorURI.getRaizURL(request));
         	return;
 		}
 		

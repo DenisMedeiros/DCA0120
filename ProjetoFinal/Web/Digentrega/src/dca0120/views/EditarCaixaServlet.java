@@ -16,6 +16,7 @@ import dca0120.dao.CaixasDAO;
 import dca0120.dao.TelefonesDAO;
 import dca0120.model.Caixa;
 import dca0120.utils.Hashing;
+import dca0120.utils.TratadorURI;
 import dca0120.utils.ValidadorCPF;
 
 @MultipartConfig
@@ -34,7 +35,7 @@ public class EditarCaixaServlet extends HttpServlet {
 		if (session == null) {
 			session = request.getSession(true);
 			session.setAttribute("mensagem", "Você precisa entrar no sistema para acessar esta função.");
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(TratadorURI.getRaizURL(request));
 			return;
 		}
 
@@ -42,7 +43,7 @@ public class EditarCaixaServlet extends HttpServlet {
 		Integer administrador = (Integer) session.getAttribute("administrador");
 		if (administrador == null) {
 			session.setAttribute("mensagem", "Apenas o administrador pode cadastrar funcionários.");
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(TratadorURI.getRaizURL(request));
 			return;
 		}
 
@@ -59,7 +60,7 @@ public class EditarCaixaServlet extends HttpServlet {
 				request.getRequestDispatcher("/editarCaixa.jsp").forward(request, response);
 				return;
 			} else {
-				response.sendRedirect(request.getContextPath());
+				response.sendRedirect(TratadorURI.getRaizURL(request));
 				return;
 			}
 		} catch (NumberFormatException e) {
@@ -78,7 +79,7 @@ public class EditarCaixaServlet extends HttpServlet {
 		if (session == null) {
 			session = request.getSession(true);
 			session.setAttribute("mensagem", "Você precisa entrar no sistema para acessar esta função.");
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(TratadorURI.getRaizURL(request));
 			return;
 		}
 
@@ -86,7 +87,7 @@ public class EditarCaixaServlet extends HttpServlet {
 		Integer administrador = (Integer) session.getAttribute("administrador");
 		if (administrador == null) {
 			session.setAttribute("mensagem", "Apenas o administrador pode cadastrar funcionários.");
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(TratadorURI.getRaizURL(request));
 			return;
 		}
 		
@@ -169,7 +170,7 @@ public class EditarCaixaServlet extends HttpServlet {
         cd.alterarCaixa(original, administrador);
         
         session.setAttribute("mensagem", "Caixa editado com sucesso!");
-		response.sendRedirect(request.getContextPath());
+		response.sendRedirect(TratadorURI.getRaizURL(request));
 	}
 
 }

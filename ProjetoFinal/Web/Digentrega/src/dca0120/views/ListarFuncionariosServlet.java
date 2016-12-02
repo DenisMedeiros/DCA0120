@@ -13,6 +13,7 @@ import dca0120.dao.CaixasDAO;
 import dca0120.dao.EntregadoresDAO;
 import dca0120.model.Caixa;
 import dca0120.model.Entregador;
+import dca0120.utils.TratadorURI;
 
 public class ListarFuncionariosServlet extends HttpServlet {
 
@@ -30,7 +31,7 @@ public class ListarFuncionariosServlet extends HttpServlet {
 		if(session == null) {
 			session = request.getSession(true);	
 			session.setAttribute("mensagem", "Você precisa entrar no sistema para acessar esta função.");
-        	response.sendRedirect(request.getContextPath());
+        	response.sendRedirect(TratadorURI.getRaizURL(request));
         	return;
 		}
 		
@@ -38,7 +39,7 @@ public class ListarFuncionariosServlet extends HttpServlet {
 		Integer administrador = (Integer) session.getAttribute("administrador");
 		if(administrador == null) {
 	     	session.setAttribute("mensagem", "Apenas o administrador pode cadastrar funcionários.");
-        	response.sendRedirect(request.getContextPath());
+        	response.sendRedirect(TratadorURI.getRaizURL(request));
         	return;
 		}
 		

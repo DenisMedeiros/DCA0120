@@ -13,6 +13,7 @@ import dca0120.dao.EntregadoresDAO;
 import dca0120.model.Caixa;
 import dca0120.model.Entregador;
 import dca0120.utils.Hashing;
+import dca0120.utils.TratadorURI;;
 
 public class EntrarServlet extends HttpServlet {
 
@@ -24,7 +25,9 @@ public class EntrarServlet extends HttpServlet {
     		throws ServletException, IOException {
 		
 		request.setCharacterEncoding("UTF-8");
+		
 
+		
         request.getRequestDispatcher("/entrar.jsp").forward(request, response);
     }
 
@@ -62,7 +65,7 @@ public class EntrarServlet extends HttpServlet {
 	        	}
 				    
 	        	session.setAttribute("caixa", c.getId());
-			    response.sendRedirect(request.getContextPath());    
+			    response.sendRedirect(TratadorURI.getRaizURL(request));    
 			    return;     
 	        }
         } 
@@ -74,14 +77,14 @@ public class EntrarServlet extends HttpServlet {
         	if (e.getSenha().equals(senhaCriptografada)) {  // Verifica se é um Entregador.
         		session.setAttribute("entregador", e.getId());
 			    session.setAttribute("mensagem", "Entregador logado com sucesso!");
-			    response.sendRedirect(request.getContextPath());
+			    response.sendRedirect(TratadorURI.getRaizURL(request));
 			    return;
         	}
         }
         
 		// Se chegou até aqui, é porque a senha está errada ou o funcionário não existe.
     	session.setAttribute("mensagem", "Falha de autenticação: CPF e/ou senha incorretos.");
-        response.sendRedirect(request.getContextPath() + "/entrar");
+        response.sendRedirect(TratadorURI.getRaizURL(request) + "/entrar");
 	}
 
 } 

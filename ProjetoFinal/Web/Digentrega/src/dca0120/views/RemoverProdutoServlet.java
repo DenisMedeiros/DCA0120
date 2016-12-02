@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import dca0120.dao.ProdutosDAO;
+import dca0120.utils.TratadorURI;
 
 public class RemoverProdutoServlet extends HttpServlet {
 	
@@ -23,7 +24,7 @@ private static final long serialVersionUID = -7552121270167541493L;
 		if(session == null) {
 			session = request.getSession(true);	
 			session.setAttribute("mensagem", "Você precisa entrar no sistema para acessar esta função.");
-        	response.sendRedirect(request.getContextPath());
+        	response.sendRedirect(TratadorURI.getRaizURL(request));
         	return;
 		}
 			
@@ -34,7 +35,7 @@ private static final long serialVersionUID = -7552121270167541493L;
 			if(pd.getProduto(id) != null) {
 				pd.removerProduto(id);
 			} else {
-				response.sendRedirect(request.getContextPath());
+				response.sendRedirect(TratadorURI.getRaizURL(request));
 				return;
 			}
 		} catch (NumberFormatException e) {

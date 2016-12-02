@@ -17,6 +17,7 @@ import javax.servlet.http.Part;
 import dca0120.dao.ProdutosDAO;
 import dca0120.model.Produto;
 import dca0120.utils.Hashing;
+import dca0120.utils.TratadorURI;
 
 @MultipartConfig
 public class EditarProdutoServlet extends HttpServlet {
@@ -35,7 +36,7 @@ public class EditarProdutoServlet extends HttpServlet {
 		if(session == null) {
 			session = request.getSession(true);	
 			session.setAttribute("mensagem", "Você precisa entrar no sistema para acessar esta função.");
-        	response.sendRedirect(request.getContextPath());
+        	response.sendRedirect(TratadorURI.getRaizURL(request));
         	return;
 		}
 		
@@ -50,7 +51,7 @@ public class EditarProdutoServlet extends HttpServlet {
 				request.getRequestDispatcher("/editarProduto.jsp").forward(request, response);
 				return;
 			} else {
-				response.sendRedirect(request.getContextPath());
+				response.sendRedirect(TratadorURI.getRaizURL(request));
 				return;
 			}
 		} catch (NumberFormatException e) {
@@ -69,7 +70,7 @@ public class EditarProdutoServlet extends HttpServlet {
 		if(session == null) {
 			session = request.getSession(true);	
 			session.setAttribute("mensagem", "Você precisa entrar no sistema para acessar esta função.");
-        	response.sendRedirect(request.getContextPath());
+        	response.sendRedirect(TratadorURI.getRaizURL(request));
         	return;
 		}
 		
@@ -77,7 +78,7 @@ public class EditarProdutoServlet extends HttpServlet {
 		Integer caixa = (Integer) session.getAttribute("caixa");
 		if(caixa == null) {
 	     	session.setAttribute("mensagem", "Apenas o caixa pode cadastrar produtos.");
-        	response.sendRedirect(request.getContextPath());
+        	response.sendRedirect(TratadorURI.getRaizURL(request));
         	return;
 		}
 		
@@ -163,7 +164,7 @@ public class EditarProdutoServlet extends HttpServlet {
         pd.alterarProduto(original);
         
         session.setAttribute("mensagem", "Produto editado com sucesso!");
-        response.sendRedirect(request.getContextPath());
+        response.sendRedirect(TratadorURI.getRaizURL(request));
     }
 	
 

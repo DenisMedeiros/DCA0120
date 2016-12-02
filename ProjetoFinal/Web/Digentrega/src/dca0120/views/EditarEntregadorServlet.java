@@ -19,6 +19,7 @@ import dca0120.dao.EntregadoresDAO;
 import dca0120.dao.TelefonesDAO;
 import dca0120.model.Entregador;
 import dca0120.utils.Hashing;
+import dca0120.utils.TratadorURI;
 import dca0120.utils.ValidadorCPF;
 
 @MultipartConfig
@@ -36,7 +37,7 @@ public class EditarEntregadorServlet extends HttpServlet {
 		if (session == null) {
 			session = request.getSession(true);
 			session.setAttribute("mensagem", "Você precisa entrar no sistema para acessar esta função.");
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(TratadorURI.getRaizURL(request));
 			return;
 		}
 
@@ -44,7 +45,7 @@ public class EditarEntregadorServlet extends HttpServlet {
 		Integer administrador = (Integer) session.getAttribute("administrador");
 		if (administrador == null) {
 			session.setAttribute("mensagem", "Apenas o administrador pode cadastrar funcionários.");
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(TratadorURI.getRaizURL(request));
 			return;
 		}
 
@@ -61,7 +62,7 @@ public class EditarEntregadorServlet extends HttpServlet {
 				request.getRequestDispatcher("/editarEntregador.jsp").forward(request, response);
 				return;
 			} else {
-				response.sendRedirect(request.getContextPath());
+				response.sendRedirect(TratadorURI.getRaizURL(request));
 				return;
 			}
 		} catch (NumberFormatException e) {
@@ -80,7 +81,7 @@ public class EditarEntregadorServlet extends HttpServlet {
 		if (session == null) {
 			session = request.getSession(true);
 			session.setAttribute("mensagem", "Você precisa entrar no sistema para acessar esta função.");
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(TratadorURI.getRaizURL(request));
 			return;
 		}
 
@@ -88,7 +89,7 @@ public class EditarEntregadorServlet extends HttpServlet {
 		Integer administrador = (Integer) session.getAttribute("administrador");
 		if (administrador == null) {
 			session.setAttribute("mensagem", "Apenas o administrador pode cadastrar funcionários.");
-			response.sendRedirect(request.getContextPath());
+			response.sendRedirect(TratadorURI.getRaizURL(request));
 			return;
 		}
 		
@@ -177,7 +178,7 @@ public class EditarEntregadorServlet extends HttpServlet {
         ed.alterarEntregador(original, administrador);
         
         session.setAttribute("mensagem", "Entregador editado com sucesso!");
-		response.sendRedirect(request.getContextPath());
+		response.sendRedirect(TratadorURI.getRaizURL(request));
 	}
 
 }
