@@ -16,7 +16,7 @@ import java.util.Properties;
  */
 public class ConnectionFactory {
 	
-	//private final static String caminhoCompleto = "
+	public static Connection conexao = null;
 
 		
 	/** Abre a conexão com o banco de dados e retorna-a.
@@ -26,6 +26,12 @@ public class ConnectionFactory {
 	 * @throws SQLException
 	 */
 	public static Connection getConexao() throws ClassNotFoundException, SQLException {
+		
+		if(conexao != null) {
+			if(!conexao.isClosed()) {
+				return conexao;
+			}
+		}
 		
 		String driver;
 		String url;
@@ -44,14 +50,13 @@ public class ConnectionFactory {
 		    senha = prop.getProperty("senha");
 		    
 			Class.forName(driver);
-			Connection conexao = DriverManager.getConnection(url, usuario, senha);
-			return conexao;
+			conexao = DriverManager.getConnection(url, usuario, senha);
 		    
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	    
-		return null;
+		return conexao;
 
 		
 	}

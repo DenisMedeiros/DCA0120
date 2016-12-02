@@ -1,10 +1,14 @@
 package dca0120.views;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import dca0120.dao.CaixasDAO;
 import dca0120.dao.CaixasGerenciamPedidosDAO;
 import dca0120.dao.CaixasGerenciamProdutosDAO;
+import dca0120.dao.ConnectionFactory;
 import dca0120.dao.EnderecosEntregaDAO;
 import dca0120.dao.EntregadoresDAO;
 import dca0120.dao.PedidosContemProdutosDAO;
@@ -56,21 +61,49 @@ public class PrepararBDServlet extends HttpServlet {
 		pcpd.criarTabelaPedidosContemProdutos();
 		
 		// Cria o administrador padrão.
-		List<String> telefones = new ArrayList<String>();
-		telefones.add("123123123");
+		InputStream is = ConnectionFactory.class.getClassLoader().getResourceAsStream("administrador.properties");
+		Properties prop = new Properties();
 		
-		String senha = Hashing.plainToSHA256("123", "00000000000".getBytes());
-		
-		Caixa caixa = new Caixa(0, "00000000000", senha, "Administrador", Calendar.getInstance(), telefones, true);
-		
-		if(cd.getCaixaWithCPF("00000000000") == null) {
-			cd.inserirCaixa(caixa, -1);
+	    try {
+			prop.load(is);
+		   
+		    String nome = prop.getProperty("nome");
+		    String cpf = prop.getProperty("cpf");
+		    String dataNascimentoStr = prop.getProperty("dataNascimento");
+		    String telefonesStr = prop.getProperty("telefones");
+		    String senha = prop.getProperty("senha");
+		    
+		    
+	        // Valida a data de nascimento.
+	        Calendar dataNascimento = Calendar.getInstance();
+	        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	        try {
+				dataNascimento.setTime(sdf.parse(dataNascimentoStr));
+			} catch (ParseException e) {
+				request.setAttribute("mensagem", "Data de nascimento inválida!");
+	            response.sendRedirect(request.getHeader("referer"));
+	            return;
+			}
+	        
+	        List<String> telefones =  Arrays.asList(telefonesStr.split(";"));
+	        String senhaCriptografada = Hashing.plainToSHA256(senha, cpf.getBytes());
+	        
+	        Caixa caixa = new Caixa(0, cpf, senhaCriptografada, nome, dataNascimento, telefones, true);
+	        
+			response.setContentType("text/html");
+			PrintWriter out = response.getWriter();
+			out.append("Tabelas e administrador criados com sucesso!\n");
+			out.close();
+	        
+			if(cd.getCaixaWithCPF("00000000000") == null) {
+				cd.inserirCaixa(caixa, -1);
+			}
+		    
+		    
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		out.append("Tabelas e administrador criados com sucesso!\n");
-		out.close();
      
     }
 

@@ -1,9 +1,11 @@
 package dca0120.views;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dca0120.dao.ConnectionFactory;
 import dca0120.dao.EntregadoresDAO;
 import dca0120.dao.PedidosDAO;
 import dca0120.dao.ProdutosDAO;
@@ -63,6 +66,17 @@ public class CadastrarPedidoServlet extends HttpServlet {
 			request.setAttribute("produtos", produtos);
 		} else {
 			request.setAttribute("produtos", null);
+		}
+
+		InputStream is = ConnectionFactory.class.getClassLoader().getResourceAsStream("google.properties");
+		Properties prop = new Properties();
+		
+		try {
+			prop.load(is);
+		    String googleMapsKey = prop.getProperty("googleMapsKey");
+		    request.setAttribute("googleMapsKey", googleMapsKey);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
         request.getRequestDispatcher("/cadastrarPedido.jsp").forward(request, response);

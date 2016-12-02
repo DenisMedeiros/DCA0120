@@ -167,7 +167,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/i18n/pt-br.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/jquery.maskedinput.min.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/googleMaps.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB9nEMd1ZPizw32y8zG4T4NO3BUdoKAQQU&libraries=places&callback=initAutocomplete"
+		<script src="https://maps.googleapis.com/maps/api/js?key=${requestScope.googleMapsKey}&libraries=places&callback=initAutocomplete"
          async defer></script>
 				
 		<script>
