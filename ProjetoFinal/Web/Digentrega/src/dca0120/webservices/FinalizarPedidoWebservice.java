@@ -1,6 +1,7 @@
 package dca0120.webservices;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -36,7 +37,7 @@ public class FinalizarPedidoWebservice extends HttpServlet {
 		response.setContentType("application/json");
 	   
 		String entregadorIdStr = request.getParameter("entregadorId");
-		String pedidoIdStr = request.getParameter("pedidoId");	
+		String pedidoIdStr = request.getParameter("pedidoId");
 		
 		if(entregadorIdStr == null || pedidoIdStr == null) {
 			JsonObject json = Json.createObjectBuilder()
@@ -45,12 +46,14 @@ public class FinalizarPedidoWebservice extends HttpServlet {
 			response.getWriter().write(json.toString()); 
 			return;
 		}
-		
+				
 		int entregadorId = Integer.parseInt(entregadorIdStr);
 		int pedidoId = Integer.parseInt(pedidoIdStr);
 		
 		EntregadoresDAO ed = new EntregadoresDAO();
 		Entregador e = ed.getEntregadorWithID(entregadorId);
+		
+		Calendar dataHoraEntrega = Calendar.getInstance();
 			
 		if(e != null) {
 			
@@ -75,6 +78,7 @@ public class FinalizarPedidoWebservice extends HttpServlet {
 			}
 			
 			p.avancarStatus();
+			p.setDataHoraEntrega(dataHoraEntrega);
 			ped.alterarPedido(p);
 			
 			JsonObject json = Json.createObjectBuilder()
