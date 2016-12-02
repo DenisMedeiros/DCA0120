@@ -130,7 +130,8 @@
     
     <footer class="footer">
       <div class="container">
-        <p class="text-muted text-center"> DigEntrega 0.1. b2016.10.26. </p>
+        <p class="text-muted text-center"> DigEntrega 0.1. b2016.12.02. </p>
+        <p class="text-muted text-center"> <a href="https://github.com/DenisMedeiros/DCA0120/raw/master/ProjetoFinal/DigEntrega.apk">  Aplicativo Android <img src="${ pageContext.request.contextPath }/static/image/android.png" height="24"/> </a> </p>
       </div>
     </footer>
 
