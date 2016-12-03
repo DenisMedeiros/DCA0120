@@ -1,22 +1,23 @@
 package ga.digentre.mobile.activities;
 
-import android.content.Context;
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -33,6 +34,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,15 +46,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import android.Manifest;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.Toast;
-
-import org.json.JSONObject;
-
 import ga.digentre.mobile.R;
 import ga.digentre.mobile.utils.DataParser;
+
+//import com.google.android.gms.maps.model.MarkerOptions;
+//import com.google.android.gms.maps.model.PolylineOptions;
 
 public class RotasActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -63,8 +62,9 @@ public class RotasActivity extends FragmentActivity implements OnMapReadyCallbac
     LocationRequest mLocationRequest;
     Marker mCurrLocationMarker;
     ArrayList<LatLng> points;
+    ArrayList<LatLng> waypoints;
 
-      @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rotas);
@@ -84,7 +84,7 @@ public class RotasActivity extends FragmentActivity implements OnMapReadyCallbac
         fabNavigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String strUri = "";
+                String strUri;
                 if(points.size()>0) {
                     strUri = "google.navigation:q="+ points.get(0).latitude + "," + points.get(0).longitude;
                 }else {
@@ -94,7 +94,6 @@ public class RotasActivity extends FragmentActivity implements OnMapReadyCallbac
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
                 startActivity(mapIntent);
-                //RotasActivity.this.startActivity(mapIntent);
             }
         });
     }
@@ -200,10 +199,9 @@ public class RotasActivity extends FragmentActivity implements OnMapReadyCallbac
         String output = "json";
 
         // Building the url to the web service
-        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
 
 
-        return url;
+        return "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters;
     }
 
     /**
@@ -315,12 +313,11 @@ public class RotasActivity extends FragmentActivity implements OnMapReadyCallbac
         // Executes in UI thread, after the parsing process
         @Override
         protected void onPostExecute(List<List<HashMap<String, String>>> result) {
-            ArrayList<LatLng> points;
             PolylineOptions lineOptions = null;
 
             // Traversing through all the routes
             for (int i = 0; i < result.size(); i++) {
-                points = new ArrayList<>();
+                waypoints = new ArrayList<>();
                 lineOptions = new PolylineOptions();
 
                 // Fetching i-th route
@@ -334,11 +331,11 @@ public class RotasActivity extends FragmentActivity implements OnMapReadyCallbac
                     double lng = Double.parseDouble(point.get("lng"));
                     LatLng position = new LatLng(lat, lng);
 
-                    points.add(position);
+                    waypoints.add(position);
                 }
 
                 // Adding all the points in the route to LineOptions
-                lineOptions.addAll(points);
+                lineOptions.addAll(waypoints);
                 lineOptions.width(10);
                 lineOptions.color(Color.RED);
 
@@ -429,8 +426,9 @@ public class RotasActivity extends FragmentActivity implements OnMapReadyCallbac
         markerOptions.position(latLng);
         markerOptions.title("Atual localização");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        markerOptions.flat(true);
+        markerOptions.rotation(245);
         mCurrLocationMarker = mMap.addMarker(markerOptions);
-
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
