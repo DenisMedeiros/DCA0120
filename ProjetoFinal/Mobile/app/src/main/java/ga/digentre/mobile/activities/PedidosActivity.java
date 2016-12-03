@@ -205,7 +205,7 @@ public class PedidosActivity extends AppCompatActivity {
 
                 Map<String, String> pedido = new HashMap<String, String>(2);
                 pedido.put("id", "Pedido #" + pedidoId);
-                pedido.put("detalhes", "(" + peso + " kg, " + volume + " l)");
+                pedido.put("detalhes", "(" + peso + " g, " + volume + " ml)");
                 pedidosItemSubitem.add(pedido);
                 pedidos.put(pedidoId, conteudo);
                 adapter.notifyDataSetChanged();
