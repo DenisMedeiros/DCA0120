@@ -109,7 +109,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 // Tenta autenticar o usuário.
-                // TODO
                 final String url = "http://digentre.ga/webservice/login/entregador/";
 
                 StringRequest jsonObjRequest = new StringRequest(Request.Method.POST,
@@ -122,6 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if (json.get("id") != null) {
                                         Intent intent = new Intent(LoginActivity.this, PedidosActivity.class);
                                         intent.putExtra("cpf", cpf); //Optional parameters
+                                        intent.putExtra("entregadorId", String.valueOf(json.get("id"))); //Optional parameters
                                         LoginActivity.this.startActivity(intent);
                                         return;
                                     }
@@ -161,26 +161,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 queue.add(jsonObjRequest);
 
-
-                // Na situação final, é para buscar no BD o usuário e senha.
-                if(!(cpf.equals("11111111111") && senha.equals("123"))) {
-
-
-                }
-
-                //Intent intent = new Intent(LoginActivity.this, PedidosActivity.class);
-                //intent.putExtra("cpf", cpf); //Optional parameters
-                //LoginActivity.this.startActivity(intent);
-
-
             }
         });
-
-
-
     }
-
-
-
 
 }
