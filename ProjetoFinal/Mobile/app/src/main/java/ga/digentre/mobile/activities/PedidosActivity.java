@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -217,6 +218,13 @@ public class PedidosActivity extends AppCompatActivity {
         });
 
 
+        Button btnSair = (Button) findViewById(R.id.sair);
+        btnSair.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         // Action responsável por fechar um pedido.
         listaPedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
