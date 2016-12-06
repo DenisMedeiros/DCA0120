@@ -17,4 +17,6 @@
     <string name="title_activity_pedidos">PedidosActivity</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_rotas">Map</string>
+    <string name="title_activity_controle_pedidos">ControlePedidosActivity</string>
+    <string name="title_activity_teste">TesteAc</string>
 </resources>

@@ -49,8 +49,6 @@ import java.util.List;
 import ga.digentre.mobile.R;
 import ga.digentre.mobile.utils.DataParser;
 
-//import com.google.android.gms.maps.model.MarkerOptions;
-//import com.google.android.gms.maps.model.PolylineOptions;
 
 public class RotasActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -310,11 +308,11 @@ public class RotasActivity extends FragmentActivity implements OnMapReadyCallbac
             return routes;
         }
 
+
         // Executes in UI thread, after the parsing process
         @Override
         protected void onPostExecute(List<List<HashMap<String, String>>> result) {
             PolylineOptions lineOptions = null;
-
             // Traversing through all the routes
             for (int i = 0; i < result.size(); i++) {
                 waypoints = new ArrayList<>();

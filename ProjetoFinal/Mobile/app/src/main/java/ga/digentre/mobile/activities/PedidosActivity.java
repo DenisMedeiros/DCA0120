@@ -4,11 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -23,7 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-
+import android.support.design.widget.FloatingActionButton;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -43,7 +39,9 @@ public class PedidosActivity extends AppCompatActivity {
     SimpleAdapter adapter;
     List<Map<String, String>> pedidosItemSubitem = new ArrayList<Map<String, String>>();
     Map<Integer, String> pedidos = new HashMap<Integer, String>();
-
+    public static final double RESTAURANTE_LATITUDE = -5.8428903;
+    public static final double RESTAURANTE_LONGITUDE = -35.1974639;
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -51,6 +49,8 @@ public class PedidosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pedidos);
 
         setTitle("DigEntrega - Pedidos");
+
+
         Intent intent = getIntent();
         String cpf = intent.getStringExtra("cpf");
 
@@ -112,7 +112,20 @@ public class PedidosActivity extends AppCompatActivity {
                 integrator.initiateScan();
             }
         });
+		
+		// Action voltar para restaurante
+        FloatingActionButton fabRotaRestaurante = (FloatingActionButton) findViewById(R.id.restaurante);
+        fabRotaRestaurante.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                String strUri = "google.navigation:q=" + RESTAURANTE_LATITUDE + "," + RESTAURANTE_LONGITUDE;
+
+                Uri gmmIntentUri = Uri.parse(strUri);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                //mapIntent.setPackage("com.google.android.apps.maps");
+                PedidosActivity.this.startActivity(mapIntent);            }
+        });
 
         // Action para calcular rota.
         FloatingActionButton fabCriarRota = (FloatingActionButton) findViewById(R.id.calcularRota);
@@ -120,7 +133,7 @@ public class PedidosActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(PedidosActivity.this, RotasActivity.class);
+                //Intent intent = new Intent(PedidosActivity.this, RotasActivity.class);
                 ArrayList<String> pedidosStr = new ArrayList<String>(pedidos.values());
                 if(pedidosStr.size() < 1) {
 
@@ -132,11 +145,21 @@ public class PedidosActivity extends AppCompatActivity {
                 intent.putStringArrayListExtra("pedidos", pedidosStr);
                 PedidosActivity.this.startActivity(intent);
 
-//                Intent intent = new Intent(PedidosActivity.this, MapsActivity.class);
-//                intent.setPackage("com.google.android.apps.maps");
-//                if (intent.resolveActivity(getPackageManager()) != null) {
-//                    startActivity(intent);
-//                }
+				String pedido = pedidosStr.get(0);
+                String[] valores = pedido.split(";");
+
+                //int pedidoId = Integer.parseInt(valores[0]);
+                double latitude = Double.parseDouble(valores[1]);
+                double longitude = Double.parseDouble(valores[2]);
+                //float peso = Float.parseFloat(valores[3]);
+                //float volume = Float.parseFloat(valores[4]);
+
+                String strUri = "google.navigation:q=" + latitude + "," + longitude;
+
+                Uri gmmIntentUri = Uri.parse(strUri);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                //mapIntent.setPackage("com.google.android.apps.maps");
+                PedidosActivity.this.startActivity(mapIntent);
 
 
             }

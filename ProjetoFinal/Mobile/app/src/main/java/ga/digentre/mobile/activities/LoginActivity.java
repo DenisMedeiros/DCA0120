@@ -7,13 +7,32 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import ga.digentre.mobile.R;
 import ga.digentre.mobile.utils.Mascaras;
 import ga.digentre.mobile.utils.ValidadorCPF;
+
+
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -25,10 +44,13 @@ public class LoginActivity extends AppCompatActivity {
     EditText editTextSenha;
     Button button;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final RequestQueue queue = Volley.newRequestQueue(this);
 
         editTextSenha = (EditText) this.findViewById(R.id.editTextSenha);
         editTextCPF = (EditText) this.findViewById(R.id.editTextCpf);
@@ -39,9 +61,9 @@ public class LoginActivity extends AppCompatActivity {
 
         // temporario para evitar o login
 
-        Intent intent = new Intent(LoginActivity.this, PedidosActivity.class);
-        intent.putExtra("cpf", "11111111111"); //Optional parameters
-        LoginActivity.this.startActivity(intent);
+        //Intent intent = new Intent(LoginActivity.this, PedidosActivity.class);
+        //intent.putExtra("cpf", "11111111111"); //Optional parameters
+        //LoginActivity.this.startActivity(intent);
 
         // Faz a autenticação do usuário.
         button.setOnClickListener(new View.OnClickListener()
@@ -49,10 +71,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 String cpfFormatado = editTextCPF.getText().toString();
-                String cpf = cpfFormatado.replace(".", "").replace("-", "");
-                String senha = editTextSenha.getText().toString();
+                final String cpf = cpfFormatado.replace(".", "").replace("-", "");
+                final String senha = editTextSenha.getText().toString();
 
-                AlertDialog.Builder ad  = new AlertDialog.Builder(context);
+
+                final AlertDialog.Builder ad  = new AlertDialog.Builder(context);
                 ad.setTitle("Erro");
                 ad.setPositiveButton("OK", null);
                 ad.setCancelable(true);
@@ -87,17 +110,67 @@ public class LoginActivity extends AppCompatActivity {
 
                 // Tenta autenticar o usuário.
                 // TODO
+                final String url = "http://digentre.ga/webservice/login/entregador/";
+
+                StringRequest jsonObjRequest = new StringRequest(Request.Method.POST,
+                        url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject json = new JSONObject(response);
+                                    if (json.get("id") != null) {
+                                        Intent intent = new Intent(LoginActivity.this, PedidosActivity.class);
+                                        intent.putExtra("cpf", cpf); //Optional parameters
+                                        LoginActivity.this.startActivity(intent);
+                                        return;
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                ad.setMessage("CPF e/ou senha incorreta.");
+                                ad.create().show();
+                                return;
+
+
+                            }
+                        }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.d("volley", "Error: " + error.getMessage());
+                        error.printStackTrace();
+                    }
+                }) {
+
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/x-www-form-urlencoded; charset=UTF-8";
+                    }
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("cpf", cpf);
+                        params.put("senha",senha);
+                        return params;
+                    }
+
+                };
+
+                queue.add(jsonObjRequest);
+
+
                 // Na situação final, é para buscar no BD o usuário e senha.
                 if(!(cpf.equals("11111111111") && senha.equals("123"))) {
-                    ad.setMessage("CPF e/ou senha incorreta.");
-                    ad.create().show();
-                    return;
+
 
                 }
 
-                Intent intent = new Intent(LoginActivity.this, PedidosActivity.class);
-                intent.putExtra("cpf", cpf); //Optional parameters
-                LoginActivity.this.startActivity(intent);
+                //Intent intent = new Intent(LoginActivity.this, PedidosActivity.class);
+                //intent.putExtra("cpf", cpf); //Optional parameters
+                //LoginActivity.this.startActivity(intent);
 
 
             }
