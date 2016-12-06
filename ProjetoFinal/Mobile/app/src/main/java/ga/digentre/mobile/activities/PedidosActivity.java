@@ -1,32 +1,25 @@
 package ga.digentre.mobile.activities;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
-import android.support.design.widget.FloatingActionButton;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -133,7 +126,7 @@ public class PedidosActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //Intent intent = new Intent(PedidosActivity.this, RotasActivity.class);
+                Intent intent = new Intent(PedidosActivity.this, RotasActivity.class);
                 ArrayList<String> pedidosStr = new ArrayList<String>(pedidos.values());
                 if(pedidosStr.size() < 1) {
 

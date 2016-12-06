@@ -38,21 +38,22 @@
         android:layout_height="60dp"
         app:layout_anchorGravity="bottom|right"
         app:layout_anchor="@+id/listaPedidos"
-        android:layout_gravity="top|left"
+        android:layout_gravity="top|start"
         android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginEnd="10dp" />
 		
 	<android.support.design.widget.FloatingActionButton
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_margin="@dimen/fab_margin"
         android:scaleType="center"
-        app:backgroundTint="@android:color/holo_purple"
-        app:srcCompat="@drawable/store"
+        app:backgroundTint="@android:color/background_light"
+        app:srcCompat="@mipmap/loja"
         android:id="@+id/restaurante"
-        app:layout_anchor="@+id/includePedidos"
+        app:layout_anchor="@+id/listaPedidos"
         app:layout_anchorGravity="bottom|center"
-        android:layout_gravity="center_vertical|center_horizontal"/>
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginBottom="10dp"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/calcularRota"
@@ -62,10 +63,10 @@
         app:srcCompat="@mipmap/caminhao"
         app:backgroundTint="@android:color/holo_red_light"
         app:layout_anchor="@+id/listaPedidos"
-        app:layout_anchorGravity="bottom|left"
-        android:layout_gravity="bottom|right"
+        app:layout_anchorGravity="bottom|start"
+        android:layout_gravity="bottom|end"
         android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginStart="10dp" />
 
 
 </android.support.design.widget.CoordinatorLayout>
