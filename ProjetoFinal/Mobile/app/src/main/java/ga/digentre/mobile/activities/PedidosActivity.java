@@ -187,7 +187,7 @@ public class PedidosActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-//                Intent intent = new Intent(PedidosActivity.this, RotasActivity.class);
+                Intent intent = new Intent(PedidosActivity.this, RotasActivity.class);
                 ArrayList<String> pedidosStr = new ArrayList<String>(pedidos.values());
                 if(pedidosStr.size() < 1) {
 
@@ -196,24 +196,24 @@ public class PedidosActivity extends AppCompatActivity {
                     toast.show();
                     return;
                 }
-                /*intent.putStringArrayListExtra("pedidos", pedidosStr);
-                PedidosActivity.this.startActivity(intent);*/
+                intent.putStringArrayListExtra("pedidos", pedidosStr);
+                PedidosActivity.this.startActivity(intent);
 
-				String pedido = pedidosStr.get(0);
+				/*String pedido = pedidosStr.get(0);
                 String[] valores = pedido.split(";");
 
-                //int pedidoId = Integer.parseInt(valores[0]);
+                int pedidoId = Integer.parseInt(valores[0]);
                 double latitude = Double.parseDouble(valores[1]);
                 double longitude = Double.parseDouble(valores[2]);
-                //float peso = Float.parseFloat(valores[3]);
-                //float volume = Float.parseFloat(valores[4]);
+                float peso = Float.parseFloat(valores[3]);
+                float volume = Float.parseFloat(valores[4]);
 
                 String strUri = "google.navigation:q=" + latitude + "," + longitude;
 
                 Uri gmmIntentUri = Uri.parse(strUri);
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 //mapIntent.setPackage("com.google.android.apps.maps");
-                PedidosActivity.this.startActivity(mapIntent);
+                PedidosActivity.this.startActivity(mapIntent);*/
 
 
             }
