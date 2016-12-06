@@ -16,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -85,13 +86,33 @@ public class RotasActivity extends FragmentActivity implements OnMapReadyCallbac
                 String strUri;
                 if(points.size()>0) {
                     strUri = "google.navigation:q="+ points.get(0).latitude + "," + points.get(0).longitude;
+
+                    ArrayList<String> pedidos = getIntent().getStringArrayListExtra("pedidos");
+
+                    String[] valores = pedidos.get(0).split(";");
+
+                    int pedidoId = Integer.parseInt(valores[0]);
+                    //double latitude = Double.parseDouble(valores[1]);
+                    //double longitude = Double.parseDouble(valores[2]);
+                    // float peso = Float.parseFloat(valores[3]);
+                    //float volume = Float.parseFloat(valores[4]);
+
+                    Toast toast = Toast.makeText(getApplication(), "Gerando rota para o Pedido #" + pedidoId, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }else {
                     strUri = "google.navigation:q="+ RESTAURANTE_LATITUDE + "," + RESTAURANTE_LONGITUDE;
+
+                    Toast toast = Toast.makeText(getApplication(), "Gerando rota para o Restaurante", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
                 }
                 Uri gmmIntentUri = Uri.parse(strUri);
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                 mapIntent.setPackage("com.google.android.apps.maps");
+
                 startActivity(mapIntent);
+                finish();
             }
         });
     }

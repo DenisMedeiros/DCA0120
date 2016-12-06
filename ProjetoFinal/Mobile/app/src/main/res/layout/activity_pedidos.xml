@@ -9,7 +9,7 @@
     android:id="@+id/container">
 
     <Button
-        android:text="Sair"
+        android:text="@string/sair"
         android:layout_height="wrap_content"
         android:id="@+id/sair"
         app:layout_anchorGravity="end"

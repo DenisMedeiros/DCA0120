@@ -171,6 +171,9 @@ public class PedidosActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Toast toast = Toast.makeText(getApplication(), "Gerando rota para o Restaurante", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
                 String strUri = "google.navigation:q=" + RESTAURANTE_LATITUDE + "," + RESTAURANTE_LONGITUDE;
 
                 Uri gmmIntentUri = Uri.parse(strUri);
