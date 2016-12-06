@@ -183,7 +183,7 @@ public class RotasActivity extends FragmentActivity implements OnMapReadyCallbac
 
         //mMap.moveCamera(CameraUpdateFactory.newLatLng());
 
-        String url = getUrl();
+        /*String url = getUrl();
         Log.d("onMapReady", url);
         FetchUrl fetchUrl = new FetchUrl();
 
@@ -191,7 +191,7 @@ public class RotasActivity extends FragmentActivity implements OnMapReadyCallbac
         fetchUrl.execute(url);
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pontoRestaurante, 12.0f));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11));*/
     }
 
     private String getUrl() {
@@ -200,7 +200,8 @@ public class RotasActivity extends FragmentActivity implements OnMapReadyCallbac
             waypoints += "|" + point.latitude + "," + point.longitude;
         }
         // Origem da rota saindo do restaurante
-        String str_origem = "origin=" + RESTAURANTE_LATITUDE + "," + RESTAURANTE_LONGITUDE;
+        String str_origem = "origin=" + mCurrLocationMarker.getPosition().latitude + "," +
+                mCurrLocationMarker.getPosition().longitude;
 
         // Destino da rota chegando ao restaurante
         String str_dest = "destination=" + RESTAURANTE_LATITUDE + "," + RESTAURANTE_LONGITUDE;
@@ -448,6 +449,14 @@ public class RotasActivity extends FragmentActivity implements OnMapReadyCallbac
         markerOptions.flat(true);
         markerOptions.rotation(245);
         mCurrLocationMarker = mMap.addMarker(markerOptions);
+
+        String url = getUrl();
+        Log.d("onLocationChanged", url);
+        FetchUrl fetchUrl = new FetchUrl();
+
+        // Start downloading json data from Google Directions API
+        fetchUrl.execute(url);
+
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
