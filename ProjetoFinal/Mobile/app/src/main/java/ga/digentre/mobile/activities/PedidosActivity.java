@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,8 +16,20 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +45,8 @@ public class PedidosActivity extends AppCompatActivity {
     SimpleAdapter adapter;
     List<Map<String, String>> pedidosItemSubitem = new ArrayList<Map<String, String>>();
     Map<Integer, String> pedidos = new HashMap<Integer, String>();
+    String entregadorId;
+
     public static final double RESTAURANTE_LATITUDE = -5.8428903;
     public static final double RESTAURANTE_LONGITUDE = -35.1974639;
 	
@@ -43,12 +58,13 @@ public class PedidosActivity extends AppCompatActivity {
 
         setTitle("DigEntrega - Pedidos");
 
+        final RequestQueue queue = Volley.newRequestQueue(this);
 
         Intent intent = getIntent();
-        String cpf = intent.getStringExtra("cpf");
+        final String cpf = intent.getStringExtra("cpf");
+        entregadorId = intent.getStringExtra("entregadorId");
 
         listaPedidos = (ListView) this.findViewById(R.id.listaPedidos);
-
 
         adapter = new SimpleAdapter(this, pedidosItemSubitem,
                 android.R.layout.simple_list_item_2,
@@ -57,6 +73,73 @@ public class PedidosActivity extends AppCompatActivity {
                         android.R.id.text2});
 
 
+        // Tenta autenticar o usuário.
+        final String url = "http://digentre.ga/webservice/listar/pedidos/entregador/";
+
+        StringRequest jsonObjRequest = new StringRequest(Request.Method.POST,
+                url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject json = new JSONObject(response);
+                            if (json.get("pedidos") != null) {
+                                JSONArray pedidosJSON = (JSONArray) json.get("pedidos");
+                                for(int i = 0; i < pedidosJSON.length(); i++) {
+                                    JSONObject pedidoJSON = pedidosJSON.getJSONObject(i);
+                                    final int pedidoId = pedidoJSON.getInt("id");
+                                    double latitude = pedidoJSON.getDouble("latitude");
+                                    double longitude = pedidoJSON.getDouble("longitude");
+                                    double peso = pedidoJSON.getDouble("peso");
+                                    double volume = pedidoJSON.getDouble("volume");
+
+                                    String conteudo = pedidoId + ";" + latitude + ";" + longitude + ";" + peso + ";" + volume + ";";
+                                    Map<String, String> pedido = new HashMap<String, String>(2);
+                                    pedido.put("id", "Pedido #" + pedidoId);
+                                    pedido.put("detalhes", "(" + peso + " g, " + volume + " ml)");
+                                    pedidosItemSubitem.add(pedido);
+                                    pedidos.put(pedidoId, conteudo);
+                                    adapter.notifyDataSetChanged();
+
+
+
+
+
+                                }
+
+                                Log.d("ELEMENTO", pedidos.toString());
+                            }
+                        } catch (JSONException e) {
+                            Log.d("ERRO", e.toString());
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d("volley", "Error: " + error.getMessage());
+                error.printStackTrace();
+            }
+        }) {
+
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("entregadorId", entregadorId);
+                return params;
+            }
+
+        };
+
+        queue.add(jsonObjRequest);
+
 
      /*  // Temporario
         Map<String, String> pedido1 = new HashMap<String, String>(2);
@@ -64,30 +147,7 @@ public class PedidosActivity extends AppCompatActivity {
         pedido1.put("detalhes", "(" + 6000 + " g, " + 15 + " l)");
         pedidosItemSubitem.add(pedido1);
         adapter.notifyDataSetChanged();
-
-        Map<String, String> pedido2 = new HashMap<String, String>(2);
-        pedido2.put("id", "Pedido #" + 2);
-        pedido2.put("detalhes", "(" + 3000 + " g, " + 2 + " l)");
-        pedidosItemSubitem.add(pedido2);
-        adapter.notifyDataSetChanged();
-
-        Map<String, String> pedido3 = new HashMap<String, String>(2);
-        pedido3.put("id", "Pedido #" + 3);
-        pedido3.put("detalhes", "(" + 3 + " g, " + 2 + " l)");
-        pedidosItemSubitem.add(pedido3);
-        adapter.notifyDataSetChanged();
-
-        Map<String, String> pedido4 = new HashMap<String, String>(2);
-        pedido4.put("id", "Pedido #" + 4);
-        pedido4.put("detalhes", "(" + 600 + " g, " + 24 + " l)");
-        pedidosItemSubitem.add(pedido4);
-        adapter.notifyDataSetChanged();
-
-        Map<String, String> pedido5 = new HashMap<String, String>(2);
-        pedido5.put("id", "Pedido #" + 5);
-        pedido5.put("detalhes", "(" + 100 + " g, " + 2 + " l)");
-        pedidosItemSubitem.add(pedido5);
-        adapter.notifyDataSetChanged();*/
+    */
 
         // Assign adapter to ListView
         listaPedidos.setAdapter(adapter);
@@ -197,6 +257,7 @@ public class PedidosActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        final RequestQueue queue = Volley.newRequestQueue(this);
         if(result != null) {
             if(result.getContents() == null) {
                 Toast.makeText(this, "Cancelado", Toast.LENGTH_LONG).show();
@@ -206,7 +267,7 @@ public class PedidosActivity extends AppCompatActivity {
                 String conteudo = result.getContents();
                 String[] valores = conteudo.split(";");
 
-                int pedidoId = Integer.parseInt(valores[0]);
+                final int pedidoId = Integer.parseInt(valores[0]);
                 double latitude = Double.parseDouble(valores[1]);
                 double longitude = Double.parseDouble(valores[2]);
                 double peso = Double.parseDouble(valores[3]);
@@ -225,6 +286,52 @@ public class PedidosActivity extends AppCompatActivity {
                 pedidosItemSubitem.add(pedido);
                 pedidos.put(pedidoId, conteudo);
                 adapter.notifyDataSetChanged();
+
+                final String url = "http://digentre.ga/webservice/entregar/pedido/";
+
+                StringRequest jsonObjRequest = new StringRequest(Request.Method.POST,
+                        url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                try {
+                                    JSONObject json = new JSONObject(response);
+
+                                    if (json.get("sucesso") != null && json.get("status") != null) {
+                                        Log.d("ASSOCIADO", json.get("status").toString());
+                                        return;
+                                    }
+                                } catch (JSONException e) {
+                                    Log.d("ERRO", e.toString());
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.d("volley", "Error: " + error.getMessage());
+                        error.printStackTrace();
+                    }
+                }) {
+
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/x-www-form-urlencoded; charset=UTF-8";
+                    }
+
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("entregadorId", entregadorId);
+                        params.put("pedidoId", String.valueOf(pedidoId));
+                        return params;
+                    }
+
+                };
+
+                queue.add(jsonObjRequest);
 
                 Toast toast = Toast.makeText(this, "Pedido #" + pedidoId + " adicionado com sucesso!", Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.CENTER, 0, 0);

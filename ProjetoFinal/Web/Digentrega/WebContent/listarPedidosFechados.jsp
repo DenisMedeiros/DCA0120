@@ -30,7 +30,7 @@
 			<table id="tabelaPedidosFechados" class="table table-striped table-bordered table-hover"> 
 				<thead>
 			      <tr>
-			      	<th>Prioridade</th>
+			      	<th>#</th>
 			        <th>Momento Abertura</th>
 			        <th>Previsão Entrega</th>
 			        <th>Entregador</th>
