@@ -19,5 +19,4 @@
     <string name="title_activity_rotas">Map</string>
     <string name="title_activity_controle_pedidos">ControlePedidosActivity</string>
     <string name="title_activity_teste">TesteAc</string>
-    <string name="sair">Sair</string>
 </resources>

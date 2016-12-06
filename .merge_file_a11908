@@ -8,6 +8,17 @@
     tools:context="ga.digentre.mobile.activities.PedidosActivity"
     android:id="@+id/container">
 
+    <Button
+        android:text="@string/sair"
+        android:layout_height="wrap_content"
+        android:id="@+id/sair"
+        app:layout_anchorGravity="end"
+        app:layout_anchor="@+id/toolbar"
+        android:layout_gravity="end"
+        style="@android:style/Widget.Holo.Button.Borderless"
+        android:gravity="fill|end"
+        android:layout_width="wrap_content" />
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,9 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            />
-
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
 
