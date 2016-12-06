@@ -103,8 +103,6 @@ public class PedidosActivity extends AppCompatActivity {
 
 
 
-
-
                                 }
 
                                 Log.d("ELEMENTO", pedidos.toString());
@@ -236,9 +234,59 @@ public class PedidosActivity extends AppCompatActivity {
                 ad.setPositiveButton("Sim",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                pedidosItemSubitem.remove(position);
-                                pedidos.remove(pedidoId);
-                                adapter.notifyDataSetChanged();
+
+                                final String url = "http://digentre.ga/webservice/finalizar/pedido/";
+                                StringRequest jsonObjRequest = new StringRequest(Request.Method.POST,
+                                        url,
+                                        new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String response) {
+                                                try {
+                                                    JSONObject json = new JSONObject(response);
+
+                                                    if (json.get("sucesso") != null && json.get("status") != null) {
+
+                                                        pedidosItemSubitem.remove(position);
+                                                        pedidos.remove(pedidoId);
+                                                        adapter.notifyDataSetChanged();
+
+
+                                                        return;
+                                                    }
+                                                } catch (JSONException e) {
+                                                    Log.d("ERRO", e.toString());
+                                                    e.printStackTrace();
+                                                }
+
+                                            }
+                                        }, new Response.ErrorListener() {
+
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        VolleyLog.d("volley", "Error: " + error.getMessage());
+                                        error.printStackTrace();
+                                    }
+                                }) {
+
+                                    @Override
+                                    public String getBodyContentType() {
+                                        return "application/x-www-form-urlencoded; charset=UTF-8";
+                                    }
+
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        Map<String, String> params = new HashMap<String, String>();
+                                        params.put("entregadorId", entregadorId);
+                                        params.put("pedidoId", String.valueOf(pedidoId));
+                                        return params;
+                                    }
+
+                                };
+
+                                queue.add(jsonObjRequest);
+
+
+
                                 Toast toast = Toast.makeText(PedidosActivity.this, "Pedido " + pedidoId + " removido com sucesso", Toast.LENGTH_LONG);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
