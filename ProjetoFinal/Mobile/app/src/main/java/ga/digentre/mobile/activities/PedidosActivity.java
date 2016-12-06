@@ -186,7 +186,7 @@ public class PedidosActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(PedidosActivity.this, RotasActivity.class);
+//                Intent intent = new Intent(PedidosActivity.this, RotasActivity.class);
                 ArrayList<String> pedidosStr = new ArrayList<String>(pedidos.values());
                 if(pedidosStr.size() < 1) {
 
@@ -195,8 +195,8 @@ public class PedidosActivity extends AppCompatActivity {
                     toast.show();
                     return;
                 }
-                intent.putStringArrayListExtra("pedidos", pedidosStr);
-                PedidosActivity.this.startActivity(intent);
+                /*intent.putStringArrayListExtra("pedidos", pedidosStr);
+                PedidosActivity.this.startActivity(intent);*/
 
 				String pedido = pedidosStr.get(0);
                 String[] valores = pedido.split(";");
